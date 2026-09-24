@@ -135,6 +135,7 @@ footer a:hover{text-decoration:underline}
 .rb-check{display:inline-block;background:#f4f6f9;border:1px solid var(--line);padding:8px 13px;margin:0 8px 8px 0;font-size:13.5px;cursor:pointer}
 .rb-check input{margin-right:6px}
 .rb-nav{display:flex;justify-content:space-between;margin-top:20px}
+.rb-hint{background:#f6f1dd;border-left:3px solid var(--gold);padding:10px 12px;font-size:13px;color:#5a5340;margin:10px 0 14px}
 .rb-preview{border:1px solid var(--line);padding:22px;background:#fbfbfc;font-size:14px}
 .rb-preview h3{font-family:Georgia,serif;color:var(--navy);font-size:20px;margin-bottom:2px}
 .rb-preview .pos{font-weight:700;margin:6px 0 2px}
@@ -420,10 +421,12 @@ document.getElementById('rbBack').style.visibility=RB.step===1?'hidden':'visible
 document.getElementById('rbNext').textContent=RB.step===5?'Готово':'Далее →';
 if(RB.step===1){
 b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 1.</b> В какой академии вы учитесь? Под неё подберём должности, программы и навыки.</p>'
++'<div class="rb-hint">Совет: выбирайте академию, где учитесь сейчас. Ошибка здесь — и дальше будут чужие подсказки: не те должности и программы.</div>'
 +ACADS.map(x=>'<label class="rb-opt"><input type="radio" name="rbAcad" value="'+x.id+'"'+(RB.acad===x.id?' checked':'')+'><b>'+x.name+'</b><br><span style="color:#6b7280;font-size:13px">'+x.spec+'</span></label>').join('');
 }
 if(RB.step===2){
 b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 2.</b> Как с вами связаться? <span style="color:#6b7280">Академия: '+(a?a.name:'—')+'</span></p>'
++'<div class="rb-hint">Совет: телефон — рабочий, с WhatsApp или MAX. Email проверьте дважды: опечатка — и приглашение уйдёт в никуда. Город — где реально готовы работать.</div>'
 +'<div class="field"><label>ФИО</label><input id="rbName" type="text" value="'+esc(RB.name)+'" placeholder="Иванова Анна Сергеевна"></div>'
 +'<div class="field"><label>Телефон</label><input id="rbPhone" type="text" value="'+esc(RB.phone)+'" placeholder="+7 (___) ___-__-__"></div>'
 +'<div class="field"><label>Email</label><input id="rbEmail" type="text" value="'+esc(RB.email)+'" placeholder="anna@example.ru"></div>'
@@ -433,6 +436,7 @@ b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 2.</b> Как с вами �
 if(RB.step===3){
 const pos=a?a.positions:[];
 b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 3.</b> Кем хотите работать? <span style="color:#6b7280">Подсказки — по вашей академии.</span></p>'
++'<div class="rb-hint">Совет: студенту — честная junior-должность из списка, а не завышенная. Работодатель ищет по названию: пишите так же, как в вакансии, на которую откликаетесь.</div>'
 +'<div class="field"><label>Желаемая должность</label><select id="rbPosition"><option value="">— выбрать —</option>'+pos.map(p=>'<option'+(RB.position===p?' selected':'')+'>'+p+'</option>').join('')+'</select></div>'
 +'<div class="field"><label>Или своя должность</label><input id="rbCustomPos" type="text" value="'+esc(RB.customPos)+'" placeholder="Например: помощник маркетолога"></div>'
 +'<div class="field"><label>Занятость</label><select id="rbEmployment">'+["Полная занятость","Частичная занятость","Стажировка","Практика","Удалённая работа"].map(c=>'<option'+(RB.employment===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>';
@@ -440,6 +444,7 @@ b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 3.</b> Кем хотите 
 if(RB.step===4){
 const prg=a?a.programs:[];const sk=a?a.skills:[];
 b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 4.</b> Образование, практика и навыки.</p>'
++'<div class="rb-hint">Совет: программу пишите с шифром (например, 38.02.01) — так принято в вузе. В практике дайте 1–2 места с фактами: где, сколько, что делали. Навыки отмечайте только те, что подтвердите на собеседовании.</div>'
 +'<div class="field"><label>Программа обучения</label><select id="rbProgram"><option value="">— выбрать —</option>'+prg.map(p=>'<option'+(RB.program===p?' selected':'')+'>'+p+'</option>').join('')+'</select></div>'
 +'<div class="field"><label>Год выпуска</label><select id="rbYear">'+["2026","2027","2028","2029","2030","Уже выпустился"].map(c=>'<option'+(RB.year===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>'
 +'<div class="field"><label>Практика и опыт (где проходили, что делали)</label><textarea id="rbPractice" placeholder="Например: практика в отеле «Атташе» — служба приёма, 2 месяца">'+esc(RB.practice)+'</textarea></div>'
@@ -451,6 +456,7 @@ if(RB.step===5){
 const pos=RB.customPos.trim()||RB.position||'—';
 const skills=RB.skills.concat(RB.customSkills.split(',').map(s=>s.trim()).filter(Boolean));
 b.innerHTML='<p style="margin-bottom:12px"><b>Шаг 5.</b> Резюме собрано. Скачайте в Word или скопируйте текст.</p>'
++'<div class="rb-hint">Перед скачиванием проверьте: имя и телефон без опечаток, должность совпадает с вакансией, нет пустых разделов. Такой файл можно сразу прикладывать к отклику.</div>'
 +'<div class="rb-preview"><h3>'+esc(RB.name||'Ваше имя')+'</h3><div style="color:#6b7280;font-size:13px">'+esc(a?a.name:'')+'</div>'
 +'<div class="pos">Желаемая должность: '+esc(pos)+' · '+esc(RB.employment)+'</div>'
 +'<div class="sec"><b>Контакты</b>'+esc(RB.phone)+(RB.email?', '+esc(RB.email):'')+' · '+esc(RB.city)+'</div>'

@@ -116,6 +116,16 @@ footer h5{color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:.6px
 footer a{color:#d6dce5;text-decoration:none}
 footer a:hover{text-decoration:underline}
 .foot-bottom{border-top:1px solid #1c2f52;padding:14px 20px;max-width:1180px;margin:0 auto;font-size:12px;display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
+.acad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.acad-card{background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);padding:20px;cursor:pointer;transition:box-shadow .15s}
+.acad-card:hover{box-shadow:0 3px 14px rgba(8,32,64,.12)}
+.acad-card h3{font-family:Georgia,serif;font-size:17px;color:var(--navy);margin-bottom:4px}
+.acad-card p{font-size:13px;color:var(--muted)}
+.acad-card .cnt{display:inline-block;margin-top:10px;font-size:13px;font-weight:700;color:var(--navy)}
+.acad-card .go{display:inline-block;margin:10px 0 0 10px;font-size:13px;color:#1a4fa0}
+.backlink{margin-bottom:12px}
+.acad-title{font-family:Georgia,serif;font-size:20px;color:var(--navy);margin:2px 0 2px}
+.acad-sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:#101418;color:#fff;padding:12px 20px;border-left:4px solid var(--gold);font-size:14px;opacity:0;transition:.25s;z-index:100;max-width:92%}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:920px){.work{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr}.head-contact{display:none}.hero h2{font-size:24px}.search-panel{flex-direction:column}}
@@ -141,7 +151,7 @@ footer a:hover{text-decoration:underline}
 <section class="hero"><div class="container">
 <h2>Карьера выпускника <span>начинается здесь</span></h2>
 <p>Проверенные вакансии Ростова-на-Дону и удалённая работа для студентов очной, вечерней и заочной форм обучения. Помогаем с резюме, практикой и первым местом работы.</p>
-<div class="search-panel"><input id="search" type="text" placeholder="Должность, компания или навык — например, «юрист»"><button class="btn btn-gold" onclick="renderVacs()">Найти работу</button></div>
+<div class="search-panel"><input id="search" type="text" placeholder="Должность, компания или навык — например, «юрист»"><button class="btn btn-gold" onclick="heroSearch()">Найти работу</button></div>
 <div class="fast"><span>Быстрый поиск:</span><button onclick="q('Менеджер')">менеджер по продажам</button><button onclick="q('Юрист')">юрист</button><button onclick="q('Экономист')">экономист</button><button onclick="q('удалённо')">удалённо</button><button onclick="q('HR')">hr-специалист</button></div>
 <div class="hero-stats">
 <div><b>1 248</b>активных вакансий</div>
@@ -163,6 +173,8 @@ footer a:hover{text-decoration:underline}
 <label><input type="radio" name="dir" value="IT"> Информационные технологии</label>
 <label><input type="radio" name="dir" value="HR"> Управление персоналом</label>
 <label><input type="radio" name="dir" value="Маркетинг"> Маркетинг и SMM</label>
+<label><input type="radio" name="dir" value="Туризм"> Туризм и гостеприимство</label>
+<label><input type="radio" name="dir" value="Медицина"> Медицина и фармация</label>
 <h4>Место работы</h4>
 <label><input type="checkbox" checked> Ростов-на-Дону</label>
 <label><input type="checkbox" checked> Удалённо</label>
@@ -173,9 +185,18 @@ footer a:hover{text-decoration:underline}
 </aside>
 <div>
 <div style="margin-bottom:14px"><select id="filter" style="border:1px solid #c3c8cf;border-radius:3px;padding:10px 12px;font-size:14px;font-family:inherit;max-width:280px">
-<option value="all">Все направления</option><option>Менеджмент</option><option>Экономика</option><option>Юриспруденция</option><option>IT</option><option>HR</option><option>Маркетинг</option>
+<option value="all">Все направления</option><option>Менеджмент</option><option>Экономика</option><option>Юриспруденция</option><option>IT</option><option>HR</option><option>Маркетинг</option><option>Туризм</option><option>Медицина</option>
 </select></div>
+<div id="acadView">
+<p style="font-size:14px;color:#4b5158;margin-bottom:14px">Выберите академию — покажем вакансии и места практики по вашим специальностям.</p>
+<div class="acad-grid" id="acadGrid"></div>
+</div>
+<div id="vacView" style="display:none">
+<div class="backlink"><button class="btn btn-outline" onclick="showAcads()">← Все академии</button></div>
+<div class="acad-title" id="vacAcadTitle"></div>
+<div class="acad-sub" id="vacAcadSub"></div>
 <div id="grid"></div>
+</div>
 </div>
 </div>
 </section>
@@ -240,43 +261,86 @@ footer a:hover{text-decoration:underline}
 </footer>
 <div id="toast"></div>
 <script>
+const ACADS=[
+{id:"tourism",name:"Академия туризма и гостеприимства",spec:"Туризм · Гостиничное дело",note:"Практика — в отелях, турфирмах и экскурсионных бюро Ростова-на-Дону."},
+{id:"medic",name:"Медицинский колледж",spec:"Лечебное дело · Стоматология · Фармация · Сестринское дело",note:"Практика — в больницах, стоматологиях и аптеках города."},
+{id:"law",name:"Академия права",spec:"Юриспруденция",note:"Практика — в юрфирмах, госорганах и судах."},
+{id:"econ",name:"Академия экономики и управления",spec:"Менеджмент · Экономика · HR · Кадастр",note:"Практика — в банках, компаниях и кадровых агентствах."},
+{id:"it",name:"Академия цифровых технологий",spec:"Информационные технологии",note:"Практика — в ИТ-компаниях, удалённо и в офисе."},
+{id:"mark",name:"Академия маркетинга и коммуникаций",spec:"Маркетинг · Реклама · SMM",note:"Практика — в агентствах и отделах маркетинга."}
+];
+let currentAcad="cards";
+function hhLink(v){let url="https://hh.ru/search/vacancy?text="+encodeURIComponent(v.hq||v.t);url+="&area="+(v.city==="Удалённо"?"113":"76");if(v.city==="Удалённо")url+="&schedule=remote";return url}
 const vacs=[
-{t:"Менеджер по продажам",c:"ООО «Юг-Трейд»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"55 000 – 120 000 ₽",d:"B2B-продажи, ведение клиентской базы в CRM, выезды к клиентам 2–3 раза в неделю. Наставник в первые два месяца, оформление практики для студентов.",tags:["продажи","CRM","переговоры"],dir:"Менеджмент",hh:"https://hh.ru/search/vacancy?text=%D0%9C%D0%B5%D0%BD%D0%B5%D0%B4%D0%B6%D0%B5%D1%80+%D0%BF%D0%BE+%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B6%D0%B0%D0%BC&area=76"},
-{t:"Экономист-аналитик (junior)",c:"ПАО «РостБанк»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"50 000 – 110 000 ₽",d:"Бюджетирование филиалов, сверки в 1С, подготовка управленческой отчётности. Подходит выпускникам направления «Экономика».",tags:["Excel","1С","бюджетирование"],dir:"Экономика",hh:"https://hh.ru/search/vacancy?text=%D0%AD%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%81%D1%82&area=76"},
-{t:"Юрист-консультант",c:"ЮК «Право и Бизнес»",city:"Ростов-на-Дону",exp:"Опыт 1–3 года",type:"Полная занятость",s:"55 000 – 130 000 ₽",d:"Договорная работа, претензионный порядок, участие в судебных заседаниях. Удобный график для студентов вечерней формы.",tags:["договоры","суды","консалтинг"],dir:"Юриспруденция",hh:"https://hh.ru/search/vacancy?text=%D0%AE%D1%80%D0%B8%D1%81%D1%82&area=76"},
-{t:"Системный администратор",c:"ООО «ТехноСофт»",city:"Удалённо",exp:"Опыт 1–3 года",type:"Удалённая работа",s:"70 000 – 160 000 ₽",d:"Администрирование серверов Linux, корпоративная сеть, дежурства по графику. Технику предоставляет работодатель.",tags:["Linux","сети","администрирование"],dir:"IT",hh:"https://hh.ru/search/vacancy?text=%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D1%8B%D0%B9+%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80&area=113&schedule=remote"},
-{t:"HR-специалист (подбор)",c:"ГК «Южный Кадр»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Гибрид",s:"45 000 – 95 000 ₽",d:"Массовый и точечный подбор персонала, телефонные интервью, ведение кадровой системы. Обучаем с нуля.",tags:["подбор","интервью","HRIS"],dir:"HR",hh:"https://hh.ru/search/vacancy?text=HR+%D0%BF%D0%BE%D0%B4%D0%B1%D0%BE%D1%80&area=76"},
-{t:"SMM-специалист",c:"Digital-агентство «Волна»",city:"Удалённо",exp:"Без опыта",type:"Удалённая работа",s:"45 000 – 100 000 ₽",d:"Ведение 3–4 клиентских проектов, контент-план, базовая аналитика. Портфолио будет преимуществом.",tags:["SMM","контент","аналитика"],dir:"Маркетинг",hh:"https://hh.ru/search/vacancy?text=SMM&area=113&schedule=remote"},
-{t:"Специалист по госзакупкам",c:"Администрация г. Ростова-на-Дону",city:"Ростов-на-Дону",exp:"Опыт 1–3 года",type:"Полная занятость",s:"45 000 – 90 000 ₽",d:"Работа в рамках 44-ФЗ, подготовка конкурсной документации, сопровождение тендеров.",tags:["44-ФЗ","тендеры","документы"],dir:"Юриспруденция",hh:"https://hh.ru/search/vacancy?text=%D0%93%D0%BE%D1%81%D0%B7%D0%B0%D0%BA%D1%83%D0%BF%D0%BA%D0%B8+44-%D0%A4%D0%97&area=76"},
-{t:"Кадастровый инженер",c:"ООО «ГеоПроект»",city:"Ростов-на-Дону",exp:"Опыт 1–3 года",type:"Полная занятость",s:"55 000 – 110 000 ₽",d:"Межевание земельных участков, технические планы, взаимодействие с Росреестром. Разъездной характер работы.",tags:["кадастр","геодезия","БТИ"],dir:"Менеджмент",hh:"https://hh.ru/search/vacancy?text=%D0%9A%D0%B0%D0%B4%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B2%D1%8B%D0%B9+%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80&area=76"}
+{t:"Менеджер по туризму",c:"Туроператор «Юг-Тур»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"40 000 – 90 000 ₽",d:"Продажа туров по России и зарубежью, оформление документов, сопровождение клиентов. Обучаем с нуля.",tags:["туризм","продажи","документы"],dir:"Туризм",acad:"tourism",hq:"Менеджер по туризму"},
+{t:"Администратор гостиницы",c:"Отель «Атташе»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Сменный график",s:"45 000 – 80 000 ₽",d:"Служба приёма и размещения: заселение гостей, работа с бронированиями, решение текущих вопросов.",tags:["гостиницы","reception","бронирование"],dir:"Туризм",acad:"tourism",hq:"Администратор гостиницы"},
+{t:"Гид-экскурсовод",c:"Бюро экскурсий «Донские зори»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Гибкий график",s:"40 000 – 100 000 ₽",d:"Пешеходные и автобусные экскурсии по Ростову-на-Дону. Оплата за каждую экскурсию.",tags:["экскурсии","история","общение"],dir:"Туризм",acad:"tourism",hq:"Гид экскурсовод"},
+{t:"Специалист по бронированию",c:"Туроператор «Юг-Тур»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Гибрид",s:"45 000 – 85 000 ₽",d:"Бронирование авиабилетов и отелей, работа с системами бронирования, поддержка клиентов.",tags:["бронирование","авиабилеты","клиенты"],dir:"Туризм",acad:"tourism",hq:"Специалист по бронированию"},
+{t:"Медицинская сестра",c:"ГБУЗ «Городская больница №7»",city:"Ростов-на-Дону",exp:"Сертификат / аккредитация",type:"Сменный график",s:"45 000 – 70 000 ₽",d:"Процедурный кабинет, уход за пациентами, ведение документации. Помогаем с аккредитацией.",tags:["сестринское дело","процедуры","уход"],dir:"Медицина",acad:"medic",hq:"Медицинская сестра"},
+{t:"Ассистент стоматолога",c:"Стоматология «ДентаЛюкс»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"50 000 – 80 000 ₽",d:"Ассистирование врачу на приёме, подготовка кабинета, стерилизация инструментов. Обучение на месте.",tags:["стоматология","ассистирование","стерилизация"],dir:"Медицина",acad:"medic",hq:"Ассистент стоматолога"},
+{t:"Фармацевт",c:"Аптечная сеть «ФармЮг»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Сменный график",s:"55 000 – 90 000 ₽",d:"Отпуск лекарственных препаратов, консультирование покупателей, учёт товара.",tags:["фармация","консультирование","учёт"],dir:"Медицина",acad:"medic",hq:"Фармацевт"},
+{t:"Фельдшер скорой помощи",c:"ССМП г. Ростова-на-Дону",city:"Ростов-на-Дону",exp:"Диплом фельдшера",type:"Сменный график",s:"50 000 – 85 000 ₽",d:"Выездные бригады, оказание неотложной помощи. Доплаты за ночные смены и стаж.",tags:["неотложная помощь","выезды","фельдшер"],dir:"Медицина",acad:"medic",hq:"Фельдшер"},
+{t:"Менеджер по продажам",c:"ООО «Юг-Трейд»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"55 000 – 120 000 ₽",d:"B2B-продажи, ведение клиентской базы в CRM, выезды к клиентам 2–3 раза в неделю. Наставник в первые два месяца.",tags:["продажи","CRM","переговоры"],dir:"Менеджмент",acad:"econ",hq:"Менеджер по продажам"},
+{t:"Экономист-аналитик (junior)",c:"ПАО «РостБанк»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"50 000 – 110 000 ₽",d:"Бюджетирование филиалов, сверки в 1С, подготовка управленческой отчётности.",tags:["Excel","1С","бюджетирование"],dir:"Экономика",acad:"econ",hq:"Экономист"},
+{t:"HR-специалист (подбор)",c:"ГК «Южный Кадр»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Гибрид",s:"45 000 – 95 000 ₽",d:"Массовый и точечный подбор персонала, телефонные интервью, ведение кадровой системы. Обучаем с нуля.",tags:["подбор","интервью","HRIS"],dir:"HR",acad:"econ",hq:"HR подбор"},
+{t:"Кадастровый инженер",c:"ООО «ГеоПроект»",city:"Ростов-на-Дону",exp:"Опыт 1–3 года",type:"Полная занятость",s:"55 000 – 110 000 ₽",d:"Межевание земельных участков, технические планы, взаимодействие с Росреестром.",tags:["кадастр","геодезия","БТИ"],dir:"Менеджмент",acad:"econ",hq:"Кадастровый инженер"},
+{t:"Юрист-консультант",c:"ЮК «Право и Бизнес»",city:"Ростов-на-Дону",exp:"Опыт 1–3 года",type:"Полная занятость",s:"55 000 – 130 000 ₽",d:"Договорная работа, претензионный порядок, участие в судебных заседаниях.",tags:["договоры","суды","консалтинг"],dir:"Юриспруденция",acad:"law",hq:"Юрист"},
+{t:"Специалист по госзакупкам",c:"Администрация г. Ростова-на-Дону",city:"Ростов-на-Дону",exp:"Опыт 1–3 года",type:"Полная занятость",s:"45 000 – 90 000 ₽",d:"Работа в рамках 44-ФЗ, подготовка конкурсной документации, сопровождение тендеров.",tags:["44-ФЗ","тендеры","документы"],dir:"Юриспруденция",acad:"law",hq:"Госзакупки 44-ФЗ"},
+{t:"Системный администратор",c:"ООО «ТехноСофт»",city:"Удалённо",exp:"Опыт 1–3 года",type:"Удалённая работа",s:"70 000 – 160 000 ₽",d:"Администрирование серверов Linux, корпоративная сеть, дежурства по графику.",tags:["Linux","сети","администрирование"],dir:"IT",acad:"it",hq:"Системный администратор"},
+{t:"Специалист технической поддержки",c:"ООО «ТехноСофт»",city:"Удалённо",exp:"Без опыта",type:"Удалённая работа",s:"50 000 – 90 000 ₽",d:"Первая линия поддержки: приём заявок, решение типовых инцидентов, эскалация сложных случаев.",tags:["helpdesk","заявки","поддержка"],dir:"IT",acad:"it",hq:"Специалист технической поддержки"},
+{t:"SMM-специалист",c:"Digital-агентство «Волна»",city:"Удалённо",exp:"Без опыта",type:"Удалённая работа",s:"45 000 – 100 000 ₽",d:"Ведение 3–4 клиентских проектов, контент-план, базовая аналитика.",tags:["SMM","контент","аналитика"],dir:"Маркетинг",acad:"mark",hq:"SMM"},
+{t:"Контент-менеджер",c:"Digital-агентство «Волна»",city:"Удалённо",exp:"Без опыта",type:"Удалённая работа",s:"45 000 – 85 000 ₽",d:"Наполнение сайтов и соцсетей, подготовка текстов, работа с CMS.",tags:["контент","CMS","тексты"],dir:"Маркетинг",acad:"mark",hq:"Контент-менеджер"}
 ];
 const grid=document.getElementById('grid');
 function curDir(){const r=document.querySelector('input[name=dir]:checked');return r?r.value:document.getElementById('filter').value}
+function acadCount(id){return vacs.filter(v=>v.acad===id).length}
+function renderAcads(){
+const g=document.getElementById('acadGrid');g.innerHTML='';
+ACADS.forEach(a=>{
+const n=acadCount(a.id);
+const el=document.createElement('div');el.className='acad-card';
+el.innerHTML='<h3>'+a.name+'</h3><p>'+a.spec+'</p><span class="cnt">'+n+' '+plural(n,'вакансия','вакансии','вакансий')+'</span><span class="go">Открыть →</span>';
+el.onclick=()=>openAcad(a.id);
+g.appendChild(el);
+});
+}
+function plural(n,a,b,c){n=Math.abs(n)%100;const d=n%10;if(n>10&&n<20)return c;if(d>1&&d<5)return b;if(d===1)return a;return c}
+function showAcads(){currentAcad='cards';document.getElementById('acadView').style.display='';document.getElementById('vacView').style.display='none';document.getElementById('count').textContent='Всего: '+vacs.length+' вакансий · '+ACADS.length+' академий';}
+function openAcad(id){
+currentAcad=id;
+document.getElementById('acadView').style.display='none';
+document.getElementById('vacView').style.display='';
+if(id==='all'){document.getElementById('vacAcadTitle').textContent='Все вакансии';document.getElementById('vacAcadSub').textContent='Все академии и направления подготовки.'}
+else{const a=ACADS.find(x=>x.id===id);document.getElementById('vacAcadTitle').textContent=a.name;document.getElementById('vacAcadSub').textContent=a.spec+'. '+a.note}
+renderVacs();
+}
 function renderVacs(){
 const query=document.getElementById('search').value.toLowerCase().trim();
 const f=document.getElementById('filter').value;const d=curDir();
 const dir=d&&d!=='all'?d:(f||'all');
-const list=vacs.filter(v=>(dir==='all'||v.dir===dir)&&(v.t+' '+v.c+' '+v.city+' '+v.tags.join(' ')).toLowerCase().includes(query));
+const list=vacs.filter(v=>(currentAcad==='all'||v.acad===currentAcad)&&(dir==='all'||v.dir===dir)&&(v.t+' '+v.c+' '+v.city+' '+v.tags.join(' ')).toLowerCase().includes(query));
 document.getElementById('count').textContent='Найдено: '+list.length+' · данные на 24 сентября 2026 г.';
 grid.innerHTML='';
 list.forEach((v,i)=>{
+const link=hhLink(v);
 const el=document.createElement('article');el.className='vacancy';
-el.innerHTML='<div class="vac-head"><a class="vac-title" href="'+v.hh+'" target="_blank" rel="noopener">'+v.t+'</a><div class="vac-salary">'+v.s+'</div></div>'
+el.innerHTML='<div class="vac-head"><a class="vac-title" href="'+link+'" target="_blank" rel="noopener">'+v.t+'</a><div class="vac-salary">'+v.s+'</div></div>'
 +'<div class="vac-sub">'+v.c+' · '+v.city+'</div>'
 +'<div class="vac-meta">Опыт: '+v.exp+' · '+v.type+'</div>'
 +'<p class="vac-desc">'+v.d+'</p>'
 +'<div class="vac-skills">'+v.tags.map(t=>'<span class="skill">'+t+'</span>').join('')+'</div>'
-+'<div class="vac-bottom"><span class="vac-src">Проверено Центром карьеры · <a href="'+v.hh+'" target="_blank" rel="noopener">открыть на hh.ru</a></span><span class="vac-actions"><a class="btn btn-outline" href="'+v.hh+'" target="_blank" rel="noopener">Подробнее на hh.ru</a><button class="btn btn-navy">Откликнуться</button></span></div>';
-el.querySelector('button').onclick=()=>{showToast('Отклик отправлен: '+v.c+'. Продолжить — на hh.ru');window.open(v.hh,'_blank')};
++'<div class="vac-bottom"><span class="vac-src">Проверено Центром карьеры · <a href="'+link+'" target="_blank" rel="noopener">открыть на hh.ru</a></span><span class="vac-actions"><a class="btn btn-outline" href="'+link+'" target="_blank" rel="noopener">Подробнее на hh.ru</a><button class="btn btn-navy">Откликнуться</button></span></div>';
+el.querySelector('button').onclick=()=>{showToast('Отклик отправлен: '+v.c+'. Продолжить — на hh.ru');window.open(link,'_blank')};
 grid.appendChild(el);
 });
 if(!grid.innerHTML)grid.innerHTML='<div class="panel">По запросу ничего не нашлось. Позвоните нам: +7 (863) 292-43-64 — подберём варианты вручную.</div>';
 }
-function q(s){document.getElementById('search').value=s;renderVacs();goTab('vac')}
-document.getElementById('search').addEventListener('input',renderVacs);
+function heroSearch(){goTab('vac');openAcad('all')}
+function q(s){document.getElementById('search').value=s;goTab('vac');openAcad('all')}
+document.getElementById('search').addEventListener('input',()=>{if(currentAcad==='cards')openAcad('all');else renderVacs()});
 document.getElementById('filter').onchange=renderVacs;
 document.querySelectorAll('input[name=dir]').forEach(r=>r.onchange=()=>{document.getElementById('filter').value=r.value;renderVacs()});
-renderVacs();
+renderAcads();showAcads();
 function goTab(id){document.querySelectorAll('.mainnav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('.mainnav button').forEach(b=>{b.onclick=()=>goTab(b.dataset.tab)});
 let toastTimer;

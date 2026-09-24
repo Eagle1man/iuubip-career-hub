@@ -276,7 +276,7 @@ footer a:hover{text-decoration:underline}
 <div class="acad-grid" id="acadGrid"></div>
 </div>
 <div id="vacView" style="display:none">
-<div class="backlink"><button class="btn btn-outline" onclick="showAcads()">← Все академии</button></div>
+<div class="backlink"><button class="btn btn-outline" onclick="resetFilters();showAcads()">← Все академии</button></div>
 <div class="acad-title" id="vacAcadTitle"></div>
 <div class="acad-sub" id="vacAcadSub"></div>
 <div id="grid"></div>
@@ -471,6 +471,9 @@ const vacs=[
 {t:"Водитель-экспедитор",c:"ООО \"АТП-61\"",city:"Ростовская область",date:"25.06.2026",s:"50 000–90 000 ₽",tags:["логистика"],dir:"Логистика",acad:"itd",u:"https://trudvsem.ru/vacancy/card/1256100022947/02253bb1-705d-11f1-bd43-0d138a37ec09"},
 {t:"Экономист",c:"ГКОУ РО ДОНЕЦКАЯ ШКОЛА-ИНТЕРНАТ",city:"Ростовская область",date:"04.09.2026",s:"27 500–35 000 ₽",tags:["экономика"],dir:"Экономика",acad:"ect",u:"https://trudvsem.ru/vacancy/card/1026102062975/c04f9e38-a81c-11f1-8a32-2b6903e6a9c2"},
 {t:"Главный экономист",c:"АО \"ШЗГ\"",city:"Ростовская область",date:"03.09.2026",s:"69 800–100 000 ₽",tags:["экономика"],dir:"Экономика",acad:"ect",u:"https://trudvsem.ru/vacancy/card/1026102769417/fee828df-a761-11f1-b4b9-312b1e80675a"},
+{t:"Бизнес-аналитик",c:"ООО «СКВИЛЛА»",city:"г. Ростов-на-Дону",date:"10.02.2026",s:"127 500–170 000 ₽",tags:["аналитика","данные"],dir:"Экономика",acad:"ect",u:"https://trudvsem.ru/vacancy/card/1186196025256/58909f10-0696-11f1-9ed5-a782872f6753"},
+{t:"Маркетолог-аналитик",c:"ООО «МИЛЕНД»",city:"г. Аксай",date:"08.08.2026",s:"70 000–80 000 ₽",tags:["аналитика","маркетинг"],dir:"Экономика",acad:"ect",u:"https://trudvsem.ru/vacancy/card/1146181002758/bd845c4c-92ff-11f1-b277-2737f6f4cf0b"},
+{t:"Маркетолог-аналитик",c:"ООО «Рыжий кот»",city:"г. Аксай",date:"08.08.2026",s:"80 000–100 000 ₽",tags:["аналитика","маркетинг"],dir:"Экономика",acad:"ect",u:"https://trudvsem.ru/vacancy/card/1126189001509/bb5accec-92fc-11f1-b277-2737f6f4cf0b"},
 {t:"Бухгалтер",c:"ФИЛИАЛ \"РОСТОВСКИЙ\"",city:"Ростовская область",date:"23.09.2026",s:"от 60 000 ₽",tags:["бухучёт"],dir:"Бухучёт",acad:"ect",u:"https://trudvsem.ru/vacancy/card/78fd7760-0dee-11f0-a4be-03e6ffa13304/4d4a5a24-b749-11f1-b291-e7968767fb9b"},
 {t:"Бухгалтер",c:"ООО \"СИА ТРЕЙД\"",city:"Ростовская область",date:"22.09.2026",s:"33 983–70 000 ₽",tags:["бухучёт"],dir:"Бухучёт",acad:"ect",u:"https://trudvsem.ru/vacancy/card/1156196053089/e48de03a-b678-11f1-85fc-83a545b8b137"},
 {t:"Администратор гостиницы (дома отдыха)",c:"Индивидуальный предприниматель Катеринич Оксана Анатольевна",city:"Ростовская область",date:"16.01.2026",s:"от 27 093 ₽",tags:["гостиницы"],dir:"Туризм",acad:"ect",u:"https://trudvsem.ru/vacancy/card/319619600013253/12bfb2f8-f2b9-11f0-8628-a3cca5294b78"},
@@ -494,17 +497,17 @@ ACADS.forEach(a=>{
 const n=acadCount(a.id);
 const el=document.createElement('div');el.className='acad-card';
 el.innerHTML='<h3>'+a.name+'</h3><p>'+a.spec+'</p><span class="cnt">'+n+' '+plural(n,'вакансия','вакансии','вакансий')+'</span><span class="go">Открыть →</span>';
-el.onclick=()=>openAcad(a.id);
+el.onclick=()=>{resetFilters();openAcad(a.id)};
 g.appendChild(el);
 });
 }
 function plural(n,a,b,c){n=Math.abs(n)%100;const d=n%10;if(n>10&&n<20)return c;if(d>1&&d<5)return b;if(d===1)return a;return c}
 function showAcads(){currentAcad='cards';document.getElementById('acadView').style.display='';document.getElementById('vacView').style.display='none';document.getElementById('count').textContent='Всего: '+vacs.length+' вакансий · '+ACADS.length+' академий';}
+function resetDir(){document.getElementById('filter').value='all';document.querySelectorAll('input[name=dir]').forEach(r=>{r.checked=(r.value==='all')})}
+function resetFilters(){resetDir();document.getElementById('search').value=''}
+function hay(v){const a=ACADS.find(x=>x.id===v.acad);return (v.t+' '+v.c+' '+v.city+' '+v.tags.join(' ')+' '+v.dir+' '+(a?a.name:'')).toLowerCase().replace(/ё/g,'е')}
 function openAcad(id){
 currentAcad=id;
-document.getElementById('filter').value='all';
-document.querySelectorAll('input[name=dir]').forEach(r=>{r.checked=(r.value==='all')});
-document.getElementById('search').value='';
 document.getElementById('acadView').style.display='none';
 document.getElementById('vacView').style.display='';
 if(id==='all'){document.getElementById('vacAcadTitle').textContent='Все вакансии';document.getElementById('vacAcadSub').textContent='Все академии и направления подготовки.'}
@@ -512,10 +515,10 @@ else{const a=ACADS.find(x=>x.id===id);document.getElementById('vacAcadTitle').te
 renderVacs();
 }
 function renderVacs(){
-const query=document.getElementById('search').value.toLowerCase().trim();
+const query=document.getElementById('search').value.toLowerCase().trim().replace(/ё/g,'е');
 const f=document.getElementById('filter').value;const d=curDir();
 const dir=d&&d!=='all'?d:(f||'all');
-const list=vacs.filter(v=>(currentAcad==='all'||v.acad===currentAcad)&&(dir==='all'||v.dir===dir)&&(v.t+' '+v.c+' '+v.city+' '+v.tags.join(' ')).toLowerCase().includes(query));
+const list=vacs.filter(v=>(currentAcad==='all'||v.acad===currentAcad)&&(dir==='all'||v.dir===dir)&&hay(v).includes(query));
 document.getElementById('count').textContent='Найдено: '+list.length+' · данные на '+DATA_DATE+' г.';
 document.getElementById('cntVac').textContent=list.length;
 grid.innerHTML='';
@@ -658,9 +661,9 @@ html+='<div class="vacancy"><div class="vac-head"><a class="vac-title" href="'+l
 box.innerHTML=html;
 }catch(e){btn.disabled=false;btn.textContent='Загрузить с hh.ru';showToast('hh.ru не ответил — попробуйте позже')}
 }
-function heroSearch(){goTab('vac');openAcad('all')}
-function q(s){document.getElementById('search').value=s;goTab('vac');openAcad('all')}
-document.getElementById('search').addEventListener('input',()=>{if(currentAcad==='cards')openAcad('all');else renderVacs()});
+function heroSearch(){resetDir();goTab('vac');openAcad('all')}
+function q(s){resetDir();document.getElementById('search').value=s;goTab('vac');openAcad('all')}
+document.getElementById('search').addEventListener('input',()=>{if(currentAcad==='cards'){resetDir();openAcad('all')}else renderVacs()});
 document.getElementById('filter').onchange=renderVacs;
 document.querySelectorAll('input[name=dir]').forEach(r=>r.onchange=()=>{document.getElementById('filter').value=r.value;renderVacs()});
 renderAcads();showAcads();

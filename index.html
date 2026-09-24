@@ -36,7 +36,7 @@ h1,h2,.serif{font-family:Georgia,"Times New Roman",serif}
 .btn-outline:hover{background:#eef2f8}
 /* Навигация, ряд 1 */
 .unav{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:60}
-.unav-inner{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;align-items:center;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.unav-inner{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;align-items:center;flex-wrap:wrap;scrollbar-width:none;-ms-overflow-style:none}
 .unav-inner::-webkit-scrollbar{display:none}
 .unav button{background:none;border:0;color:#174a94;font-family:inherit;font-weight:700;font-size:16px;padding:15px 18px;cursor:pointer;white-space:nowrap}
 .unav button:hover{color:var(--navy);background:#f2f6fc}
@@ -176,7 +176,7 @@ footer a:hover{text-decoration:underline}
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:#101418;color:#fff;padding:12px 20px;border-left:4px solid var(--gold);font-size:14px;opacity:0;transition:.25s;z-index:100;max-width:92%}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:920px){.work{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr}.head-phones{display:none}.hero h2{font-size:24px}.search-panel{flex-direction:column}}
-@media(max-width:600px){.steps{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr}.head-titles h1{font-size:18px}}
+@media(max-width:600px){.steps{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr}.head-titles h1{font-size:18px}.unav-inner{flex-wrap:nowrap;overflow-x:auto}}
 </style>
 </head>
 <body>

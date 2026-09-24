@@ -285,6 +285,7 @@ footer a:hover{text-decoration:underline}
 <div class="pills" id="intPills"></div>
 <div id="intGrid" style="margin-top:14px"></div>
 <div id="medPanel" style="margin-top:14px"></div>
+<div id="lawPanel" style="margin-top:14px"></div>
 </section>
 <section id="resume" class="page">
 <div class="section-head"><h2>Конструктор резюме</h2><span>5 шагов · вопросы под вашу академию · выгрузка в Word</span></div>
@@ -524,7 +525,19 @@ if(btn){if(!v.u){btn.onclick=()=>showToast('ГосСтарт: заявки — �
 g.appendChild(el);
 });
 if(!g.innerHTML)g.innerHTML='<div class="panel">В этой академии пока нет подборки — загляните во «Все академии» или спросите куратора.</div>';
-renderMedPanel();
+renderMedPanel();renderLawPanel();
+}
+const LAWS=[
+{name:"Облсуд — вакансии",u:"https://oblsud.ros.sudrf.ru/modules.php?name=vacance"},
+{name:"Судебный департамент РО — кадры районных судов",u:"https://oblsud.ros.sudrf.ru/modules.php?name=usd"},
+{name:"Арбитражный суд РО — кадровое обеспечение",u:"https://rostov.arbitr.ru/about/kadry"},
+{name:"Прокуратура РО — сайт",u:"https://epp.genproc.gov.ru/web/proc_61"},
+{name:"ГУ МВД по РО — сайт",u:"https://61.mvd.ru"}
+];
+function renderLawPanel(){
+const m=document.getElementById('lawPanel');
+if(currentIntAcad!=='all'&&currentIntAcad!=='law'){m.innerHTML='';return}
+m.innerHTML='<div class="panel"><h2 style="font-size:18px">Юристам: суды, МВД, прокуратура</h2><p class="lead">Кнопки ведут в кадровые разделы судов. Кадрами всех районных судов ведает Судебный департамент. По МВД и прокуратуре — официальные сайты (горячая линия прокуратуры РО: +7 (863) 210-55-99). Практику согласуйте с академией: academy_law@iubip.ru.</p><div style="display:flex;gap:8px;flex-wrap:wrap">'+LAWS.map(x=>'<a class="btn btn-outline" style="font-size:13px;padding:8px 14px" href="'+x.u+'" target="_blank" rel="noopener">'+x.name+'</a>').join('')+'</div></div>';
 }
 const MEDS=[
 {name:"РОКБ — вакансии",u:"https://rocb.ru/vakansii"},

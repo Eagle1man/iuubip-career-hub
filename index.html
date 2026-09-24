@@ -36,7 +36,8 @@ h1,h2,.serif{font-family:Georgia,"Times New Roman",serif}
 .btn-outline:hover{background:#eef2f8}
 /* Навигация, ряд 1 */
 .unav{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:60}
-.unav-inner{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;align-items:center;overflow-x:auto}
+.unav-inner{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;align-items:center;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.unav-inner::-webkit-scrollbar{display:none}
 .unav button{background:none;border:0;color:#174a94;font-family:inherit;font-weight:700;font-size:16px;padding:15px 18px;cursor:pointer;white-space:nowrap}
 .unav button:hover{color:var(--navy);background:#f2f6fc}
 .unav button.active{color:var(--navy);box-shadow:inset 0 -3px 0 var(--gold)}

@@ -43,13 +43,6 @@ h1,h2,.serif{font-family:Georgia,"Times New Roman",serif}
 .unav .usearch{margin-left:auto;display:flex;align-items:center;padding:6px 0 6px 14px}
 .unav .usearch input{border:0;border-left:1px solid var(--line);padding:10px 12px;font-size:14px;outline:none;width:170px;font-family:inherit}
 .unav .usearch button{background:none;border:0;cursor:pointer;padding:6px 10px}
-/* Навигация, ряд 2 */
-.aunav{background:#fff;border-bottom:1px solid var(--line)}
-.aunav-inner{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:26px;overflow-x:auto;font-size:15px}
-.aunav a{color:#1f2329;text-decoration:none;padding:14px 0;white-space:nowrap}
-.aunav a:hover{color:var(--navy)}
-.aunav .career-btn{margin-left:auto;border:1px solid #174a94;color:#174a94;border-radius:6px;padding:9px 26px;white-space:nowrap}
-.aunav .career-btn:hover{background:#eef3fb}
 /* Hero */
 .hero{background:linear-gradient(180deg,#123a73 0%,var(--navy) 70%);color:#fff;padding:36px 0 34px;border-bottom:4px solid var(--gold)}
 .hero h2{font-size:30px;font-weight:700;margin-bottom:8px}
@@ -204,6 +197,7 @@ footer a:hover{text-decoration:underline}
 <div class="head-phones">
 <div class="hphone">Горячая линия (звонок бесплатный)<b><span style="color:#1a9e4b">&#9742; </span>8 800 77-55-012</b></div>
 <div class="hphone">Приёмная комиссия<b><span style="color:#1a9e4b">&#9742; </span>8 (863) 245-45-65</b></div>
+<button class="btn btn-outline" onclick="goTab('vac')">Центр карьеры</button>
 <button class="btn btn-call" onclick="goTab('book')">Заказать звонок</button>
 </div>
 </div></header>
@@ -216,15 +210,6 @@ footer a:hover{text-decoration:underline}
 <button data-tab="prog">Студентам</button>
 <button data-tab="dash">Аналитика</button>
 <span class="usearch"><input id="usearch" type="text" placeholder="Поиск по сайту" onkeydown="if(event.key==='Enter')uSearch()"><button onclick="uSearch()" aria-label="Найти"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#174a94" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg></button></span>
-</div></nav>
-<nav class="aunav"><div class="aunav-inner">
-<a href="https://www.iubip.ru/" target="_blank" rel="noopener">Школьнику</a>
-<a href="https://www.iubip.ru/" target="_blank" rel="noopener">Абитуриенту</a>
-<a href="#" onclick="goTab('vac');return false">Студенту</a>
-<a href="#" onclick="goTab('prog');return false">Выпускнику</a>
-<a href="#" onclick="goTab('dash');return false">Партнеру</a>
-<a href="https://www.iubip.ru/" target="_blank" rel="noopener">Работнику</a>
-<a class="career-btn" href="#" onclick="goTab('vac');return false">Центр карьеры</a>
 </div></nav>
 <section class="hero"><div class="container">
 <h2>Карьера выпускника <span>начинается здесь</span></h2>

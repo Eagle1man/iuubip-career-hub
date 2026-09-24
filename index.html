@@ -99,8 +99,24 @@ main{padding:24px 0 50px}
 .times input{margin-right:6px}
 .legal{font-size:12px;color:var(--muted);margin-top:12px}
 .ok{background:#f0f6ef;border:1px solid #9dbf9f;border-left:4px solid #2e7d32;padding:24px;font-size:15px;color:#1d4d24}
-.track{background:#e3e6ea;height:10px;overflow:hidden;margin:8px 0 4px}
-.fill{width:40%;height:100%;background:linear-gradient(90deg,var(--navy),var(--gold))}
+.track-hero{display:flex;gap:20px;align-items:center;background:linear-gradient(120deg,#0e2f5f,#17457e);padding:24px;margin-bottom:18px}
+.ring{width:104px;height:104px;flex:none}
+.timeline{position:relative;margin:4px 0 4px 6px;padding-left:36px}
+.timeline:before{content:"";position:absolute;left:13px;top:14px;bottom:14px;width:3px;background:#e3e6ea}
+.tstep{position:relative;background:#fff;border:1px solid var(--line);padding:14px 16px;margin-bottom:12px;font-size:14px}
+.tstep .dot{position:absolute;left:-31px;top:15px;width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;background:var(--navy);color:var(--gold-light)}
+.tstep.done{border-left:3px solid var(--navy)}
+.tstep.done b{color:var(--navy)}
+.tstep.now{border:1px solid var(--gold);border-left:4px solid var(--gold);box-shadow:0 3px 14px rgba(201,162,39,.25)}
+.tstep.now .dot{background:var(--gold);color:#1d1d1d}
+.tstep.now b{color:var(--navy)}
+.tstep.locked{background:#f6f7f9;color:#8a9099}
+.tstep.locked .dot{background:#cfd5dd;color:#fff}
+.tstep.locked b{color:#6b7280}
+.tstep .date{font-size:12px;color:var(--muted);margin-top:2px}
+.minibar{background:#e3e6ea;height:8px;margin-top:8px;max-width:260px}
+.minibar div{height:100%;background:linear-gradient(90deg,var(--navy),var(--gold))}
+@media(max-width:600px){.track-hero{flex-direction:column;text-align:center}}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
 .step{border:1px solid var(--line);border-top:3px solid var(--navy);padding:14px 16px;font-size:13.5px;background:#fff}
 .step.locked{border-top-color:#c3c8cf;background:#f7f8fa;color:#8a9099}
@@ -332,14 +348,17 @@ footer a:hover{text-decoration:underline}
 <section id="prog" class="page">
 <div class="section-head"><h2>Карьерный трек студента</h2><span>выполнено 3 шага из 6 · 40%</span></div>
 <div class="panel">
-<div class="track"><div class="fill"></div></div>
-<div class="steps">
-<div class="step"><b>Резюме собрано</b>Проверено консультантом.<div class="date">12 марта 2026</div></div>
-<div class="step"><b>Первый отклик</b>ЮК «Право и Бизнес».<div class="date">18 марта 2026</div></div>
-<div class="step"><b>Собеседование</b>Разбор с наставником.<div class="date">24 марта 2026</div></div>
-<div class="step locked"><b>Встречи с работодателями</b>Проведено 2 из 5.</div>
-<div class="step locked"><b>Стажировка</b>Подберём после встреч.</div>
-<div class="step locked"><b>Оффер</b>Цель — конец семестра.</div>
+<div class="track-hero">
+<svg class="ring" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="11"/><circle cx="60" cy="60" r="50" fill="none" stroke="#e8cf7a" stroke-width="11" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="188" transform="rotate(-90 60 60)"/><text x="60" y="68" text-anchor="middle" fill="#fff" font-size="24" font-weight="800">40%</text></svg>
+<div><div style="font-size:13px;color:#9fb0cc">Уровень «Соискатель» · следующий — «Стажёр»</div><div style="font-family:Georgia,serif;font-size:22px;margin:4px 0">Вы прошли 3 шага из 6</div><div style="font-size:13.5px;color:#c3cede">Резюме, отклик и собеседование — позади. Впереди встречи с работодателями.</div></div>
+</div>
+<div class="timeline">
+<div class="tstep done"><span class="dot">✓</span><b>Резюме собрано</b><div>Проверено консультантом.</div><div class="date">12 марта 2026</div></div>
+<div class="tstep done"><span class="dot">✓</span><b>Первый отклик</b><div>ЮК «Право и Бизнес».</div><div class="date">18 марта 2026</div></div>
+<div class="tstep done"><span class="dot">✓</span><b>Собеседование</b><div>Разбор с наставником.</div><div class="date">24 марта 2026</div></div>
+<div class="tstep now"><span class="dot">4</span><b>Встречи с работодателями — текущий шаг</b><div>Проведено 2 из 5.</div><div class="minibar"><div style="width:40%"></div></div></div>
+<div class="tstep locked"><span class="dot">5</span><b>Стажировка</b><div>Откроется после 5 встреч.</div></div>
+<div class="tstep locked"><span class="dot">6</span><b>Оффер</b><div>Цель — конец семестра.</div></div>
 </div>
 <div style="display:flex;gap:10px;flex-wrap:wrap">
 <button class="btn btn-navy" onclick="goTab('vac')">Перейти к вакансиям</button>

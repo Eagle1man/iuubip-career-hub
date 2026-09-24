@@ -126,6 +126,20 @@ footer a:hover{text-decoration:underline}
 .backlink{margin-bottom:12px}
 .acad-title{font-family:Georgia,serif;font-size:20px;color:var(--navy);margin:2px 0 2px}
 .acad-sub{font-size:13px;color:var(--muted);margin-bottom:14px}
+.rb-steps{display:flex;gap:6px;margin-bottom:20px}
+.rb-steps span{flex:1;text-align:center;font-size:11.5px;color:var(--muted);padding-top:8px;border-top:3px solid #d5dbe5}
+.rb-steps span.on{color:var(--navy);border-color:var(--gold);font-weight:700}
+.rb-opt{display:block;border:1px solid var(--line);padding:11px 13px;margin:8px 0;cursor:pointer;font-size:14px;background:#fff}
+.rb-opt:hover{border-color:var(--navy)}
+.rb-opt input{margin-right:9px}
+.rb-check{display:inline-block;background:#f4f6f9;border:1px solid var(--line);padding:8px 13px;margin:0 8px 8px 0;font-size:13.5px;cursor:pointer}
+.rb-check input{margin-right:6px}
+.rb-nav{display:flex;justify-content:space-between;margin-top:20px}
+.rb-preview{border:1px solid var(--line);padding:22px;background:#fbfbfc;font-size:14px}
+.rb-preview h3{font-family:Georgia,serif;color:var(--navy);font-size:20px;margin-bottom:2px}
+.rb-preview .pos{font-weight:700;margin:6px 0 2px}
+.rb-preview .sec{margin-top:12px}
+.rb-preview .sec b{display:block;color:var(--navy);font-size:13px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:#101418;color:#fff;padding:12px 20px;border-left:4px solid var(--gold);font-size:14px;opacity:0;transition:.25s;z-index:100;max-width:92%}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:920px){.work{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr}.head-contact{display:none}.hero h2{font-size:24px}.search-panel{flex-direction:column}}
@@ -144,6 +158,7 @@ footer a:hover{text-decoration:underline}
 </div></header>
 <nav class="mainnav"><div class="mainnav-inner">
 <button class="active" data-tab="vac">Вакансии</button>
+<button data-tab="resume">Конструктор резюме</button>
 <button data-tab="book">Консультации</button>
 <button data-tab="prog">Студентам</button>
 <button data-tab="dash">Работодателям и аналитика</button>
@@ -167,12 +182,14 @@ footer a:hover{text-decoration:underline}
 <aside class="side">
 <h4>Направление подготовки</h4>
 <label><input type="radio" name="dir" value="all" checked> Все направления</label>
-<label><input type="radio" name="dir" value="Менеджмент"> Менеджмент</label>
-<label><input type="radio" name="dir" value="Экономика"> Экономика и финансы</label>
 <label><input type="radio" name="dir" value="Юриспруденция"> Юриспруденция</label>
-<label><input type="radio" name="dir" value="IT"> Информационные технологии</label>
+<label><input type="radio" name="dir" value="Психология"> Психология</label>
 <label><input type="radio" name="dir" value="HR"> Управление персоналом</label>
-<label><input type="radio" name="dir" value="Маркетинг"> Маркетинг и SMM</label>
+<label><input type="radio" name="dir" value="Менеджмент"> Менеджмент</label>
+<label><input type="radio" name="dir" value="Экономика"> Экономика</label>
+<label><input type="radio" name="dir" value="Бухучёт"> Бухучёт</label>
+<label><input type="radio" name="dir" value="IT"> Информационные технологии</label>
+<label><input type="radio" name="dir" value="Логистика"> Логистика</label>
 <label><input type="radio" name="dir" value="Туризм"> Туризм и гостеприимство</label>
 <label><input type="radio" name="dir" value="Медицина"> Медицина и фармация</label>
 <h4>Место работы</h4>
@@ -185,7 +202,7 @@ footer a:hover{text-decoration:underline}
 </aside>
 <div>
 <div style="margin-bottom:14px"><select id="filter" style="border:1px solid #c3c8cf;border-radius:3px;padding:10px 12px;font-size:14px;font-family:inherit;max-width:280px">
-<option value="all">Все направления</option><option>Менеджмент</option><option>Экономика</option><option>Юриспруденция</option><option>IT</option><option>HR</option><option>Маркетинг</option><option>Туризм</option><option>Медицина</option>
+<option value="all">Все направления</option><option>Юриспруденция</option><option>Психология</option><option>HR</option><option>Менеджмент</option><option>Экономика</option><option>Бухучёт</option><option>IT</option><option>Логистика</option><option>Туризм</option><option>Медицина</option>
 </select></div>
 <div id="acadView">
 <p style="font-size:14px;color:#4b5158;margin-bottom:14px">Выберите академию — покажем вакансии и места практики по вашим специальностям.</p>
@@ -200,10 +217,19 @@ footer a:hover{text-decoration:underline}
 </div>
 </div>
 </section>
+<section id="resume" class="page">
+<div class="section-head"><h2>Конструктор резюме</h2><span>5 шагов · вопросы под вашу академию · выгрузка в Word</span></div>
+<div class="panel" style="max-width:740px">
+<div class="rb-steps" id="rbSteps"></div>
+<div id="rbBody"></div>
+<div class="rb-nav"><button class="btn btn-outline" id="rbBack" onclick="rbNav(-1)">← Назад</button><button class="btn btn-navy" id="rbNext" onclick="rbNav(1)">Далее →</button></div>
+</div>
+</section>
 <section id="book" class="page">
 <div class="section-head"><h2>Запись на консультацию</h2><span>очно и онлайн</span></div>
 <div class="panel" id="formCard" style="max-width:680px">
 <p class="lead">Разбираем резюме, готовим к собеседованию, подбираем стажировку. Вечерние часы — для работающих студентов вечерней и заочной форм.</p>
+<div class="field"><label>Ваша академия</label><select id="bookAcad"></select></div>
 <div class="field"><label>Тема встречи</label><select id="topic"><option>Разбор резюме</option><option>Подготовка к собеседованию</option><option>Выбор карьерного трека</option><option>Стажировка и практика</option></select></div>
 <div class="field"><label>Дата</label><select id="dateSel"></select></div>
 <div class="field"><label>Время</label><div class="times">
@@ -262,34 +288,34 @@ footer a:hover{text-decoration:underline}
 <div id="toast"></div>
 <script>
 const ACADS=[
-{id:"tourism",name:"Академия туризма и гостеприимства",spec:"Туризм · Гостиничное дело",note:"Практика — в отелях, турфирмах и экскурсионных бюро Ростова-на-Дону."},
-{id:"medic",name:"Медицинский колледж",spec:"Лечебное дело · Стоматология · Фармация · Сестринское дело",note:"Практика — в больницах, стоматологиях и аптеках города."},
-{id:"law",name:"Академия права",spec:"Юриспруденция",note:"Практика — в юрфирмах, госорганах и судах."},
-{id:"econ",name:"Академия экономики и управления",spec:"Менеджмент · Экономика · HR · Кадастр",note:"Практика — в банках, компаниях и кадровых агентствах."},
-{id:"it",name:"Академия цифровых технологий",spec:"Информационные технологии",note:"Практика — в ИТ-компаниях, удалённо и в офисе."},
-{id:"mark",name:"Академия маркетинга и коммуникаций",spec:"Маркетинг · Реклама · SMM",note:"Практика — в агентствах и отделах маркетинга."}
+{id:"law",name:"Академия права и государственной службы",spec:"Юриспруденция",note:"Практика — в юридических фирмах, госорганах и судах.",head:"Фоменко Андрей Иванович",phone:"+7 (863) 292-43-90",email:"academy_law@iubip.ru",programs:["40.02.04 Юриспруденция (СПО)","40.03.01 Юриспруденция (бакалавриат)","40.04.01 Юриспруденция — уголовное правосудие","40.04.01 Юриспруденция — частное право","40.04.01 Юриспруденция — юрист в цифровых технологиях"],positions:["Помощник юриста","Юрист-консультант","Специалист по госзакупкам","Юрист по договорной работе"],skills:["договоры","суды","44-ФЗ","претензии","консалтинг","делопроизводство"]},
+{id:"hum",name:"Академия гуманитарных технологий",spec:"Психология · Управление персоналом",note:"Практика — в HR-службах компаний и психологических центрах.",head:"Галоян Яна Эдуардовна",phone:"+7 (863) 292-43-80 (доб. 159)",email:"academy_hum@iubip.ru",programs:["37.03.01 Психология","37.04.01 Клиническая психология","37.04.01 Психология интервенции и реабилитации","Управление персоналом"],positions:["HR-специалист","Рекрутер","Психолог-стажёр","Менеджер по персоналу"],skills:["подбор","интервью","HRIS","адаптация персонала","консультирование"]},
+{id:"itd",name:"Академия управления и цифрового развития",spec:"IT · Менеджмент · Логистика",note:"Практика — в ИТ-компаниях и на предприятиях, очно и удалённо.",head:"Мартынов Борис Викторович",phone:"+7 (863) 292-43-80 (доб. 153)",email:"academy_it@iubip.ru",programs:["09.02.07 Информационные системы и программирование","09.02.11 Разработка ПО","38.02.03 Логистика","38.03.02 Менеджмент организации","38.04.02 Управление развитием бизнеса"],positions:["Специалист технической поддержки","Системный администратор","Junior-разработчик","Менеджер по продажам","Специалист по логистике"],skills:["helpdesk","Linux","сети","Python","продажи","CRM","логистика"]},
+{id:"ect",name:"Академия экономики, туризма и гостеприимства",spec:"Экономика · Туризм · Бухучёт",note:"Практика — в банках, турфирмах, отелях и экскурсионных бюро.",head:"Григорьева Наталья Станиславовна",phone:"+7 (863) 292-43-80 (доб. 133)",email:"academy_tourism@iubip.ru",programs:["38.02.01 Экономика и бухгалтерский учёт","43.02.16 Туризм и гостеприимство","38.03.01 Финансовая экономика","43.03.02 Туристский бизнес","38.04.01 Финансовые технологии в бизнесе"],positions:["Экономист-аналитик","Бухгалтер","Менеджер по туризму","Администратор гостиницы","Гид-экскурсовод","Специалист по бронированию"],skills:["Excel","1С","бюджетирование","бухучёт","туризм","бронирование","гостиницы"]},
+{id:"medic",name:"Медицинский колледж",spec:"Сестринское дело · Стоматология · Фармация",note:"Практика — в больницах, стоматологиях и аптеках. Адрес: Ростовская обл., г. Донецк, 3-й микрорайон, 2А.",head:"Дружинина Валерия Павловна",phone:"+7 (908) 170-09-59",email:"med@iubip.ru",programs:["34.02.01 Сестринское дело","33.02.01 Фармация","31.02.01 Лечебное дело","31.02.05 Стоматология ортопедическая"],positions:["Медицинская сестра","Ассистент стоматолога","Фармацевт","Фельдшер"],skills:["уход за пациентами","процедуры","стоматология","фармация","неотложная помощь"]}
 ];
 let currentAcad="cards";
 function hhLink(v){let url="https://hh.ru/search/vacancy?text="+encodeURIComponent(v.hq||v.t);url+="&area="+(v.city==="Удалённо"?"113":"76");if(v.city==="Удалённо")url+="&schedule=remote";return url}
 const vacs=[
-{t:"Менеджер по туризму",c:"Туроператор «Юг-Тур»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"40 000 – 90 000 ₽",d:"Продажа туров по России и зарубежью, оформление документов, сопровождение клиентов. Обучаем с нуля.",tags:["туризм","продажи","документы"],dir:"Туризм",acad:"tourism",hq:"Менеджер по туризму"},
-{t:"Администратор гостиницы",c:"Отель «Атташе»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Сменный график",s:"45 000 – 80 000 ₽",d:"Служба приёма и размещения: заселение гостей, работа с бронированиями, решение текущих вопросов.",tags:["гостиницы","reception","бронирование"],dir:"Туризм",acad:"tourism",hq:"Администратор гостиницы"},
-{t:"Гид-экскурсовод",c:"Бюро экскурсий «Донские зори»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Гибкий график",s:"40 000 – 100 000 ₽",d:"Пешеходные и автобусные экскурсии по Ростову-на-Дону. Оплата за каждую экскурсию.",tags:["экскурсии","история","общение"],dir:"Туризм",acad:"tourism",hq:"Гид экскурсовод"},
-{t:"Специалист по бронированию",c:"Туроператор «Юг-Тур»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Гибрид",s:"45 000 – 85 000 ₽",d:"Бронирование авиабилетов и отелей, работа с системами бронирования, поддержка клиентов.",tags:["бронирование","авиабилеты","клиенты"],dir:"Туризм",acad:"tourism",hq:"Специалист по бронированию"},
+{t:"Менеджер по туризму",c:"Туроператор «Юг-Тур»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"40 000 – 90 000 ₽",d:"Продажа туров по России и зарубежью, оформление документов, сопровождение клиентов. Обучаем с нуля.",tags:["туризм","продажи","документы"],dir:"Туризм",acad:"ect",hq:"Менеджер по туризму"},
+{t:"Администратор гостиницы",c:"Отель «Атташе»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Сменный график",s:"45 000 – 80 000 ₽",d:"Служба приёма и размещения: заселение гостей, работа с бронированиями, решение текущих вопросов.",tags:["гостиницы","reception","бронирование"],dir:"Туризм",acad:"ect",hq:"Администратор гостиницы"},
+{t:"Гид-экскурсовод",c:"Бюро экскурсий «Донские зори»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Гибкий график",s:"40 000 – 100 000 ₽",d:"Пешеходные и автобусные экскурсии по Ростову-на-Дону. Оплата за каждую экскурсию.",tags:["экскурсии","история","общение"],dir:"Туризм",acad:"ect",hq:"Гид экскурсовод"},
+{t:"Специалист по бронированию",c:"Туроператор «Юг-Тур»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Гибрид",s:"45 000 – 85 000 ₽",d:"Бронирование авиабилетов и отелей, работа с системами бронирования, поддержка клиентов.",tags:["бронирование","авиабилеты","клиенты"],dir:"Туризм",acad:"ect",hq:"Специалист по бронированию"},
 {t:"Медицинская сестра",c:"ГБУЗ «Городская больница №7»",city:"Ростов-на-Дону",exp:"Сертификат / аккредитация",type:"Сменный график",s:"45 000 – 70 000 ₽",d:"Процедурный кабинет, уход за пациентами, ведение документации. Помогаем с аккредитацией.",tags:["сестринское дело","процедуры","уход"],dir:"Медицина",acad:"medic",hq:"Медицинская сестра"},
 {t:"Ассистент стоматолога",c:"Стоматология «ДентаЛюкс»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"50 000 – 80 000 ₽",d:"Ассистирование врачу на приёме, подготовка кабинета, стерилизация инструментов. Обучение на месте.",tags:["стоматология","ассистирование","стерилизация"],dir:"Медицина",acad:"medic",hq:"Ассистент стоматолога"},
 {t:"Фармацевт",c:"Аптечная сеть «ФармЮг»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Сменный график",s:"55 000 – 90 000 ₽",d:"Отпуск лекарственных препаратов, консультирование покупателей, учёт товара.",tags:["фармация","консультирование","учёт"],dir:"Медицина",acad:"medic",hq:"Фармацевт"},
 {t:"Фельдшер скорой помощи",c:"ССМП г. Ростова-на-Дону",city:"Ростов-на-Дону",exp:"Диплом фельдшера",type:"Сменный график",s:"50 000 – 85 000 ₽",d:"Выездные бригады, оказание неотложной помощи. Доплаты за ночные смены и стаж.",tags:["неотложная помощь","выезды","фельдшер"],dir:"Медицина",acad:"medic",hq:"Фельдшер"},
-{t:"Менеджер по продажам",c:"ООО «Юг-Трейд»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"55 000 – 120 000 ₽",d:"B2B-продажи, ведение клиентской базы в CRM, выезды к клиентам 2–3 раза в неделю. Наставник в первые два месяца.",tags:["продажи","CRM","переговоры"],dir:"Менеджмент",acad:"econ",hq:"Менеджер по продажам"},
-{t:"Экономист-аналитик (junior)",c:"ПАО «РостБанк»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"50 000 – 110 000 ₽",d:"Бюджетирование филиалов, сверки в 1С, подготовка управленческой отчётности.",tags:["Excel","1С","бюджетирование"],dir:"Экономика",acad:"econ",hq:"Экономист"},
-{t:"HR-специалист (подбор)",c:"ГК «Южный Кадр»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Гибрид",s:"45 000 – 95 000 ₽",d:"Массовый и точечный подбор персонала, телефонные интервью, ведение кадровой системы. Обучаем с нуля.",tags:["подбор","интервью","HRIS"],dir:"HR",acad:"econ",hq:"HR подбор"},
-{t:"Кадастровый инженер",c:"ООО «ГеоПроект»",city:"Ростов-на-Дону",exp:"Опыт 1–3 года",type:"Полная занятость",s:"55 000 – 110 000 ₽",d:"Межевание земельных участков, технические планы, взаимодействие с Росреестром.",tags:["кадастр","геодезия","БТИ"],dir:"Менеджмент",acad:"econ",hq:"Кадастровый инженер"},
+{t:"Менеджер по продажам",c:"ООО «Юг-Трейд»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"55 000 – 120 000 ₽",d:"B2B-продажи, ведение клиентской базы в CRM, выезды к клиентам 2–3 раза в неделю. Наставник в первые два месяца.",tags:["продажи","CRM","переговоры"],dir:"Менеджмент",acad:"itd",hq:"Менеджер по продажам"},
+{t:"Экономист-аналитик (junior)",c:"ПАО «РостБанк»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"50 000 – 110 000 ₽",d:"Бюджетирование филиалов, сверки в 1С, подготовка управленческой отчётности.",tags:["Excel","1С","бюджетирование"],dir:"Экономика",acad:"ect",hq:"Экономист"},
+{t:"HR-специалист (подбор)",c:"ГК «Южный Кадр»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Гибрид",s:"45 000 – 95 000 ₽",d:"Массовый и точечный подбор персонала, телефонные интервью, ведение кадровой системы. Обучаем с нуля.",tags:["подбор","интервью","HRIS"],dir:"HR",acad:"hum",hq:"HR подбор"},
 {t:"Юрист-консультант",c:"ЮК «Право и Бизнес»",city:"Ростов-на-Дону",exp:"Опыт 1–3 года",type:"Полная занятость",s:"55 000 – 130 000 ₽",d:"Договорная работа, претензионный порядок, участие в судебных заседаниях.",tags:["договоры","суды","консалтинг"],dir:"Юриспруденция",acad:"law",hq:"Юрист"},
 {t:"Специалист по госзакупкам",c:"Администрация г. Ростова-на-Дону",city:"Ростов-на-Дону",exp:"Опыт 1–3 года",type:"Полная занятость",s:"45 000 – 90 000 ₽",d:"Работа в рамках 44-ФЗ, подготовка конкурсной документации, сопровождение тендеров.",tags:["44-ФЗ","тендеры","документы"],dir:"Юриспруденция",acad:"law",hq:"Госзакупки 44-ФЗ"},
-{t:"Системный администратор",c:"ООО «ТехноСофт»",city:"Удалённо",exp:"Опыт 1–3 года",type:"Удалённая работа",s:"70 000 – 160 000 ₽",d:"Администрирование серверов Linux, корпоративная сеть, дежурства по графику.",tags:["Linux","сети","администрирование"],dir:"IT",acad:"it",hq:"Системный администратор"},
-{t:"Специалист технической поддержки",c:"ООО «ТехноСофт»",city:"Удалённо",exp:"Без опыта",type:"Удалённая работа",s:"50 000 – 90 000 ₽",d:"Первая линия поддержки: приём заявок, решение типовых инцидентов, эскалация сложных случаев.",tags:["helpdesk","заявки","поддержка"],dir:"IT",acad:"it",hq:"Специалист технической поддержки"},
-{t:"SMM-специалист",c:"Digital-агентство «Волна»",city:"Удалённо",exp:"Без опыта",type:"Удалённая работа",s:"45 000 – 100 000 ₽",d:"Ведение 3–4 клиентских проектов, контент-план, базовая аналитика.",tags:["SMM","контент","аналитика"],dir:"Маркетинг",acad:"mark",hq:"SMM"},
-{t:"Контент-менеджер",c:"Digital-агентство «Волна»",city:"Удалённо",exp:"Без опыта",type:"Удалённая работа",s:"45 000 – 85 000 ₽",d:"Наполнение сайтов и соцсетей, подготовка текстов, работа с CMS.",tags:["контент","CMS","тексты"],dir:"Маркетинг",acad:"mark",hq:"Контент-менеджер"}
+{t:"Системный администратор",c:"ООО «ТехноСофт»",city:"Удалённо",exp:"Опыт 1–3 года",type:"Удалённая работа",s:"70 000 – 160 000 ₽",d:"Администрирование серверов Linux, корпоративная сеть, дежурства по графику.",tags:["Linux","сети","администрирование"],dir:"IT",acad:"itd",hq:"Системный администратор"},
+{t:"Специалист технической поддержки",c:"ООО «ТехноСофт»",city:"Удалённо",exp:"Без опыта",type:"Удалённая работа",s:"50 000 – 90 000 ₽",d:"Первая линия поддержки: приём заявок, решение типовых инцидентов, эскалация сложных случаев.",tags:["helpdesk","заявки","поддержка"],dir:"IT",acad:"itd",hq:"Специалист технической поддержки"},
+{t:"Помощник юриста",c:"ЮК «Право и Бизнес»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Частичная занятость",s:"40 000 – 75 000 ₽",d:"Помощь юристам: подготовка документов, архив, выезды в суды. Подходит студентам 2–3 курса.",tags:["документы","суды","делопроизводство"],dir:"Юриспруденция",acad:"law",hq:"Помощник юриста"},
+{t:"Психолог-стажёр",c:"Центр психологической поддержки ИУБиП",city:"Ростов-на-Дону",exp:"Без опыта",type:"Частичная занятость",s:"40 000 – 70 000 ₽",d:"Консультации студентов под супервизией, тренинги, диагностика.",tags:["консультирование","тренинги","диагностика"],dir:"Психология",acad:"hum",hq:"Психолог"},
+{t:"Бухгалтер (junior)",c:"ООО «ДонАудит»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"45 000 – 85 000 ₽",d:"Первичная документация, банк-клиент, помощь главному бухгалтеру. Возьмём выпускника колледжа.",tags:["1С","первичка","бухучёт"],dir:"Бухучёт",acad:"ect",hq:"Бухгалтер"},
+{t:"Специалист по логистике",c:"ТК «ДонЛогистик»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"50 000 – 90 000 ₽",d:"Планирование перевозок по ЮФО, работа с водителями и складом, сопроводительные документы.",tags:["перевозки","склад","документы"],dir:"Логистика",acad:"itd",hq:"Логист"}
 ];
 const grid=document.getElementById('grid');
 function curDir(){const r=document.querySelector('input[name=dir]:checked');return r?r.value:document.getElementById('filter').value}
@@ -311,7 +337,7 @@ currentAcad=id;
 document.getElementById('acadView').style.display='none';
 document.getElementById('vacView').style.display='';
 if(id==='all'){document.getElementById('vacAcadTitle').textContent='Все вакансии';document.getElementById('vacAcadSub').textContent='Все академии и направления подготовки.'}
-else{const a=ACADS.find(x=>x.id===id);document.getElementById('vacAcadTitle').textContent=a.name;document.getElementById('vacAcadSub').textContent=a.spec+'. '+a.note}
+else{const a=ACADS.find(x=>x.id===id);document.getElementById('vacAcadTitle').textContent=a.name;document.getElementById('vacAcadSub').innerHTML=a.spec+'. '+a.note+'<br>Руководитель: '+a.head+' · '+a.phone+' · '+a.email}
 renderVacs();
 }
 function renderVacs(){
@@ -341,6 +367,8 @@ document.getElementById('search').addEventListener('input',()=>{if(currentAcad==
 document.getElementById('filter').onchange=renderVacs;
 document.querySelectorAll('input[name=dir]').forEach(r=>r.onchange=()=>{document.getElementById('filter').value=r.value;renderVacs()});
 renderAcads();showAcads();
+document.getElementById('bookAcad').innerHTML=ACADS.map(a=>'<option value="'+a.id+'">'+a.name+'</option>').join('');
+rbRender();
 function goTab(id){document.querySelectorAll('.mainnav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('.mainnav button').forEach(b=>{b.onclick=()=>goTab(b.dataset.tab)});
 let toastTimer;
@@ -348,7 +376,124 @@ function showToast(m){const t=document.getElementById('toast');t.textContent=m;t
 const ds=document.getElementById('dateSel');
 const days=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],months=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
 for(let i=1;i<=7;i++){const d=new Date();d.setDate(d.getDate()+i);const o=document.createElement('option');o.textContent=days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()];ds.appendChild(o)}
-function submitForm(){document.getElementById('formCard').innerHTML='<div class="ok"><b>Заявка принята.</b><br>Сотрудник Центра карьеры подтвердит время в MAX-боте в течение рабочего дня.</div>';}
+function submitForm(){
+const ba=document.getElementById('bookAcad');const a=ACADS.find(x=>x.id===ba.value);
+const info=a?('<br>Ваш куратор: '+a.head+', '+a.phone+', '+a.email+'.'):'';
+document.getElementById('formCard').innerHTML='<div class="ok"><b>Заявка принята.</b><br>Сотрудник Центра карьеры подтвердит время в MAX-боте в течение рабочего дня.'+info+'</div>';}
+/* ===== Конструктор резюме: опросник по шагам, всё под выбранную академию ===== */
+const RB={step:1,acad:"",name:"",phone:"",email:"",city:"Ростов-на-Дону",course:"3 курс",position:"",customPos:"",employment:"Полная занятость",program:"",year:"2026",practice:"",skills:[],customSkills:"",about:""};
+const RB_TITLES=["1. Академия","2. Контакты","3. Цель","4. Опыт и навыки","5. Готово"];
+function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function rbAcad(){return ACADS.find(a=>a.id===RB.acad)}
+function rbCollect(){
+const g=id=>{const el=document.getElementById(id);return el?el.value:""};
+if(RB.step===1){const r=document.querySelector('input[name=rbAcad]:checked');RB.acad=r?r.value:""}
+if(RB.step===2){RB.name=g('rbName');RB.phone=g('rbPhone');RB.email=g('rbEmail');RB.city=g('rbCity');RB.course=g('rbCourse')}
+if(RB.step===3){RB.position=g('rbPosition');RB.customPos=g('rbCustomPos');RB.employment=g('rbEmployment')}
+if(RB.step===4){RB.program=g('rbProgram');RB.year=g('rbYear');RB.practice=g('rbPractice');RB.about=g('rbAbout');
+RB.skills=[].map.call(document.querySelectorAll('input[name=rbSkill]:checked'),x=>x.value);RB.customSkills=g('rbCustomSkills')}
+}
+function rbNav(d){
+rbCollect();
+if(d===1){
+if(RB.step===1&&!RB.acad){showToast('Сначала выберите вашу академию');return}
+if(RB.step===2&&(!RB.name.trim()||!RB.phone.trim())){showToast('Укажите имя и телефон — иначе работодатель не свяжется');return}
+if(RB.step===3&&!RB.position&&!RB.customPos.trim()){showToast('Выберите желаемую должность');return}
+if(RB.step<5)RB.step++;
+}else{if(RB.step>1)RB.step--}
+rbRender();
+document.getElementById('resume').scrollIntoView({behavior:'smooth'});
+}
+function rbRender(){
+const steps=document.getElementById('rbSteps');
+steps.innerHTML=RB_TITLES.map((t,i)=>'<span class="'+(i+1<=RB.step?'on':'')+'">'+t+'</span>').join('');
+const b=document.getElementById('rbBody');const a=rbAcad();
+document.getElementById('rbBack').style.visibility=RB.step===1?'hidden':'visible';
+document.getElementById('rbNext').textContent=RB.step===5?'Готово':'Далее →';
+if(RB.step===1){
+b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 1.</b> В какой академии вы учитесь? Под неё подберём должности, программы и навыки.</p>'
++ACADS.map(x=>'<label class="rb-opt"><input type="radio" name="rbAcad" value="'+x.id+'"'+(RB.acad===x.id?' checked':'')+'><b>'+x.name+'</b><br><span style="color:#6b7280;font-size:13px">'+x.spec+'</span></label>').join('');
+}
+if(RB.step===2){
+b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 2.</b> Как с вами связаться? <span style="color:#6b7280">Академия: '+(a?a.name:'—')+'</span></p>'
++'<div class="field"><label>ФИО</label><input id="rbName" type="text" value="'+esc(RB.name)+'" placeholder="Иванова Анна Сергеевна"></div>'
++'<div class="field"><label>Телефон</label><input id="rbPhone" type="text" value="'+esc(RB.phone)+'" placeholder="+7 (___) ___-__-__"></div>'
++'<div class="field"><label>Email</label><input id="rbEmail" type="text" value="'+esc(RB.email)+'" placeholder="anna@example.ru"></div>'
++'<div class="field"><label>Город</label><input id="rbCity" type="text" value="'+esc(RB.city)+'"></div>'
++'<div class="field"><label>Курс</label><select id="rbCourse">'+["1 курс","2 курс","3 курс","4 курс","5 курс","Магистратура, 1 курс","Магистратура, 2 курс","Колледж","Выпускник"].map(c=>'<option'+(RB.course===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>';
+}
+if(RB.step===3){
+const pos=a?a.positions:[];
+b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 3.</b> Кем хотите работать? <span style="color:#6b7280">Подсказки — по вашей академии.</span></p>'
++'<div class="field"><label>Желаемая должность</label><select id="rbPosition"><option value="">— выбрать —</option>'+pos.map(p=>'<option'+(RB.position===p?' selected':'')+'>'+p+'</option>').join('')+'</select></div>'
++'<div class="field"><label>Или своя должность</label><input id="rbCustomPos" type="text" value="'+esc(RB.customPos)+'" placeholder="Например: помощник маркетолога"></div>'
++'<div class="field"><label>Занятость</label><select id="rbEmployment">'+["Полная занятость","Частичная занятость","Стажировка","Практика","Удалённая работа"].map(c=>'<option'+(RB.employment===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>';
+}
+if(RB.step===4){
+const prg=a?a.programs:[];const sk=a?a.skills:[];
+b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 4.</b> Образование, практика и навыки.</p>'
++'<div class="field"><label>Программа обучения</label><select id="rbProgram"><option value="">— выбрать —</option>'+prg.map(p=>'<option'+(RB.program===p?' selected':'')+'>'+p+'</option>').join('')+'</select></div>'
++'<div class="field"><label>Год выпуска</label><select id="rbYear">'+["2026","2027","2028","2029","2030","Уже выпустился"].map(c=>'<option'+(RB.year===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>'
++'<div class="field"><label>Практика и опыт (где проходили, что делали)</label><textarea id="rbPractice" placeholder="Например: практика в отеле «Атташе» — служба приёма, 2 месяца">'+esc(RB.practice)+'</textarea></div>'
++'<div class="field"><label>Навыки (отметьте подходящие)</label><div>'+sk.map(s=>'<label class="rb-check"><input type="checkbox" name="rbSkill" value="'+s+'"'+(RB.skills.indexOf(s)>=0?' checked':'')+'>'+s+'</label>').join('')+'</div></div>'
++'<div class="field"><label>Свои навыки через запятую</label><input id="rbCustomSkills" type="text" value="'+esc(RB.customSkills)+'" placeholder="Английский B1, водительские права"></div>'
++'<div class="field"><label>О себе (2–3 предложения)</label><textarea id="rbAbout" placeholder="Ответственный, быстро учусь, готов к сменному графику">'+esc(RB.about)+'</textarea></div>';
+}
+if(RB.step===5){
+const pos=RB.customPos.trim()||RB.position||'—';
+const skills=RB.skills.concat(RB.customSkills.split(',').map(s=>s.trim()).filter(Boolean));
+b.innerHTML='<p style="margin-bottom:12px"><b>Шаг 5.</b> Резюме собрано. Скачайте в Word или скопируйте текст.</p>'
++'<div class="rb-preview"><h3>'+esc(RB.name||'Ваше имя')+'</h3><div style="color:#6b7280;font-size:13px">'+esc(a?a.name:'')+'</div>'
++'<div class="pos">Желаемая должность: '+esc(pos)+' · '+esc(RB.employment)+'</div>'
++'<div class="sec"><b>Контакты</b>'+esc(RB.phone)+(RB.email?', '+esc(RB.email):'')+' · '+esc(RB.city)+'</div>'
++'<div class="sec"><b>Образование</b>'+esc(RB.program||'—')+', '+esc(RB.course)+', выпуск '+esc(RB.year)+'</div>'
++(RB.practice.trim()?'<div class="sec"><b>Практика и опыт</b>'+esc(RB.practice)+'</div>':'')
++(skills.length?'<div class="sec"><b>Навыки</b>'+esc(skills.join(', '))+'</div>':'')
++(RB.about.trim()?'<div class="sec"><b>О себе</b>'+esc(RB.about)+'</div>':'')
++'</div>'
++'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">'
++'<button class="btn btn-navy" onclick="rbDownload()">Скачать в Word (.doc)</button>'
++'<button class="btn btn-outline" onclick="rbCopy()">Скопировать текст</button>'
++'<button class="btn btn-outline" onclick="goTab(\'vac\');openAcad(\''+(RB.acad||'all')+'\')">Вакансии моей академии</button></div>';
+}
+}
+function rbResumeText(){
+const a=rbAcad();const pos=RB.customPos.trim()||RB.position||'—';
+const skills=RB.skills.concat(RB.customSkills.split(',').map(s=>s.trim()).filter(Boolean));
+return "РЕЗЮМЕ\n"+(RB.name||"")+"\nЖелаемая должность: "+pos+" ("+RB.employment+")\n"
++"Академия: "+(a?a.name:"")+"\nКонтакты: "+RB.phone+(RB.email?", "+RB.email:"")+" · "+RB.city+"\n"
++"Образование: "+(RB.program||"—")+", "+RB.course+", выпуск "+RB.year+"\n"
++(RB.practice.trim()?"Практика и опыт: "+RB.practice.trim()+"\n":"")
++(skills.length?"Навыки: "+skills.join(", ")+"\n":"")
++(RB.about.trim()?"О себе: "+RB.about.trim()+"\n":"");
+}
+function rbCopy(){
+const done=()=>showToast('Текст резюме скопирован');
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(rbResumeText()).then(done,()=>showToast('Не вышло скопировать — выделите текст вручную'))}
+else{const t=document.createElement('textarea');t.value=rbResumeText();document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(t)}
+}
+function rbDownload(){
+const a=rbAcad();const pos=RB.customPos.trim()||RB.position||'—';
+const skills=RB.skills.concat(RB.customSkills.split(',').map(s=>s.trim()).filter(Boolean));
+const rows=[
+["Желаемая должность",pos+" · "+RB.employment],
+["Академия",(a?a.name:"")],
+["Контакты",RB.phone+(RB.email?", "+RB.email:"")+" · "+RB.city],
+["Образование",(RB.program||"—")+", "+RB.course+", выпуск "+RB.year]];
+if(RB.practice.trim())rows.push(["Практика и опыт",RB.practice.trim()]);
+if(skills.length)rows.push(["Навыки",skills.join(", ")]);
+if(RB.about.trim())rows.push(["О себе",RB.about.trim()]);
+const html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>Резюме</title></head><body>'
++'<h1>'+esc(RB.name||"Резюме")+'</h1>'
++rows.map(r=>'<p><b>'+esc(r[0])+':</b> '+esc(r[1])+'</p>').join('')
++'<p style="color:#777">Собрано в конструкторе Центра карьеры Южного университета (ИУБиП).</p></body></html>';
+const blob=new Blob(["\ufeff"+html],{type:"application/msword"});
+const url=URL.createObjectURL(blob);const l=document.createElement("a");l.href=url;
+l.download="Резюме_"+(RB.name||"студент").trim().replace(/\s+/g,"_")+".doc";
+document.body.appendChild(l);l.click();document.body.removeChild(l);
+setTimeout(()=>URL.revokeObjectURL(url),3000);
+showToast('Файл Word сохранён — проверьте загрузки');
+}
 const chartData=[["Менеджмент",91],["Экономика",87],["Юриспруденция",89],["IT",94],["HR",85],["Маркетинг",82]];
 const bars=document.getElementById('bars');
 chartData.forEach(([n,p])=>{const r=document.createElement('div');r.className='brow';r.innerHTML='<span>'+n+'</span><div class="btrack"><div class="bfill" style="width:'+p+'%"></div></div><span>'+p+'%</span>';bars.appendChild(r)});

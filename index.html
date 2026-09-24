@@ -510,6 +510,7 @@ el.querySelector('button').onclick=()=>{showToast('Отклик отправле
 grid.appendChild(el);
 });
 if(!grid.innerHTML)grid.innerHTML='<div class="panel">По запросу ничего не нашлось. Позвоните нам: 8 800 77-55-012 — подберём варианты вручную.</div>';
+grid.innerHTML+='<div class="panel" id="hhBlock" style="margin-top:4px"><b>Свежие вакансии с hh.ru</b><p class="legal">Подгружаются вживую с hh.ru под вашу академию.</p><button class="btn btn-navy" onclick="loadHH(this)">Загрузить с hh.ru</button></div>';
 }
 /* ===== Стажировки: принцип тот же — сначала академия ===== */
 const ASHORT={law:"Право",hum:"Гуманитарные",itd:"IT и управление",ect:"Экономика и туризм",medic:"Медколледж"};
@@ -608,6 +609,32 @@ if(n.length<2){showToast('Укажите имя');return}
 if(p.length<10){showToast('Проверьте телефон — нужно 10+ цифр');return}
 try{const arr=JSON.parse(localStorage.getItem('callbacks')||'[]');arr.push({n:n,p:p,t:Date.now()});localStorage.setItem('callbacks',JSON.stringify(arr))}catch(e){}
 document.getElementById('callBox').innerHTML='<div class="ok"><b>Заявка принята, '+esc(n)+'!</b><br>Перезвоним в рабочее время (пн–пт 9:00–18:00).</div><br><button class="btn btn-outline" onclick="closeCallModal()">Закрыть</button>';
+}
+const HHQ={all:"",law:"юрист",hum:"психолог",itd:"системный администратор",ect:"экономист",medic:"медицинская сестра"};
+function hhSalary(s){if(!s||(!s.from&&!s.to))return 'доход не указан';const cur=s.currency==='RUR'?'₽':(s.currency||'');const f=n=>Number(n).toLocaleString('ru-RU');if(s.from&&s.to)return f(s.from)+'–'+f(s.to)+' '+cur;if(s.from)return 'от '+f(s.from)+' '+cur;return 'до '+f(s.to)+' '+cur}
+async function loadHH(btn){
+const box=document.getElementById('hhBlock');if(!box)return;
+const q=HHQ[currentAcad]!==undefined?HHQ[currentAcad]:"";
+btn.disabled=true;btn.textContent='Загружаем…';
+try{
+const url='https://api.hh.ru/vacancies?area=76&per_page=6&order_by=publication_time'+(q?'&text='+encodeURIComponent(q):'');
+const r=await fetch(url,{headers:{'Accept':'application/json'}});
+if(!r.ok)throw new Error('hh '+r.status);
+const d=await r.json();
+if(!d.items||!d.items.length)throw new Error('empty');
+let html='<div class="section-head" style="margin-top:6px"><h2>Свежее с hh.ru</h2><span>загружено только что</span></div>';
+d.items.forEach(v=>{
+const link=v.alternate_url;
+const roles=(v.professional_roles||[]).slice(0,3).map(x=>'<span class="skill">'+esc(x.name)+'</span>').join('');
+const dt=(v.published_at||'').slice(0,10).split('-').reverse().join('.');
+html+='<div class="vacancy"><div class="vac-head"><a class="vac-title" href="'+link+'" target="_blank" rel="noopener">'+esc(v.name)+'</a><div class="vac-salary">'+hhSalary(v.salary)+'</div></div>'
++'<div class="vac-sub">'+esc((v.employer||{}).name||'')+' · '+esc((v.area||{}).name||'')+'</div>'
++'<div class="vac-meta">Опыт: '+esc((v.experience||{}).name||'любой')+' · опубликовано '+dt+'</div>'
++'<div class="vac-skills">'+roles+'</div>'
++'<div class="vac-bottom"><span class="vac-src">Источник: hh.ru · <a href="'+link+'" target="_blank" rel="noopener">открыть на hh.ru</a></span><span class="vac-actions"><a class="btn btn-navy" href="'+link+'" target="_blank" rel="noopener">Откликнуться</a></span></div></div>';
+});
+box.innerHTML=html;
+}catch(e){btn.disabled=false;btn.textContent='Загрузить с hh.ru';showToast('hh.ru не ответил — попробуйте позже')}
 }
 function heroSearch(){goTab('vac');openAcad('all')}
 function q(s){document.getElementById('search').value=s;goTab('vac');openAcad('all')}

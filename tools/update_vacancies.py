@@ -28,7 +28,7 @@ TARGETS = [
     ("системный администратор", "itd", "IT", ["сети"], 1),
     ("логист", "itd", "Логистика", ["логистика"], 1),
     ("экономист", "ect", "Экономика", ["экономика"], 2),
-    ("аналитик", "ect", "Экономика", ["аналитика"], 2),
+    ("аналитик", "ect", "Экономика", ["аналитика"], 3),
     ("бухгалтер", "ect", "Бухучёт", ["бухучёт"], 2),
     ("администратор гостиницы", "ect", "Туризм", ["гостиницы"], 1),
     ("экскурсовод", "ect", "Туризм", ["экскурсии"], 1),
@@ -98,14 +98,15 @@ def entry(v, acad, direction, tags):
 
 
 def old_chunks(block):
-    """Старые записи как запасной вариант: {url, acad, text}."""
+    """Старые записи: {url, acad, text, pin}. Помеченные pin:1 не трогаем никогда."""
     out = []
     for m in re.finditer(r"\{t:.*?\}", block, flags=re.S):
         t = m.group(0)
         a = re.search(r'acad:"(\w+)"', t)
         u = re.search(r'u:"([^"]+)"', t)
         if a and u:
-            out.append({"url": u.group(1), "acad": a.group(1), "text": t})
+            out.append({"url": u.group(1), "acad": a.group(1), "text": t,
+                        "pin": "pin:1" in t})
     return out
 
 
@@ -116,6 +117,11 @@ def main():
     old = old_chunks(html[start:end])
 
     new_entries, used_urls = [], set()
+    for o in old:  # закреплённые вручную — всегда сохраняем
+        if o["pin"] and o["url"] not in used_urls:
+            new_entries.append(o["text"])
+            used_urls.add(o["url"])
+    print("pinned kept: %d" % len(new_entries))
     for query, acad, direction, tags, need in TARGETS:
         try:
             found = api_search(query)

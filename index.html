@@ -377,7 +377,6 @@ document.getElementById('filter').onchange=renderVacs;
 document.querySelectorAll('input[name=dir]').forEach(r=>r.onchange=()=>{document.getElementById('filter').value=r.value;renderVacs()});
 renderAcads();showAcads();
 document.getElementById('bookAcad').innerHTML=ACADS.map(a=>'<option value="'+a.id+'">'+a.name+'</option>').join('');
-rbRender();
 function goTab(id){document.querySelectorAll('.mainnav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('.mainnav button').forEach(b=>{b.onclick=()=>goTab(b.dataset.tab)});
 let toastTimer;
@@ -506,6 +505,7 @@ showToast('Файл Word сохранён — проверьте загрузк�
 const chartData=[["Менеджмент",91],["Экономика",87],["Юриспруденция",89],["IT",94],["HR",85],["Маркетинг",82]];
 const bars=document.getElementById('bars');
 chartData.forEach(([n,p])=>{const r=document.createElement('div');r.className='brow';r.innerHTML='<span>'+n+'</span><div class="btrack"><div class="bfill" style="width:'+p+'%"></div></div><span>'+p+'%</span>';bars.appendChild(r)});
+rbRender();
 </script>
 </body>
 </html>

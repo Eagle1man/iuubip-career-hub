@@ -3,253 +3,280 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ЮУ Работа — вакансии ИУБиП | Центр карьеры</title>
+<title>ЮУ Работа — Центр карьеры ИУБиП</title>
 <style>
-/* Стиль в духе hh.ru: белый, красный акцент, список вакансий */
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f4f4;color:#1f2329;line-height:1.5}
-:root{--red:#d6001c;--red-dark:#b50018;--link:#0f6cbd;--grey:#8a94a6;--line:#e5e7eb}
-.container{max-width:1120px;margin:0 auto;padding:0 16px}
-/* Шапка как hh */
-header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
-.header-inner{display:flex;align-items:center;gap:16px;padding:10px 16px;max-width:1120px;margin:0 auto}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
-.logo-mark{background:var(--red);color:#fff;font-weight:900;padding:6px 10px;border-radius:50%;font-size:18px}
-.logo small{display:block;font-size:12px;color:var(--grey);font-weight:400}
-.hnav{display:flex;gap:16px;margin-left:12px;font-size:14px}
-.hnav a{color:#1f2329;text-decoration:none}
-.hnav a:hover{color:var(--red)}
-.hbtns{margin-left:auto;display:flex;gap:8px}
-.btn{border:0;border-radius:8px;padding:11px 18px;font-size:15px;cursor:pointer;transition:.2s;font-family:inherit}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:#eceef1;color:#212527;line-height:1.55;font-size:15px}
+:root{--ink:#16191d;--muted:#6b7280;--line:#dcdfe3;--red:#c8102e;--red-dark:#a30d26;--blue:#175cd3}
+.container{max-width:1140px;margin:0 auto;padding:0 20px}
+header{background:#16191d;color:#e8eaed;position:sticky;top:0;z-index:50}
+.header-inner{display:flex;align-items:center;gap:22px;max-width:1140px;margin:0 auto;padding:0 20px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+.brand-mark{width:30px;height:30px;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+.brand-name{font-weight:700;font-size:16px;line-height:1.1}
+.brand-name span{display:block;font-weight:400;font-size:11px;color:#9aa0a8}
+nav.main-nav{display:flex;gap:18px;font-size:14px}
+nav.main-nav a{color:#c9cdd3;text-decoration:none}
+nav.main-nav a:hover{color:#fff}
+.header-actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+.btn{font-family:inherit;font-size:14px;padding:9px 16px;border-radius:4px;border:1px solid transparent;cursor:pointer;transition:background .15s,border-color .15s;text-decoration:none;display:inline-block}
 .btn-red{background:var(--red);color:#fff}
 .btn-red:hover{background:var(--red-dark)}
-.btn-outline{background:#fff;border:1px solid var(--red);color:var(--red)}
-.btn-outline:hover{background:#fff0f1}
-/* Поиск hero */
-.hero{background:#fff;border-bottom:1px solid var(--line);padding:28px 0 20px}
-.hero h1{font-size:30px;margin-bottom:6px}
-.hero p{color:#54595f;margin-bottom:16px}
-.searchbar{display:flex;gap:0;border:1px solid #cbd5e1;border-radius:8px;overflow:hidden;max-width:760px}
-.searchbar input{flex:1;border:0;padding:14px;font-size:16px;font-family:inherit;outline:none;min-width:0}
-.searchbar button{border-radius:0;padding:0 28px;font-size:16px}
-.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--grey)}
-.quick button{background:#eef1f4;border:0;border-radius:16px;padding:6px 12px;cursor:pointer;font-size:13px}
-.quick button:hover{background:#e2e7ec}
-.hh-stats{display:flex;gap:24px;margin-top:16px;font-size:14px;color:#54595f;flex-wrap:wrap}
-.hh-stats b{color:#1f2329}
-/* Табы */
-.tabs-wrap{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:57px;z-index:40}
-.tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;max-width:1120px;margin:0 auto}
-.tab{white-space:nowrap;border:1px solid var(--line);background:#fff;color:#1f2329;padding:9px 16px;border-radius:8px;cursor:pointer;font-size:14px;transition:.2s}
-.tab.active{background:#1f2329;color:#fff;border-color:#1f2329}
-main{padding:20px 0 40px}
-.tab-page{display:none}
-.tab-page.active{display:block;animation:fade .2s ease}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-.layout{display:grid;grid-template-columns:220px 1fr;gap:16px;align-items:start}
-.side{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;font-size:14px}
-.side h4{margin-bottom:10px;font-size:14px}
-.side label{display:flex;gap:8px;align-items:center;font-weight:400;margin:8px 0;cursor:pointer}
-/* Список вакансий как на hh */
-.vac-list{display:flex;flex-direction:column;gap:12px}
-.vac{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;transition:.2s}
-.vac:hover{box-shadow:0 4px 18px rgba(0,0,0,.1)}
-.vac-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-.vac-title{color:var(--link);font-size:19px;font-weight:700;text-decoration:none;cursor:pointer}
-.vac-title:hover{color:var(--red)}
-.vac-salary{font-weight:700;font-size:17px;white-space:nowrap}
-.vac-company{color:#54595f;font-size:14px;margin:4px 0}
-.vac-city{color:var(--grey);font-size:13px}
-.vac-tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
-.tag{background:#eef1f4;color:#1f2329;font-size:12px;padding:4px 10px;border-radius:6px}
-.vac-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.vac-date{font-size:12px;color:var(--grey)}
-.filters-row{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.filters-row input,.filters-row select{padding:11px 12px;border-radius:8px;border:1px solid #cbd5e1;font-size:14px;font-family:inherit}
-.filters-row input{flex:1;min-width:200px}
-/* Формы */
-.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px}
-.card h2{margin-bottom:6px}
-.card p.sub{color:#54595f;margin-bottom:14px}
-label.fl{display:block;font-weight:600;margin:12px 0 6px;font-size:14px}
-select,input[type=text],textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #cbd5e1;font-family:inherit;font-size:15px}
-textarea{min-height:80px;resize:vertical}
-.radio-row{display:flex;gap:8px;flex-wrap:wrap}
-.radio-row label{font-weight:400;background:#eef1f4;padding:8px 14px;border-radius:20px;cursor:pointer;margin:0;font-size:14px}
-.success{background:#e6f4ea;border:1px solid #34a853;color:#137333;border-radius:12px;padding:24px;text-align:center;font-size:17px;font-weight:600}
-/* Прогресс */
-.bar-bg{background:#e5e7eb;border-radius:999px;height:14px;overflow:hidden;margin:12px 0 6px}
-.bar-fill{width:40%;height:100%;background:var(--red);border-radius:999px}
-.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
-.badge{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;transition:.2s}
-.badge.got{border-color:var(--red)}
-.badge.locked{color:#8a94a6;background:#f7f7f7}
-.badge .ico{font-size:30px}
-/* Дашборд */
-.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
-.num-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center}
-.num-card .v{font-size:30px;font-weight:800;color:var(--red)}
-.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:14px}
-.bar-row .name{width:130px;text-align:right}
-.bar-track{flex:1;background:#eef1f4;border-radius:6px;height:24px;overflow:hidden}
-.bar-val{height:100%;background:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;color:#fff;font-size:12px;font-weight:700;padding-right:8px}
-.note{font-size:12px;color:#8a94a6;margin-top:12px}
-#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#1f2329;color:#fff;padding:14px 22px;border-radius:10px;opacity:0;transition:.3s;z-index:100;max-width:90%}
+.btn-ghost{background:transparent;color:#e8eaed;border-color:#3a3f46}
+.btn-ghost:hover{border-color:#6b7280}
+.btn-outline{background:#fff;border-color:var(--red);color:var(--red)}
+.btn-outline:hover{background:#fdf0f2}
+.hero{background:#23272e;color:#e8eaed;padding:34px 0 30px;border-bottom:1px solid #000}
+.hero h1{font-size:27px;font-weight:700;margin-bottom:8px;letter-spacing:-.2px}
+.hero p{color:#b7bcc4;max-width:720px;margin-bottom:18px;font-size:15px}
+.search{display:flex;max-width:780px;background:#fff;border-radius:4px;overflow:hidden}
+.search input{flex:1;border:0;padding:13px 14px;font-size:15px;font-family:inherit;outline:none;min-width:0}
+.search button{border-radius:0;padding:0 30px;font-size:15px}
+.tags-row{margin-top:12px;font-size:13px;color:#9aa0a8;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tags-row button{background:#2e333b;color:#d5d9de;border:0;border-radius:4px;padding:5px 10px;font-size:12px;cursor:pointer}
+.tags-row button:hover{background:#3a4048}
+.stats-row{display:flex;gap:28px;margin-top:18px;flex-wrap:wrap;font-size:13px;color:#9aa0a8}
+.stats-row b{display:block;color:#fff;font-size:18px}
+.tabs-bar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:60px;z-index:40}
+.tabs{display:flex;gap:4px;max-width:1140px;margin:0 auto;padding:0 20px;overflow-x:auto}
+.tab{background:none;border:0;border-bottom:2px solid transparent;padding:14px 14px;font-size:14px;cursor:pointer;color:var(--muted);white-space:nowrap;font-family:inherit}
+.tab:hover{color:var(--ink)}
+.tab.active{color:var(--ink);border-bottom-color:var(--red);font-weight:600}
+main{padding:22px 0 46px}
+.page{display:none}
+.page.active{display:block}
+.work{display:grid;grid-template-columns:230px 1fr;gap:18px;align-items:start}
+.filters{background:#fff;border:1px solid var(--line);border-radius:6px;padding:16px 16px 10px;font-size:14px}
+.filters h4{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:14px 0 8px}
+.filters h4:first-child{margin-top:0}
+.filters label{display:flex;gap:8px;align-items:center;margin:7px 0;cursor:pointer;color:#2b2f36}
+.result-meta{font-size:13px;color:var(--muted);margin:0 0 10px}
+.vacancy{background:#fff;border:1px solid var(--line);border-radius:6px;padding:18px 20px;margin-bottom:12px;transition:border-color .15s,box-shadow .15s}
+.vacancy:hover{border-color:#b9bec6;box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.vac-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.vac-title{font-size:18px;font-weight:700;color:var(--blue);text-decoration:none}
+.vac-title:hover{text-decoration:underline}
+.vac-salary{font-size:16px;font-weight:700;white-space:nowrap}
+.vac-sub{font-size:13.5px;color:#4b5158;margin-top:4px}
+.vac-desc{font-size:13.5px;color:#4b5158;margin-top:8px}
+.vac-skills{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.skill{font-size:12px;background:#f1f3f5;color:#3c424a;border-radius:4px;padding:3px 8px}
+.vac-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px;flex-wrap:wrap}
+.vac-meta{font-size:12px;color:var(--muted)}
+.vac-actions{display:flex;gap:8px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:6px;padding:26px}
+.panel h2{font-size:20px;margin-bottom:6px}
+.panel .lead{color:var(--muted);font-size:14px;margin-bottom:14px}
+.field{margin:14px 0}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+.field select,.field input,.field textarea{width:100%;border:1px solid #c3c8cf;border-radius:4px;padding:10px 12px;font-size:14px;font-family:inherit}
+.field textarea{min-height:90px;resize:vertical}
+.times{display:flex;gap:8px;flex-wrap:wrap}
+.times label{background:#f1f3f5;border:1px solid var(--line);border-radius:4px;padding:7px 12px;font-size:13px;cursor:pointer;font-weight:400}
+.times input{margin-right:6px}
+.ok{background:#eef6ee;border:1px solid #a9cfae;color:#1d5c2a;border-radius:6px;padding:26px;text-align:center}
+.progress-top{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px}
+.track{background:#e3e6ea;border-radius:4px;height:10px;overflow:hidden}
+.fill{width:40%;height:100%;background:var(--red)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.step{border:1px solid var(--line);border-radius:6px;padding:14px;font-size:13.5px;background:#fff}
+.step.done{border-left:3px solid var(--red)}
+.step.locked{background:#f6f7f9;color:#8a9099}
+.step b{display:block;font-size:14px;margin-bottom:2px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:6px;padding:18px}
+.kpi b{font-size:26px;display:block}
+.kpi span{font-size:13px;color:var(--muted)}
+.bars{margin-top:10px}
+.brow{display:grid;grid-template-columns:150px 1fr 46px;gap:10px;align-items:center;font-size:13.5px;margin-bottom:8px}
+.btrack{background:#eef0f3;border-radius:3px;height:20px;overflow:hidden}
+.bfill{height:100%;background:#2b2f36}
+.note{font-size:12px;color:var(--muted);margin-top:12px}
+.employer-cta{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+footer{background:#16191d;color:#9aa0a8;font-size:13px;margin-top:10px}
+.foot-grid{max-width:1140px;margin:0 auto;padding:30px 20px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px}
+footer a{color:#c9cdd3;text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer h5{color:#fff;font-size:13px;margin-bottom:10px}
+.foot-bottom{border-top:1px solid #2a2e35;padding:14px 20px;text-align:left;max-width:1140px;margin:0 auto;font-size:12px}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:#16191d;color:#fff;padding:12px 18px;border-radius:4px;font-size:14px;opacity:0;transition:.25s;z-index:100}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-footer{background:#1f2329;color:#b9c0cb;text-align:center;padding:22px 16px;font-size:13px;margin-top:20px}
-@media(max-width:860px){.layout{grid-template-columns:1fr}.side{display:none}.nums{grid-template-columns:1fr}.hnav{display:none}.hero h1{font-size:24px}.badges{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.work{grid-template-columns:1fr}.filters{display:none}nav.main-nav{display:none}.kpis{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr}.hero h1{font-size:22px}}
 </style>
 </head>
 <body>
 <header>
 <div class="header-inner">
-<div class="logo"><span class="logo-mark">юу</span><span>ЮУ Работа<small>Центр карьеры ИУБиП · Ростов-на-Дону</small></span></div>
-<nav class="hnav"><a href="#" onclick="goTab('vac');return false">Вакансии</a><a href="#" onclick="goTab('book');return false">Консультации</a><a href="#" onclick="goTab('dash');return false">Работодателям</a></nav>
-<div class="hbtns"><button class="btn btn-outline" onclick="goTab('dash')">Найти сотрудника</button><button class="btn btn-red" onclick="goTab('prog')">Войти</button></div>
+<a class="brand" href="#" onclick="goTab('vac');return false"><span class="brand-mark">ЮУ</span><span class="brand-name">ЮУ Работа<span>Центр карьеры · ИУБиП</span></span></a>
+<nav class="main-nav">
+<a href="#" onclick="goTab('vac');return false">Вакансии</a>
+<a href="#" onclick="goTab('book');return false">Консультации</a>
+<a href="#" onclick="goTab('prog');return false">Студентам</a>
+<a href="#" onclick="goTab('dash');return false">Работодателям</a>
+</nav>
+<div class="header-actions">
+<button class="btn btn-ghost" onclick="goTab('dash')">Разместить вакансию</button>
+<button class="btn btn-red" onclick="goTab('prog')">Войти</button>
+</div>
 </div>
 </header>
 <section class="hero">
 <div class="container">
-<h1>Работа для студентов и выпускников ИУБиП</h1>
-<p>1 248 вакансий от 312 компаний Ростова и удалённо — для очной, вечерней и заочной форм.</p>
-<div class="searchbar"><input id="search" type="text" placeholder="Профессия, должность или компания"><button class="btn btn-red" onclick="renderVacs()">Найти</button></div>
-<div class="quick"><span>Часто ищут:</span><button onclick="q('Менеджер')">менеджер</button><button onclick="q('Юрист')">юрист</button><button onclick="q('Экономист')">экономист</button><button onclick="q('удалённо')">удалённо</button><button onclick="q('HR')">HR</button></div>
-<div class="hh-stats"><span><b>1 248</b> вакансий</span><span><b>20 000+</b> выпускников</span><span><b>88%</b> трудоустройство за 6 мес.</span><span><b>78 500 ₽</b> средняя зарплата</span></div>
+<h1>Вакансии для студентов и выпускников ИУБиП</h1>
+<p>Проверенные работодатели Ростова-на-Дону и удалённая работа. Помогаем с резюме, практикой и первым оффером — очно и онлайн.</p>
+<div class="search"><input id="search" type="text" placeholder="Должность, компания или навык"><button class="btn btn-red" onclick="renderVacs()">Найти работу</button></div>
+<div class="tags-row"><span>Часто ищут:</span><button onclick="q('Менеджер')">менеджер по продажам</button><button onclick="q('Юрист')">юрист</button><button onclick="q('Экономист')">экономист</button><button onclick="q('удалённо')">удалённо</button><button onclick="q('HR')">hr-специалист</button></div>
+<div class="stats-row">
+<div><b>1 248</b>активных вакансий</div>
+<div><b>312</b>компаний-партнёров</div>
+<div><b>88%</b>трудоустроены за 6 месяцев</div>
+<div><b>78 500 ₽</b>средняя стартовая зарплата</div>
+</div>
 </div>
 </section>
-<div class="tabs-wrap">
-<div class="tabs">
+<div class="tabs-bar"><div class="tabs">
 <button class="tab active" data-tab="vac">Вакансии</button>
-<button class="tab" data-tab="book">Записаться на консультацию</button>
+<button class="tab" data-tab="book">Консультации</button>
 <button class="tab" data-tab="prog">Мой прогресс</button>
-<button class="tab" data-tab="dash">Дашборд</button>
-</div>
-</div>
+<button class="tab" data-tab="dash">Аналитика и работодателям</button>
+</div></div>
 <main class="container">
-<section id="vac" class="tab-page active">
-<div class="layout">
-<aside class="side">
-<h4>Направление</h4>
-<label><input type="radio" name="dir" value="all" checked> Все</label>
+<section id="vac" class="page active">
+<div class="work">
+<aside class="filters">
+<h4>Направление подготовки</h4>
+<label><input type="radio" name="dir" value="all" checked> Все направления</label>
 <label><input type="radio" name="dir" value="Менеджмент"> Менеджмент</label>
 <label><input type="radio" name="dir" value="Экономика"> Экономика</label>
 <label><input type="radio" name="dir" value="Юриспруденция"> Юриспруденция</label>
-<label><input type="radio" name="dir" value="IT"> IT</label>
-<label><input type="radio" name="dir" value="HR"> HR</label>
+<label><input type="radio" name="dir" value="IT"> Информационные технологии</label>
+<label><input type="radio" name="dir" value="HR"> Управление персоналом</label>
 <label><input type="radio" name="dir" value="Маркетинг"> Маркетинг</label>
-<h4 style="margin-top:16px">Формат</h4>
+<h4>Город</h4>
 <label><input type="checkbox" checked> Ростов-на-Дону</label>
 <label><input type="checkbox" checked> Удалённо</label>
+<h4>Опыт</h4>
+<label><input type="checkbox" checked> Без опыта</label>
+<label><input type="checkbox" checked> 1–3 года</label>
+<h4>Центр карьеры</h4>
+<p style="font-size:12.5px;color:#6b7280">Каждая вакансия проверена: договор, наставник, оформление практики для заочной и вечерней форм.</p>
 </aside>
 <div>
-<div class="filters-row">
-<select id="filter" style="max-width:240px">
-<option value="all">Все направления</option>
-<option>Менеджмент</option><option>Экономика</option><option>Юриспруденция</option>
-<option>IT</option><option>HR</option><option>Маркетинг</option>
-</select>
-<span style="align-self:center;color:#8a94a6;font-size:14px" id="count"></span>
-</div>
-<div class="vac-list" id="grid"></div>
+<p class="result-meta" id="count"></p>
+<div style="margin-bottom:12px"><select id="filter" style="max-width:260px;border:1px solid #c3c8cf;border-radius:4px;padding:9px 10px;font-size:14px;font-family:inherit">
+<option value="all">Все направления</option><option>Менеджмент</option><option>Экономика</option><option>Юриспруденция</option><option>IT</option><option>HR</option><option>Маркетинг</option>
+</select></div>
+<div id="grid"></div>
 </div>
 </div>
 </section>
-<section id="book" class="tab-page">
-<div class="card" id="formCard" style="max-width:640px;margin:0 auto">
-<h2>Запись на консультацию</h2>
-<p class="sub">Вечерние окна 17:00–21:00 и суббота — для вечерней и заочной форм обучения</p>
-<label class="fl">Тема</label>
-<select id="topic"><option>Резюме</option><option>Собеседование</option><option>Карьерный путь</option><option>Стажировка</option></select>
-<label class="fl">Дата</label><select id="dateSel"></select>
-<label class="fl">Время</label>
-<div class="radio-row">
+<section id="book" class="page">
+<div class="panel" id="formCard" style="max-width:660px;margin:0 auto">
+<h2>Онлайн-консультация Центра карьеры</h2>
+<p class="lead">Разбираем резюме, готовим к собеседованию, подбираем стажировку. Вечерние слоты — для работающих студентов.</p>
+<div class="field"><label>Тема встречи</label><select id="topic"><option>Разбор резюме</option><option>Подготовка к собеседованию</option><option>Выбор карьерного трека</option><option>Стажировка и практика</option></select></div>
+<div class="field"><label>Дата</label><select id="dateSel"></select></div>
+<div class="field"><label>Время</label><div class="times">
 <label><input type="radio" name="time" checked>17:00</label>
 <label><input type="radio" name="time">18:30</label>
 <label><input type="radio" name="time">20:00</label>
-<label><input type="radio" name="time">Суббота 11:00</label>
-</div>
-<label class="fl">Ваш вопрос (необязательно)</label>
-<textarea placeholder="Например: как составить резюме без опыта?"></textarea>
-<br><br><button class="btn btn-red" onclick="submitForm()">Записаться</button>
-</div>
-</section>
-<section id="prog" class="tab-page">
-<div class="card">
-<h2>Мой прогресс: 40%</h2>
-<div class="bar-bg"><div class="bar-fill"></div></div>
-<div class="badges">
-<div class="badge got"><div class="ico">📄</div><div>Первое резюме</div></div>
-<div class="badge got"><div class="ico">💼</div><div>Первый отклик</div></div>
-<div class="badge got"><div class="ico">🎤</div><div>Первое собеседование</div></div>
-<div class="badge locked"><div class="ico">🔒 🤝</div><div>5 встреч с работодателями</div></div>
-<div class="badge locked"><div class="ico">🔒 🎓</div><div>Стажировка найдена</div></div>
-<div class="badge locked"><div class="ico">🔒 🏅</div><div>Оффер получен</div></div>
-</div>
-<button class="btn btn-red" onclick="alert('Ваш прогресс: 40%! Так держать!')">Поделиться прогрессом</button>
+<label><input type="radio" name="time">Сб, 11:00</label>
+</div></div>
+<div class="field"><label>Комментарий</label><textarea placeholder="Коротко о задаче: курс, направление, куда хотите откликнуться"></textarea></div>
+<button class="btn btn-red" onclick="submitForm()">Записаться на консультацию</button>
+<p class="note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных. Подтверждение придёт в MAX-бот Центра карьеры.</p>
 </div>
 </section>
-<section id="dash" class="tab-page">
-<div class="nums">
-<div class="num-card"><div class="v">88%</div><div>Трудоустройство за 6 мес.</div></div>
-<div class="num-card"><div class="v">78 500 ₽</div><div>Стартовая зарплата</div></div>
-<div class="num-card"><div class="v">312</div><div>Компаний-партнёров</div></div>
+<section id="prog" class="page">
+<div class="panel">
+<div class="progress-top"><span>Карьерный трек студента</span><span>Выполнено: 2 из 5 шагов · 40%</span></div>
+<div class="track"><div class="fill"></div></div>
+<div class="steps">
+<div class="step done"><b>Резюме собрано</b>Проверено карьерным консультантом, 12 марта</div>
+<div class="step done"><b>Первый отклик</b>ЮК «Право и Бизнес», 18 марта</div>
+<div class="step done"><b>Собеседование пройдено</b>Разбор с наставником, 24 марта</div>
+<div class="step locked"><b>Встречи с работодателями</b>Нужно 5 встреч, сейчас 2</div>
+<div class="step locked"><b>Стажировка</b>Подберём после 5 встреч</div>
+<div class="step locked"><b>Оффер</b>Цель — до конца семестра</div>
 </div>
-<div class="card"><h3>Трудоустройство по направлениям</h3><br><div id="bars"></div>
-<p class="note">Данные из опроса выпускников (FDS) и открытого API hh.ru</p>
-<br><div style="display:flex;gap:10px;flex-wrap:wrap">
-<a href="https://hh.ru/search/vacancy?text=&area=76" target="_blank" rel="noopener" class="btn btn-red" style="text-decoration:none;display:inline-block">Все вакансии Ростова на hh.ru →</a>
-<a href="https://hh.ru/employer" target="_blank" rel="noopener" class="btn btn-outline" style="text-decoration:none;display:inline-block">Работодателям: разместить вакансию</a>
-<a href="https://rsv.ru/" target="_blank" rel="noopener" class="btn btn-outline" style="text-decoration:none;display:inline-block">Стажировки и практики →</a>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<button class="btn btn-red" onclick="goTab('vac')">Перейти к вакансиям</button>
+<button class="btn btn-outline" onclick="alert('Ссылка на прогресс скопирована. Можете отправить её наставнику.')">Поделиться прогрессом</button>
+</div>
+</div>
+</section>
+<section id="dash" class="page">
+<div class="kpis">
+<div class="kpi"><b>88%</b><span>выпускников работают по специальности через полгода после выпуска</span></div>
+<div class="kpi"><b>78 500 ₽</b><span>медианная стартовая зарплата, опрос 2025–2026</span></div>
+<div class="kpi"><b>312</b><span>компаний принимают студентов ИУБиП на практику</span></div>
+</div>
+<div class="panel"><h2>Трудоустройство по направлениям</h2><p class="lead">Опрос выпускников, выпуски 2024–2025. Обновлено в сентябре 2026.</p><div class="bars" id="bars"></div>
+<p class="note">Источник: внутренний опрос Центра карьеры и открытые данные hh.ru по Ростовской области.</p>
+<div class="employer-cta">
+<a class="btn btn-red" href="https://hh.ru/search/vacancy?text=&area=76" target="_blank" rel="noopener">Вакансии Ростова на hh.ru</a>
+<a class="btn btn-outline" href="https://hh.ru/employer" target="_blank" rel="noopener">Разместить вакансию</a>
 </div></div>
 </section>
 </main>
-<footer>© 2026 Южный университет (ИУБиП) · Центр карьеры · Ростов-на-Дону</footer>
+<footer>
+<div class="foot-grid">
+<div><h5>Центр карьеры Южного университета (ИУБиП)</h5><p>344068, Ростов-на-Дону, пр. Михаила Нагибина, 14а<br>career@iubip.ru · +7 (863) 000-00-00<br>Пн–Пт 9:00–18:00, Сб 10:00–14:00</p></div>
+<div><h5>Студентам</h5><p><a href="#" onclick="goTab('vac');return false">Вакансии</a><br><a href="#" onclick="goTab('book');return false">Консультации</a><br><a href="#" onclick="goTab('prog');return false">Мой прогресс</a></p></div>
+<div><h5>Работодателям</h5><p><a href="https://hh.ru/employer" target="_blank" rel="noopener">Разместить вакансию</a><br><a href="#" onclick="goTab('dash');return false">Аналитика выпуска</a><br><a href="#" onclick="goTab('book');return false">День карьеры</a></p></div>
+</div>
+<div class="foot-bottom">© 2026 Южный университет (ИУБиП). Все права защищены.</div>
+</footer>
 <div id="toast"></div>
 <script>
 const vacs=[
-{t:"Менеджер по продажам",c:"ООО «Юг-Трейд»",city:"Ростов-на-Дону",s:"55 000–120 000 ₽",tags:["продажи","CRM","переговоры"],dir:"Менеджмент",hh:"https://hh.ru/search/vacancy?text=%D0%9C%D0%B5%D0%BD%D0%B5%D0%B4%D0%B6%D0%B5%D1%80+%D0%BF%D0%BE+%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B6%D0%B0%D0%BC&area=76"},
-{t:"Экономист-аналитик (junior)",c:"ПАО «РостБанк»",city:"Ростов-на-Дону",s:"50 000–110 000 ₽",tags:["Excel","1С","бюджетирование"],dir:"Экономика",hh:"https://hh.ru/search/vacancy?text=%D0%AD%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%81%D1%82&area=76"},
-{t:"Юрист-консультант",c:"ЮК «Право и Бизнес»",city:"Ростов-на-Дону",s:"55 000–130 000 ₽",tags:["договоры","суды","консалтинг"],dir:"Юриспруденция",hh:"https://hh.ru/search/vacancy?text=%D0%AE%D1%80%D0%B8%D1%81%D1%82&area=76"},
-{t:"Системный администратор",c:"ООО «ТехноСофт»",city:"удалённо",s:"70 000–160 000 ₽",tags:["Linux","сети","администрирование"],dir:"IT",hh:"https://hh.ru/search/vacancy?text=%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D1%8B%D0%B9+%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80&area=113&schedule=remote"},
-{t:"HR-специалист (подбор)",c:"ГК «Южный Кадр»",city:"Ростов-на-Дону",s:"45 000–95 000 ₽",tags:["подбор","интервью","HRIS"],dir:"HR",hh:"https://hh.ru/search/vacancy?text=HR+%D0%BF%D0%BE%D0%B4%D0%B1%D0%BE%D1%80&area=76"},
-{t:"SMM-специалист",c:"Digital-агентство «Волна»",city:"удалённо",s:"45 000–100 000 ₽",tags:["SMM","контент","аналитика"],dir:"Маркетинг",hh:"https://hh.ru/search/vacancy?text=SMM&area=113&schedule=remote"},
-{t:"Специалист по госзакупкам",c:"Администрация г. Ростова",city:"Ростов-на-Дону",s:"45 000–90 000 ₽",tags:["44-ФЗ","тендеры","документы"],dir:"Юриспруденция",hh:"https://hh.ru/search/vacancy?text=%D0%93%D0%BE%D1%81%D0%B7%D0%B0%D0%BA%D1%83%D0%BF%D0%BA%D0%B8+44-%D0%A4%D0%97&area=76"},
-{t:"Инженер-кадастровый инженер",c:"ООО «ГеоПроект»",city:"Ростов-на-Дону",s:"55 000–110 000 ₽",tags:["кадастр","геодезия","БТИ"],dir:"Менеджмент",hh:"https://hh.ru/search/vacancy?text=%D0%9A%D0%B0%D0%B4%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B2%D1%8B%D0%B9+%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80&area=76"}
+{t:"Менеджер по продажам",c:"ООО «Юг-Трейд»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"55 000 – 120 000 ₽",d:"B2B-продажи, ведение CRM, выезды к клиентам 2–3 раза в неделю. Наставник первые 2 месяца.",tags:["продажи","CRM","переговоры"],dir:"Менеджмент",hh:"https://hh.ru/search/vacancy?text=%D0%9C%D0%B5%D0%BD%D0%B5%D0%B4%D0%B6%D0%B5%D1%80+%D0%BF%D0%BE+%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B6%D0%B0%D0%BC&area=76"},
+{t:"Экономист-аналитик (junior)",c:"ПАО «РостБанк»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Полная занятость",s:"50 000 – 110 000 ₽",d:"Бюджетирование филиалов, сверки в 1С, подготовка отчётности для руководства.",tags:["Excel","1С","бюджетирование"],dir:"Экономика",hh:"https://hh.ru/search/vacancy?text=%D0%AD%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%81%D1%82&area=76"},
+{t:"Юрист-консультант",c:"ЮК «Право и Бизнес»",city:"Ростов-на-Дону",exp:"Опыт 1–3 года",type:"Полная занятость",s:"55 000 – 130 000 ₽",d:"Договорная работа, претензии, участие в судах. Подходит студентам старших курсов вечерней формы.",tags:["договоры","суды","консалтинг"],dir:"Юриспруденция",hh:"https://hh.ru/search/vacancy?text=%D0%AE%D1%80%D0%B8%D1%81%D1%82&area=76"},
+{t:"Системный администратор",c:"ООО «ТехноСофт»",city:"Удалённо",exp:"Опыт 1–3 года",type:"Удалённо",s:"70 000 – 160 000 ₽",d:"Администрирование Linux, сети, дежурства по графику. Выдаём технику.",tags:["Linux","сети","администрирование"],dir:"IT",hh:"https://hh.ru/search/vacancy?text=%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D1%8B%D0%B9+%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80&area=113&schedule=remote"},
+{t:"HR-специалист (подбор)",c:"ГК «Южный Кадр»",city:"Ростов-на-Дону",exp:"Без опыта",type:"Гибрид",s:"45 000 – 95 000 ₽",d:"Массовый и точечный подбор, телефонные интервью, ведение HRIS.",tags:["подбор","интервью","HRIS"],dir:"HR",hh:"https://hh.ru/search/vacancy?text=HR+%D0%BF%D0%BE%D0%B4%D0%B1%D0%BE%D1%80&area=76"},
+{t:"SMM-специалист",c:"Digital-агентство «Волна»",city:"Удалённо",exp:"Без опыта",type:"Удалённо",s:"45 000 – 100 000 ₽",d:"Ведение 3–4 проектов, контент-план, базовая аналитика. Портфолио будет плюсом.",tags:["SMM","контент","аналитика"],dir:"Маркетинг",hh:"https://hh.ru/search/vacancy?text=SMM&area=113&schedule=remote"},
+{t:"Специалист по госзакупкам",c:"Администрация г. Ростова",city:"Ростов-на-Дону",exp:"Опыт 1–3 года",type:"Полная занятость",s:"45 000 – 90 000 ₽",d:"Работа с 44-ФЗ, подготовка документации, сопровождение тендеров.",tags:["44-ФЗ","тендеры","документы"],dir:"Юриспруденция",hh:"https://hh.ru/search/vacancy?text=%D0%93%D0%BE%D1%81%D0%B7%D0%B0%D0%BA%D1%83%D0%BF%D0%BA%D0%B8+44-%D0%A4%D0%97&area=76"},
+{t:"Кадастровый инженер",c:"ООО «ГеоПроект»",city:"Ростов-на-Дону",exp:"Опыт 1–3 года",type:"Полная занятость",s:"55 000 – 110 000 ₽",d:"Межевание, техпланы, взаимодействие с Росреестром. Разъездной характер.",tags:["кадастр","геодезия","БТИ"],dir:"Менеджмент",hh:"https://hh.ru/search/vacancy?text=%D0%9A%D0%B0%D0%B4%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B2%D1%8B%D0%B9+%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80&area=76"}
 ];
 const grid=document.getElementById('grid');
 function curDir(){const r=document.querySelector('input[name=dir]:checked');return r?r.value:document.getElementById('filter').value}
 function renderVacs(){
-const query=document.getElementById('search').value.toLowerCase();
-const f=document.getElementById('filter').value;
-const d=curDir();const dir=d&&d!=='all'?d:(f||'all');
-const list=vacs.filter(v=>(dir==='all'||v.dir===dir)&&(v.t+' '+v.c+' '+v.city).toLowerCase().includes(query));
-document.getElementById('count').textContent='Найдено: '+list.length;
+const query=document.getElementById('search').value.toLowerCase().trim();
+const f=document.getElementById('filter').value;const d=curDir();
+const dir=d&&d!=='all'?d:(f||'all');
+const list=vacs.filter(v=>(dir==='all'||v.dir===dir)&&(v.t+' '+v.c+' '+v.city+' '+v.tags.join(' ')).toLowerCase().includes(query));
+document.getElementById('count').textContent='Найдено вакансий: '+list.length+' · обновлено сегодня в 9:20';
 grid.innerHTML='';
-list.forEach(v=>{
-const el=document.createElement('div');el.className='vac';
-el.innerHTML='<div class="vac-top"><a class="vac-title" href="'+v.hh+'" target="_blank" rel="noopener">'+v.t+'</a><div class="vac-salary">'+v.s+'</div></div><div class="vac-company">'+v.c+'</div><div class="vac-city">'+v.city+' · '+v.dir+'</div><div class="vac-tags">'+v.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div><div class="vac-foot"><span class="vac-date">Сегодня · <a href="'+v.hh+'" target="_blank" rel="noopener" style="color:#0f6cbd">Смотреть на hh.ru →</a></span><span><button class="btn btn-outline" style="margin-right:8px">Подробнее</button><button class="btn btn-red">Откликнуться</button></span></div>';
-el.querySelectorAll('button')[0].onclick=()=>window.open(v.hh,'_blank');
-el.querySelectorAll('button')[1].onclick=()=>{showToast('✅ Отклик отправлен в '+v.c);window.open(v.hh,'_blank')};
+list.forEach((v,i)=>{
+const el=document.createElement('article');el.className='vacancy';
+el.innerHTML='<div class="vac-head"><a class="vac-title" href="'+v.hh+'" target="_blank" rel="noopener">'+v.t+'</a><div class="vac-salary">'+v.s+'</div></div>'
++'<div class="vac-sub">'+v.c+' · '+v.city+'</div>'
++'<div class="vac-meta" style="margin-top:4px">Опыт: '+v.exp+' · '+v.type+' · откликов сегодня: '+(3+i*2)+'</div>'
++'<p class="vac-desc">'+v.d+'</p>'
++'<div class="vac-skills">'+v.tags.map(t=>'<span class="skill">'+t+'</span>').join('')+'</div>'
++'<div class="vac-bottom"><span class="vac-meta">Проверка Центра карьеры · на сайте с 10 сентября</span><span class="vac-actions"><a class="btn btn-outline" href="'+v.hh+'" target="_blank" rel="noopener">На hh.ru</a><button class="btn btn-red">Откликнуться</button></span></div>';
+el.querySelector('button').onclick=()=>{showToast('Отклик отправлен: '+v.c+'. Детали — на hh.ru');window.open(v.hh,'_blank')};
 grid.appendChild(el);
 });
-if(!grid.innerHTML)grid.innerHTML='<div class="card">Ничего не найдено. Попробуйте изменить запрос.</div>';
+if(!grid.innerHTML)grid.innerHTML='<div class="panel">По запросу ничего не нашлось. Попробуйте упростить формулировку или позвоните нам: +7 (863) 000-00-00.</div>';
 }
-function q(s){document.getElementById('search').value=s;renderVacs()}
-document.getElementById('search').oninput=renderVacs;
+function q(s){document.getElementById('search').value=s;renderVacs();goTab('vac')}
+document.getElementById('search').addEventListener('input',renderVacs);
 document.getElementById('filter').onchange=renderVacs;
 document.querySelectorAll('input[name=dir]').forEach(r=>r.onchange=()=>{document.getElementById('filter').value=r.value;renderVacs()});
 renderVacs();
-function goTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.tab-page').forEach(x=>x.classList.toggle('active',x.id===id));window.scrollTo({top:320,behavior:'smooth'})}
+function goTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));window.scrollTo({top:300,behavior:'smooth'})}
 document.querySelectorAll('.tab').forEach(b=>{b.onclick=()=>goTab(b.dataset.tab)});
 let toastTimer;
 function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3000)}
 const ds=document.getElementById('dateSel');
 const days=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],months=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
 for(let i=1;i<=7;i++){const d=new Date();d.setDate(d.getDate()+i);const o=document.createElement('option');o.textContent=days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()];ds.appendChild(o)}
-function submitForm(){document.getElementById('formCard').innerHTML='<div class="success">✅ Вы записаны! Подтверждение придёт в MAX-бот Центра карьеры.</div>'}
+function submitForm(){document.getElementById('formCard').innerHTML='<div class="ok"><b>Заявка отправлена.</b><br>Мы подтвердим время в MAX-боте в течение рабочего дня и напомним за час до встречи.</div>'}
 const chartData=[["Менеджмент",91],["Экономика",87],["Юриспруденция",89],["IT",94],["HR",85],["Маркетинг",82]];
 const bars=document.getElementById('bars');
-chartData.forEach(([n,p])=>{const r=document.createElement('div');r.className='bar-row';r.innerHTML='<div class="name">'+n+'</div><div class="bar-track"><div class="bar-val" style="width:'+p+'%">'+p+'%</div></div>';bars.appendChild(r)});
+chartData.forEach(([n,p])=>{const r=document.createElement('div');r.className='brow';r.innerHTML='<span>'+n+'</span><div class="btrack"><div class="bfill" style="width:'+p+'%"></div></div><span>'+p+'%</span>';bars.appendChild(r)});
 </script>
 </body>
 </html>

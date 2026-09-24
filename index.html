@@ -172,6 +172,11 @@ footer a:hover{text-decoration:underline}
 .cnode .sal{font-size:23px;font-weight:800;color:var(--navy)}
 .cnode .sal small{font-size:13px;color:var(--muted);font-weight:400}
 .cnode p{font-size:13.5px;color:#3c424a;margin-top:6px}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.pill{background:#fff;border:1px solid var(--line);border-radius:20px;padding:8px 16px;font-size:13.5px;cursor:pointer;font-family:inherit;color:#2b2f36}
+.pill:hover{border-color:var(--navy)}
+.pill.on{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:600}
+.ibadge{display:inline-block;background:#eef6ee;border:1px solid #9dbf9f;color:#1d4d24;font-size:12px;font-weight:700;padding:3px 10px;border-radius:3px;white-space:nowrap}
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:#101418;color:#fff;padding:12px 20px;border-left:4px solid var(--gold);font-size:14px;opacity:0;transition:.25s;z-index:100;max-width:92%}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:920px){.work{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr}.head-phones{display:none}.hero h2{font-size:24px}.search-panel{flex-direction:column}.usearch{display:none}}
@@ -203,6 +208,7 @@ footer a:hover{text-decoration:underline}
 </div></header>
 <nav class="unav"><div class="unav-inner">
 <button class="active" data-tab="vac">Вакансии</button>
+<button data-tab="intern">Стажировки</button>
 <button data-tab="resume">Конструктор резюме</button>
 <button data-tab="amb">Амбассадоры</button>
 <button data-tab="book">Консультации</button>
@@ -272,6 +278,12 @@ footer a:hover{text-decoration:underline}
 </div>
 </div>
 </div>
+</section>
+<section id="intern" class="page">
+<div class="section-head"><h2>Стажировки и практика</h2><span>бесплатные программы Ростовской области</span></div>
+<div class="panel" style="margin-bottom:14px"><p class="lead" style="margin:0">Бесплатные стажировки и практика от работодателей региона: IT, банки, производство, госслужба. Выберите академию — покажем подходящие программы. Наборы идут волнами.</p></div>
+<div class="pills" id="intPills"></div>
+<div id="intGrid" style="margin-top:14px"></div>
 </section>
 <section id="resume" class="page">
 <div class="section-head"><h2>Конструктор резюме</h2><span>5 шагов · вопросы под вашу академию · выгрузка в Word</span></div>
@@ -463,6 +475,55 @@ grid.appendChild(el);
 });
 if(!grid.innerHTML)grid.innerHTML='<div class="panel">По запросу ничего не нашлось. Позвоните нам: 8 800 77-55-012 — подберём варианты вручную.</div>';
 }
+/* ===== Стажировки: принцип тот же — сначала академия ===== */
+const ASHORT={law:"Право",hum:"Гуманитарные",itd:"IT и управление",ect:"Экономика и туризм",medic:"Медколледж"};
+let currentIntAcad="all";
+function intLink(v){return v.u||("https://hh.ru/search/vacancy?text="+encodeURIComponent(v.hq||v.t)+"&area=76")}
+const INTERNS=[
+{t:"Стажёр Fullstack-разработчик (Ruby on Rails + Vue)",c:"RNDSOFT · г. Ростов-на-Дону",dur:"15 недель",forWhom:"Выпускные курсы, базовый опыт кода",format:"Бесплатно",note:"Бесплатная стажировка по Fullstack Web-разработке: реальные задачи с наставником.",tags:["Ruby on Rails","Vue","fullstack"],acads:["itd"],hq:"RNDSOFT"},
+{t:"ВТБ Юниор",c:"Банк ВТБ · г. Ростов-на-Дону",dur:"По программе",forWhom:"4 курс бакалавриата, 1–2 курс магистратуры",format:"Обучение бесплатно",note:"Стажировка доступна в Ростове-на-Дону: финансы, IT, розница и другие направления.",tags:["банки","финансы","стажировка"],acads:["ect","itd","law"],u:"https://rabota.vtb.ru/"},
+{t:"«Учебный год в СТЕПИ»",c:"Агрохолдинг «СТЕПЬ»",dur:"Учебный год",forWhom:"Студенты смежных направлений",format:"Питание + жильё",note:"Бесплатные питание и проживание, организован трансфер. Практика на предприятиях холдинга.",tags:["агро","производство"],acads:["ect"],hq:"СТЕПЬ"},
+{t:"Практика в энергетике",c:"ПАО «ТНС энерго Ростов-на-Дону»",dur:"Семестр",forWhom:"Студенты профильных направлений",format:"Бесплатно",note:"Совместные с вузами программы практики. Детали — у куратора академии.",tags:["энергетика","практика"],acads:["itd","ect"],hq:"ТНС энерго"},
+{t:"ГосСтарт.Стажировки",c:"Органы власти Ростовской области",dur:"По программе",forWhom:"Выпускные курсы, 18–35 лет",format:"Неоплачиваемая",note:"Стажировка в исполнительных органах власти и муниципалитетах. Заявки подаются через систему «Молодежь России».",tags:["госслужба","практика"],acads:["law","ect","hum"],u:""},
+{t:"Кадровый сервис — практика и стажёры",c:"Центр «Мой бизнес» Ростовской области",dur:"Постоянно",forWhom:"Студенты всех направлений",format:"Бесплатно",note:"Предприниматели размещают запросы на стажёров, студенты находят практику и оценивают перспективы в регионе.",tags:["практика","все направления"],acads:["law","hum","itd","ect","medic"],u:"https://mbrostov.ru"},
+{t:"Стажировки для студентов",c:"Сбер",dur:"По программам",forWhom:"Студенты разных направлений",format:"Бесплатно",note:"Стажировки в IT, маркетинге, HR, финансах. Смотрите открытые наборы.",tags:["банки","IT","стажировка"],acads:["itd","ect","hum","law"],hq:"Сбер стажировка"},
+{t:"Стажировки в IT",c:"ЛАНИТ",dur:"По программам",forWhom:"Студенты IT-направлений",format:"Бесплатно",note:"Программы для студентов в регионе. Смотрите открытые наборы.",tags:["IT","стажировка"],acads:["itd"],hq:"ЛАНИТ"},
+{t:"Стажировки для разработчиков",c:"Aston",dur:"По программам",forWhom:"Студенты IT-направлений",format:"Бесплатно",note:"Ростовская IT-компания, программы для студентов. Смотрите открытые наборы.",tags:["IT","разработка"],acads:["itd"],hq:"Aston"},
+{t:"Стажировки на производстве",c:"«Балтика»",dur:"По программам",forWhom:"Студенты",format:"Бесплатно",note:"Программы для студентов в регионе. Смотрите открытые наборы.",tags:["производство"],acads:["ect"],hq:"Балтика"},
+{t:"Стажировки в продажах и маркетинге",c:"Coca-Cola",dur:"По программам",forWhom:"Студенты",format:"Бесплатно",note:"Программы для студентов в регионе. Смотрите открытые наборы.",tags:["продажи","маркетинг"],acads:["ect"],hq:"Coca-Cola"},
+{t:"Стажировки",c:"EVRAZ",dur:"По программам",forWhom:"Студенты технических и экономических направлений",format:"Бесплатно",note:"Программы для студентов. Смотрите открытые наборы.",tags:["производство","экономика"],acads:["itd","ect"],hq:"EVRAZ"},
+{t:"Стажировки в fashion-ритейле",c:"«Глория Джинс»",dur:"По программам",forWhom:"Студенты (штаб-квартира — в Ростове-на-Дону)",format:"Бесплатно",note:"Головной офис — в Ростове-на-Дону: дизайн, маркетинг, IT, HR.",tags:["ритейл","маркетинг","дизайн"],acads:["ect","hum"],hq:"Глория Джинс"},
+{t:"Практика в больницах области",c:"Медорганизации Ростовской области",dur:"По учебному плану",forWhom:"Студенты медицинского колледжа",format:"Бесплатно",note:"Практику согласуйте с директором медколледжа: Дружинина Валерия Павловна, med@iubip.ru.",tags:["медицина","практика"],acads:["medic"],u:"mailto:med@iubip.ru?subject=Практика%20студента"}
+];
+function renderIntPills(){
+const p=document.getElementById('intPills');
+let html='<button class="pill'+(currentIntAcad==='all'?' on':'')+'" data-a="all">Все академии</button>';
+ACADS.forEach(a=>{html+='<button class="pill'+(currentIntAcad===a.id?' on':'')+'" data-a="'+a.id+'">'+(ASHORT[a.id]||a.name)+'</button>'});
+p.innerHTML=html;
+p.querySelectorAll('.pill').forEach(b=>{b.onclick=()=>{currentIntAcad=b.dataset.a;renderIntPills();renderInterns()}});
+}
+function renderInterns(){
+const g=document.getElementById('intGrid');g.innerHTML='';
+const list=INTERNS.filter(v=>currentIntAcad==='all'||v.acads.indexOf(currentIntAcad)>=0);
+list.forEach(v=>{
+const link=intLink(v);
+const el=document.createElement('article');el.className='vacancy';
+let actions='';
+if(!v.u){actions='<button class="btn btn-navy">Как попасть</button>'}
+else if(v.u.indexOf('mailto:')===0){actions='<a class="btn btn-navy" href="'+v.u+'">Написать в колледж</a>'}
+else{actions='<a class="btn btn-outline" href="'+link+'" target="_blank" rel="noopener">Открыть программу</a><button class="btn btn-navy">Хочу туда</button>'}
+el.innerHTML='<div class="vac-head"><span class="vac-title" style="cursor:default">'+v.t+'</span><span class="ibadge">'+v.format+'</span></div>'
++'<div class="vac-sub">'+v.c+'</div>'
++'<div class="vac-meta">Кому: '+v.forWhom+' · Срок: '+v.dur+'</div>'
++'<p class="vac-desc">'+v.note+'</p>'
++'<div class="vac-skills">'+v.tags.map(t=>'<span class="skill">'+t+'</span>').join('')+'</div>'
++'<div class="vac-bottom"><span class="vac-src">Академии: '+v.acads.map(a=>ASHORT[a]).join(', ')+'</span><span class="vac-actions">'+actions+'</span></div>';
+const btn=el.querySelector('button');
+if(btn){if(!v.u){btn.onclick=()=>showToast('ГосСтарт: заявки — через систему «Молодежь России» (18–35 лет). Детали — у куратора академии')}else{btn.onclick=()=>{showToast('Открываем программу: '+v.c);window.open(link,'_blank')}}}
+g.appendChild(el);
+});
+if(!g.innerHTML)g.innerHTML='<div class="panel">В этой академии пока нет подборки — загляните во «Все академии» или спросите куратора.</div>';
+}
 function heroSearch(){goTab('vac');openAcad('all')}
 function q(s){document.getElementById('search').value=s;goTab('vac');openAcad('all')}
 document.getElementById('search').addEventListener('input',()=>{if(currentAcad==='cards')openAcad('all');else renderVacs()});
@@ -606,6 +667,7 @@ const chartData=[["Менеджмент",91],["Экономика",87],["Юри�
 const bars=document.getElementById('bars');
 chartData.forEach(([n,p])=>{const r=document.createElement('div');r.className='brow';r.innerHTML='<span>'+n+'</span><div class="btrack"><div class="bfill" style="width:'+p+'%"></div></div><span>'+p+'%</span>';bars.appendChild(r)});
 rbRender();
+renderIntPills();renderInterns();
 </script>
 </body>
 </html>

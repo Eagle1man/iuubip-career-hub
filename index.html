@@ -105,7 +105,7 @@ footer{background:#1f2329;color:#b9c0cb;text-align:center;padding:22px 16px;font
 <div class="header-inner">
 <div class="logo"><span class="logo-mark">юу</span><span>ЮУ Работа<small>Центр карьеры ИУБиП · Ростов-на-Дону</small></span></div>
 <nav class="hnav"><a href="#" onclick="goTab('vac');return false">Вакансии</a><a href="#" onclick="goTab('book');return false">Консультации</a><a href="#" onclick="goTab('dash');return false">Работодателям</a></nav>
-<div class="hbtns"><button class="btn btn-outline" onclick="goTab('dash')">Найти сотрудника</button><button class="btn btn-red" onclick="goTab('book')">Войти</button></div>
+<div class="hbtns"><button class="btn btn-outline" onclick="goTab('dash')">Найти сотрудника</button><button class="btn btn-red" onclick="goTab('prog')">Войти</button></div>
 </div>
 </header>
 <section class="hero">
@@ -195,21 +195,26 @@ footer{background:#1f2329;color:#b9c0cb;text-align:center;padding:22px 16px;font
 <div class="num-card"><div class="v">312</div><div>Компаний-партнёров</div></div>
 </div>
 <div class="card"><h3>Трудоустройство по направлениям</h3><br><div id="bars"></div>
-<p class="note">Данные из опроса выпускников (FDS) и открытого API hh.ru</p></div>
+<p class="note">Данные из опроса выпускников (FDS) и открытого API hh.ru</p>
+<br><div style="display:flex;gap:10px;flex-wrap:wrap">
+<a href="https://hh.ru/search/vacancy?text=&area=76" target="_blank" rel="noopener" class="btn btn-red" style="text-decoration:none;display:inline-block">Все вакансии Ростова на hh.ru →</a>
+<a href="https://hh.ru/employer" target="_blank" rel="noopener" class="btn btn-outline" style="text-decoration:none;display:inline-block">Работодателям: разместить вакансию</a>
+<a href="https://rsv.ru/" target="_blank" rel="noopener" class="btn btn-outline" style="text-decoration:none;display:inline-block">Стажировки и практики →</a>
+</div></div>
 </section>
 </main>
 <footer>© 2026 Южный университет (ИУБиП) · Центр карьеры · Ростов-на-Дону</footer>
 <div id="toast"></div>
 <script>
 const vacs=[
-{t:"Менеджер по продажам",c:"ООО «Юг-Трейд»",city:"Ростов-на-Дону",s:"55 000–120 000 ₽",tags:["продажи","CRM","переговоры"],dir:"Менеджмент"},
-{t:"Экономист-аналитик (junior)",c:"ПАО «РостБанк»",city:"Ростов-на-Дону",s:"50 000–110 000 ₽",tags:["Excel","1С","бюджетирование"],dir:"Экономика"},
-{t:"Юрист-консультант",c:"ЮК «Право и Бизнес»",city:"Ростов-на-Дону",s:"55 000–130 000 ₽",tags:["договоры","суды","консалтинг"],dir:"Юриспруденция"},
-{t:"Системный администратор",c:"ООО «ТехноСофт»",city:"удалённо",s:"70 000–160 000 ₽",tags:["Linux","сети","администрирование"],dir:"IT"},
-{t:"HR-специалист (подбор)",c:"ГК «Южный Кадр»",city:"Ростов-на-Дону",s:"45 000–95 000 ₽",tags:["подбор","интервью","HRIS"],dir:"HR"},
-{t:"SMM-специалист",c:"Digital-агентство «Волна»",city:"удалённо",s:"45 000–100 000 ₽",tags:["SMM","контент","аналитика"],dir:"Маркетинг"},
-{t:"Специалист по госзакупкам",c:"Администрация г. Ростова",city:"Ростов-на-Дону",s:"45 000–90 000 ₽",tags:["44-ФЗ","тендеры","документы"],dir:"Юриспруденция"},
-{t:"Инженер-кадастровый инженер",c:"ООО «ГеоПроект»",city:"Ростов-на-Дону",s:"55 000–110 000 ₽",tags:["кадастр","геодезия","БТИ"],dir:"Менеджмент"}
+{t:"Менеджер по продажам",c:"ООО «Юг-Трейд»",city:"Ростов-на-Дону",s:"55 000–120 000 ₽",tags:["продажи","CRM","переговоры"],dir:"Менеджмент",hh:"https://hh.ru/search/vacancy?text=%D0%9C%D0%B5%D0%BD%D0%B5%D0%B4%D0%B6%D0%B5%D1%80+%D0%BF%D0%BE+%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B6%D0%B0%D0%BC&area=76"},
+{t:"Экономист-аналитик (junior)",c:"ПАО «РостБанк»",city:"Ростов-на-Дону",s:"50 000–110 000 ₽",tags:["Excel","1С","бюджетирование"],dir:"Экономика",hh:"https://hh.ru/search/vacancy?text=%D0%AD%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%81%D1%82&area=76"},
+{t:"Юрист-консультант",c:"ЮК «Право и Бизнес»",city:"Ростов-на-Дону",s:"55 000–130 000 ₽",tags:["договоры","суды","консалтинг"],dir:"Юриспруденция",hh:"https://hh.ru/search/vacancy?text=%D0%AE%D1%80%D0%B8%D1%81%D1%82&area=76"},
+{t:"Системный администратор",c:"ООО «ТехноСофт»",city:"удалённо",s:"70 000–160 000 ₽",tags:["Linux","сети","администрирование"],dir:"IT",hh:"https://hh.ru/search/vacancy?text=%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D1%8B%D0%B9+%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80&area=113&schedule=remote"},
+{t:"HR-специалист (подбор)",c:"ГК «Южный Кадр»",city:"Ростов-на-Дону",s:"45 000–95 000 ₽",tags:["подбор","интервью","HRIS"],dir:"HR",hh:"https://hh.ru/search/vacancy?text=HR+%D0%BF%D0%BE%D0%B4%D0%B1%D0%BE%D1%80&area=76"},
+{t:"SMM-специалист",c:"Digital-агентство «Волна»",city:"удалённо",s:"45 000–100 000 ₽",tags:["SMM","контент","аналитика"],dir:"Маркетинг",hh:"https://hh.ru/search/vacancy?text=SMM&area=113&schedule=remote"},
+{t:"Специалист по госзакупкам",c:"Администрация г. Ростова",city:"Ростов-на-Дону",s:"45 000–90 000 ₽",tags:["44-ФЗ","тендеры","документы"],dir:"Юриспруденция",hh:"https://hh.ru/search/vacancy?text=%D0%93%D0%BE%D1%81%D0%B7%D0%B0%D0%BA%D1%83%D0%BF%D0%BA%D0%B8+44-%D0%A4%D0%97&area=76"},
+{t:"Инженер-кадастровый инженер",c:"ООО «ГеоПроект»",city:"Ростов-на-Дону",s:"55 000–110 000 ₽",tags:["кадастр","геодезия","БТИ"],dir:"Менеджмент",hh:"https://hh.ru/search/vacancy?text=%D0%9A%D0%B0%D0%B4%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B2%D1%8B%D0%B9+%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80&area=76"}
 ];
 const grid=document.getElementById('grid');
 function curDir(){const r=document.querySelector('input[name=dir]:checked');return r?r.value:document.getElementById('filter').value}
@@ -222,8 +227,9 @@ document.getElementById('count').textContent='Найдено: '+list.length;
 grid.innerHTML='';
 list.forEach(v=>{
 const el=document.createElement('div');el.className='vac';
-el.innerHTML='<div class="vac-top"><a class="vac-title">'+v.t+'</a><div class="vac-salary">'+v.s+'</div></div><div class="vac-company">'+v.c+'</div><div class="vac-city">'+v.city+' · '+v.dir+'</div><div class="vac-tags">'+v.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div><div class="vac-foot"><span class="vac-date">Сегодня · откликов: '+(5+Math.floor(Math.random()*40))+'</span><button class="btn btn-red">Откликнуться</button></div>';
-el.querySelector('button').onclick=()=>showToast('✅ Отклик отправлен в '+v.c);
+el.innerHTML='<div class="vac-top"><a class="vac-title" href="'+v.hh+'" target="_blank" rel="noopener">'+v.t+'</a><div class="vac-salary">'+v.s+'</div></div><div class="vac-company">'+v.c+'</div><div class="vac-city">'+v.city+' · '+v.dir+'</div><div class="vac-tags">'+v.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div><div class="vac-foot"><span class="vac-date">Сегодня · <a href="'+v.hh+'" target="_blank" rel="noopener" style="color:#0f6cbd">Смотреть на hh.ru →</a></span><span><button class="btn btn-outline" style="margin-right:8px">Подробнее</button><button class="btn btn-red">Откликнуться</button></span></div>';
+el.querySelectorAll('button')[0].onclick=()=>window.open(v.hh,'_blank');
+el.querySelectorAll('button')[1].onclick=()=>{showToast('✅ Отклик отправлен в '+v.c);window.open(v.hh,'_blank')};
 grid.appendChild(el);
 });
 if(!grid.innerHTML)grid.innerHTML='<div class="card">Ничего не найдено. Попробуйте изменить запрос.</div>';

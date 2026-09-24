@@ -149,6 +149,17 @@ footer a:hover{text-decoration:underline}
 .amb-card li{margin-bottom:4px}
 .amb-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 @media(max-width:860px){.amb-grid{grid-template-columns:1fr}}
+.slogan{font-family:Georgia,serif;font-size:22px;color:var(--navy);text-align:center;margin:2px 0}
+.slogan-sub{text-align:center;color:var(--muted);font-size:13.5px;margin:6px 0 16px}
+.ctrack{position:relative;margin:6px 0;padding-left:28px}
+.ctrack:before{content:"";position:absolute;left:9px;top:10px;bottom:10px;width:3px;background:linear-gradient(var(--navy),var(--gold))}
+.cnode{position:relative;background:#fff;border:1px solid var(--line);padding:16px 18px;margin-bottom:12px}
+.cnode:before{content:"";position:absolute;left:-25px;top:22px;width:10px;height:10px;background:var(--gold);border:2px solid var(--navy);border-radius:50%}
+.cnode .lvl{font-size:11.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+.cnode h3{font-family:Georgia,serif;color:var(--navy);font-size:18px;margin:2px 0 4px}
+.cnode .sal{font-size:23px;font-weight:800;color:var(--navy)}
+.cnode .sal small{font-size:13px;color:var(--muted);font-weight:400}
+.cnode p{font-size:13.5px;color:#3c424a;margin-top:6px}
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:#101418;color:#fff;padding:12px 20px;border-left:4px solid var(--gold);font-size:14px;opacity:0;transition:.25s;z-index:100;max-width:92%}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:920px){.work{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr}.head-contact{display:none}.hero h2{font-size:24px}.search-panel{flex-direction:column}}
@@ -300,6 +311,16 @@ footer a:hover{text-decoration:underline}
 </section>
 <section id="dash" class="page">
 <div class="section-head"><h2>Работодателям и аналитика</h2><span>итоги 2025–2026 учебного года</span></div>
+<div class="panel" style="margin-bottom:14px">
+<div class="slogan">«Вкладываясь в образование — вкладываешься в должность и зарплату»</div>
+<div class="slogan-sub">Карьерный трек студента Южного университета: каждая ступень образования открывает следующий уровень дохода. Вилки ориентировочные, Ростов-на-Дону, 2026.</div>
+<div class="ctrack">
+<div class="cnode"><div class="lvl">Ступень 1 · Колледж (СПО)</div><h3>Старт карьеры</h3><div class="sal">35 000 – 60 000 ₽ <small>старт</small></div><p>Сестринское дело, фармация, экономика и бухучёт, туризм и гостеприимство. Должности: медсестра, фармацевт, помощник специалиста, администратор.</p></div>
+<div class="cnode"><div class="lvl">Ступень 2 · Бакалавриат</div><h3>Специалист</h3><div class="sal">55 000 – 100 000 ₽ <small>старт</small></div><p>Юриспруденция, экономика, менеджмент, психология, туризм. Должности: юрист, экономист, менеджер по продажам, HR-специалист.</p></div>
+<div class="cnode"><div class="lvl">Ступень 3 · Магистратура</div><h3>Эксперт и руководитель</h3><div class="sal">80 000 – 150 000 ₽ <small>старт</small></div><p>Финансовые технологии, частное и уголовное право, клиническая психология, управление бизнесом. Должности: аналитик, руководитель направления, эксперт.</p></div>
+</div>
+<p class="legal" style="margin-bottom:0">Ориентиры по открытым вакансиям региона (trudvsem.ru, hh.ru). Реальная зарплата зависит от направления, опыта и работодателя — точные цифры подскажет куратор вашей академии.</p>
+</div>
 <div class="kpis">
 <div class="kpi"><b>88%</b><span>выпускников работают по специальности через полгода после выпуска</span></div>
 <div class="kpi"><b>78 500 ₽</b><span>медианная стартовая зарплата по опросу выпускников</span></div>

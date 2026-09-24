@@ -150,6 +150,7 @@ footer a:hover{text-decoration:underline}
 .rb-hint{background:#f6f1dd;border-left:3px solid var(--gold);padding:10px 12px;font-size:13px;color:#5a5340;margin:10px 0 14px}
 .rb-preview{border:1px solid var(--line);padding:22px;background:#fbfbfc;font-size:14px}
 .rb-preview h3{font-family:Georgia,serif;color:var(--navy);font-size:20px;margin-bottom:2px}
+.rb-photo{width:120px;height:150px;object-fit:cover;border:1px solid var(--line);background:#fff}
 .rb-preview .pos{font-weight:700;margin:6px 0 2px}
 .rb-preview .sec{margin-top:12px}
 .rb-preview .sec b{display:block;color:var(--navy);font-size:13px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
@@ -584,16 +585,16 @@ const ba=document.getElementById('bookAcad');const a=ACADS.find(x=>x.id===ba.val
 const info=a?('<br>Ваш куратор: '+a.head+', '+a.phone+', '+a.email+'.'):'';
 document.getElementById('formCard').innerHTML='<div class="ok"><b>Заявка принята.</b><br>Сотрудник Центра карьеры подтвердит время в MAX-боте в течение рабочего дня.'+info+'</div>';}
 /* ===== Конструктор резюме: опросник по шагам, всё под выбранную академию ===== */
-const RB={step:1,acad:"",name:"",phone:"",email:"",city:"Ростов-на-Дону",course:"3 курс",position:"",customPos:"",employment:"Полная занятость",program:"",year:"2026",practice:"",skills:[],customSkills:"",about:""};
+const RB={step:1,acad:"",name:"",phone:"",email:"",city:"Ростов-на-Дону",course:"3 курс",birth:"",photo:"",position:"",customPos:"",employment:"Полная занятость",salary:"",program:"",year:"2026",practice:"",skills:[],customSkills:"",langs:"",courses:"",about:""};
 const RB_TITLES=["1. Академия","2. Контакты","3. Цель","4. Опыт и навыки","5. Готово"];
 function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 function rbAcad(){return ACADS.find(a=>a.id===RB.acad)}
 function rbCollect(){
 const g=id=>{const el=document.getElementById(id);return el?el.value:""};
 if(RB.step===1){const r=document.querySelector('input[name=rbAcad]:checked');RB.acad=r?r.value:""}
-if(RB.step===2){RB.name=g('rbName');RB.phone=g('rbPhone');RB.email=g('rbEmail');RB.city=g('rbCity');RB.course=g('rbCourse')}
-if(RB.step===3){RB.position=g('rbPosition');RB.customPos=g('rbCustomPos');RB.employment=g('rbEmployment')}
-if(RB.step===4){RB.program=g('rbProgram');RB.year=g('rbYear');RB.practice=g('rbPractice');RB.about=g('rbAbout');
+if(RB.step===2){RB.name=g('rbName');RB.phone=g('rbPhone');RB.email=g('rbEmail');RB.city=g('rbCity');RB.course=g('rbCourse');RB.birth=g('rbBirth')}
+if(RB.step===3){RB.position=g('rbPosition');RB.customPos=g('rbCustomPos');RB.employment=g('rbEmployment');RB.salary=g('rbSalary')}
+if(RB.step===4){RB.program=g('rbProgram');RB.year=g('rbYear');RB.practice=g('rbPractice');RB.about=g('rbAbout');RB.langs=g('rbLangs');RB.courses=g('rbCourses');
 RB.skills=[].map.call(document.querySelectorAll('input[name=rbSkill]:checked'),x=>x.value);RB.customSkills=g('rbCustomSkills')}
 }
 function rbNav(d){
@@ -621,9 +622,11 @@ b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 1.</b> В какой ака
 if(RB.step===2){
 b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 2.</b> Как с вами связаться? <span style="color:#6b7280">Академия: '+(a?a.name:'—')+'</span></p>'
 +'<div class="rb-hint">Совет: телефон — рабочий, с WhatsApp или MAX. Email проверьте дважды: опечатка — и приглашение уйдёт в никуда. Город — где реально готовы работать.</div>'
++'<div class="field"><label>Фото (необязательно, до 2 МБ)</label><input id="rbPhotoFile" type="file" accept="image/*" onchange="rbPhoto(this)"><div id="rbPhotoPrevWrap" style="margin-top:8px">'+(RB.photo?'<img src="'+RB.photo+'" class="rb-photo">':'')+'</div></div>'
 +'<div class="field"><label>ФИО</label><input id="rbName" type="text" value="'+esc(RB.name)+'" placeholder="Иванова Анна Сергеевна"></div>'
 +'<div class="field"><label>Телефон</label><input id="rbPhone" type="text" value="'+esc(RB.phone)+'" placeholder="+7 (___) ___-__-__"></div>'
 +'<div class="field"><label>Email</label><input id="rbEmail" type="text" value="'+esc(RB.email)+'" placeholder="anna@example.ru"></div>'
++'<div class="field"><label>Дата рождения (необязательно)</label><input id="rbBirth" type="text" value="'+esc(RB.birth)+'" placeholder="01.01.2006"></div>'
 +'<div class="field"><label>Город</label><input id="rbCity" type="text" value="'+esc(RB.city)+'"></div>'
 +'<div class="field"><label>Курс</label><select id="rbCourse">'+["1 курс","2 курс","3 курс","4 курс","5 курс","Магистратура, 1 курс","Магистратура, 2 курс","Колледж","Выпускник"].map(c=>'<option'+(RB.course===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>';
 }
@@ -633,7 +636,8 @@ b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 3.</b> Кем хотите 
 +'<div class="rb-hint">Совет: студенту — честная junior-должность из списка, а не завышенная. Работодатель ищет по названию: пишите так же, как в вакансии, на которую откликаетесь.</div>'
 +'<div class="field"><label>Желаемая должность</label><select id="rbPosition"><option value="">— выбрать —</option>'+pos.map(p=>'<option'+(RB.position===p?' selected':'')+'>'+p+'</option>').join('')+'</select></div>'
 +'<div class="field"><label>Или своя должность</label><input id="rbCustomPos" type="text" value="'+esc(RB.customPos)+'" placeholder="Например: помощник маркетолога"></div>'
-+'<div class="field"><label>Занятость</label><select id="rbEmployment">'+["Полная занятость","Частичная занятость","Стажировка","Практика","Удалённая работа"].map(c=>'<option'+(RB.employment===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>';
++'<div class="field"><label>Занятость</label><select id="rbEmployment">'+["Полная занятость","Частичная занятость","Стажировка","Практика","Удалённая работа"].map(c=>'<option'+(RB.employment===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>'
++'<div class="field"><label>Желаемая зарплата (необязательно)</label><input id="rbSalary" type="text" value="'+esc(RB.salary)+'" placeholder="Например: от 60 000 ₽"></div>';
 }
 if(RB.step===4){
 const prg=a?a.programs:[];const sk=a?a.skills:[];
@@ -644,6 +648,8 @@ b.innerHTML='<p style="margin-bottom:10px"><b>Шаг 4.</b> Образовани
 +'<div class="field"><label>Практика и опыт (где проходили, что делали)</label><textarea id="rbPractice" placeholder="Например: практика в отеле «Атташе» — служба приёма, 2 месяца">'+esc(RB.practice)+'</textarea></div>'
 +'<div class="field"><label>Навыки (отметьте подходящие)</label><div>'+sk.map(s=>'<label class="rb-check"><input type="checkbox" name="rbSkill" value="'+s+'"'+(RB.skills.indexOf(s)>=0?' checked':'')+'>'+s+'</label>').join('')+'</div></div>'
 +'<div class="field"><label>Свои навыки через запятую</label><input id="rbCustomSkills" type="text" value="'+esc(RB.customSkills)+'" placeholder="Английский B1, водительские права"></div>'
++'<div class="field"><label>Языки</label><input id="rbLangs" type="text" value="'+esc(RB.langs)+'" placeholder="Русский — родной, английский — B1"></div>'
++'<div class="field"><label>Курсы и доп. образование</label><textarea id="rbCourses" placeholder="Например: курс по Excel, 2025">'+esc(RB.courses)+'</textarea></div>'
 +'<div class="field"><label>О себе (2–3 предложения)</label><textarea id="rbAbout" placeholder="Ответственный, быстро учусь, готов к сменному графику">'+esc(RB.about)+'</textarea></div>';
 }
 if(RB.step===5){
@@ -651,12 +657,14 @@ const pos=RB.customPos.trim()||RB.position||'—';
 const skills=RB.skills.concat(RB.customSkills.split(',').map(s=>s.trim()).filter(Boolean));
 b.innerHTML='<p style="margin-bottom:12px"><b>Шаг 5.</b> Резюме собрано. Скачайте в Word или скопируйте текст.</p>'
 +'<div class="rb-hint">Перед скачиванием проверьте: имя и телефон без опечаток, должность совпадает с вакансией, нет пустых разделов. Такой файл можно сразу прикладывать к отклику.</div>'
-+'<div class="rb-preview"><h3>'+esc(RB.name||'Ваше имя')+'</h3><div style="color:#6b7280;font-size:13px">'+esc(a?a.name:'')+'</div>'
-+'<div class="pos">Желаемая должность: '+esc(pos)+' · '+esc(RB.employment)+'</div>'
-+'<div class="sec"><b>Контакты</b>'+esc(RB.phone)+(RB.email?', '+esc(RB.email):'')+' · '+esc(RB.city)+'</div>'
++'<div class="rb-preview">'+(RB.photo?'<img src="'+RB.photo+'" class="rb-photo" style="float:right;margin:0 0 10px 14px">':'')+'<h3>'+esc(RB.name||'Ваше имя')+'</h3><div style="color:#6b7280;font-size:13px">'+esc(a?a.name:'')+'</div>'
++'<div class="pos">Желаемая должность: '+esc(pos)+' · '+esc(RB.employment)+(RB.salary.trim()?'; '+esc(RB.salary):'')+'</div>'
++'<div class="sec"><b>Контакты</b>'+esc(RB.phone)+(RB.email?', '+esc(RB.email):'')+' · '+esc(RB.city)+(RB.birth.trim()?'; род. '+esc(RB.birth):'')+'</div>'
 +'<div class="sec"><b>Образование</b>'+esc(RB.program||'—')+', '+esc(RB.course)+', выпуск '+esc(RB.year)+'</div>'
 +(RB.practice.trim()?'<div class="sec"><b>Практика и опыт</b>'+esc(RB.practice)+'</div>':'')
 +(skills.length?'<div class="sec"><b>Навыки</b>'+esc(skills.join(', '))+'</div>':'')
++(RB.langs.trim()?'<div class="sec"><b>Языки</b>'+esc(RB.langs)+'</div>':'')
++(RB.courses.trim()?'<div class="sec"><b>Курсы</b>'+esc(RB.courses)+'</div>':'')
 +(RB.about.trim()?'<div class="sec"><b>О себе</b>'+esc(RB.about)+'</div>':'')
 +'</div>'
 +'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">'
@@ -665,14 +673,37 @@ b.innerHTML='<p style="margin-bottom:12px"><b>Шаг 5.</b> Резюме соб�
 +'<button class="btn btn-outline" onclick="goTab(\'vac\');openAcad(\''+(RB.acad||'all')+'\')">Вакансии моей академии</button></div>';
 }
 }
+function rbPhoto(inp){
+const f=inp.files&&inp.files[0];if(!f)return;
+if(f.size>2*1024*1024){showToast('Фото больше 2 МБ — выберите файл поменьше');return}
+const r=new FileReader();
+r.onload=()=>{RB.photo=r.result;shrinkPhoto();const w=document.getElementById('rbPhotoPrevWrap');if(w)w.innerHTML='<img src="'+RB.photo+'" class="rb-photo">'};
+r.readAsDataURL(f);
+}
+function shrinkPhoto(){
+try{
+const img=new Image();
+img.onload=()=>{
+const max=320;let w=img.width,h=img.height;
+if(w>max){h=Math.round(h*max/w);w=max}
+const c=document.createElement('canvas');c.width=w;c.height=h;
+c.getContext('2d').drawImage(img,0,0,w,h);
+RB.photo=c.toDataURL('image/jpeg',0.82);
+const w2=document.getElementById('rbPhotoPrevWrap');if(w2)w2.innerHTML='<img src="'+RB.photo+'" class="rb-photo">';
+};
+img.src=RB.photo;
+}catch(e){}
+}
 function rbResumeText(){
 const a=rbAcad();const pos=RB.customPos.trim()||RB.position||'—';
 const skills=RB.skills.concat(RB.customSkills.split(',').map(s=>s.trim()).filter(Boolean));
-return "РЕЗЮМЕ\n"+(RB.name||"")+"\nЖелаемая должность: "+pos+" ("+RB.employment+")\n"
-+"Академия: "+(a?a.name:"")+"\nКонтакты: "+RB.phone+(RB.email?", "+RB.email:"")+" · "+RB.city+"\n"
+return "РЕЗЮМЕ\n"+(RB.name||"")+"\nЖелаемая должность: "+pos+" ("+RB.employment+(RB.salary.trim()?"; "+RB.salary.trim():"")+")\n"
++"Академия: "+(a?a.name:"")+"\nКонтакты: "+RB.phone+(RB.email?", "+RB.email:"")+" · "+RB.city+(RB.birth.trim()?", род. "+RB.birth.trim():"")+"\n"
 +"Образование: "+(RB.program||"—")+", "+RB.course+", выпуск "+RB.year+"\n"
 +(RB.practice.trim()?"Практика и опыт: "+RB.practice.trim()+"\n":"")
 +(skills.length?"Навыки: "+skills.join(", ")+"\n":"")
++(RB.langs.trim()?"Языки: "+RB.langs.trim()+"\n":"")
++(RB.courses.trim()?"Курсы: "+RB.courses.trim()+"\n":"")
 +(RB.about.trim()?"О себе: "+RB.about.trim()+"\n":"");
 }
 function rbCopy(){
@@ -684,14 +715,17 @@ function rbDownload(){
 const a=rbAcad();const pos=RB.customPos.trim()||RB.position||'—';
 const skills=RB.skills.concat(RB.customSkills.split(',').map(s=>s.trim()).filter(Boolean));
 const rows=[
-["Желаемая должность",pos+" · "+RB.employment],
+["Желаемая должность",pos+" · "+RB.employment+(RB.salary.trim()?" · "+RB.salary.trim():"")],
 ["Академия",(a?a.name:"")],
-["Контакты",RB.phone+(RB.email?", "+RB.email:"")+" · "+RB.city],
+["Контакты",RB.phone+(RB.email?", "+RB.email:"")+" · "+RB.city+(RB.birth.trim()?", род. "+RB.birth.trim():"")],
 ["Образование",(RB.program||"—")+", "+RB.course+", выпуск "+RB.year]];
 if(RB.practice.trim())rows.push(["Практика и опыт",RB.practice.trim()]);
 if(skills.length)rows.push(["Навыки",skills.join(", ")]);
+if(RB.langs.trim())rows.push(["Языки",RB.langs.trim()]);
+if(RB.courses.trim())rows.push(["Курсы",RB.courses.trim()]);
 if(RB.about.trim())rows.push(["О себе",RB.about.trim()]);
 const html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>Резюме</title></head><body>'
++(RB.photo?'<p><img src="'+RB.photo+'" width="120"></p>':'')
 +'<h1>'+esc(RB.name||"Резюме")+'</h1>'
 +rows.map(r=>'<p><b>'+esc(r[0])+':</b> '+esc(r[1])+'</p>').join('')
 +'<p style="color:#777">Собрано в конструкторе Центра карьеры Южного университета (ИУБиП).</p></body></html>';
@@ -700,7 +734,7 @@ const url=URL.createObjectURL(blob);const l=document.createElement("a");l.href=u
 l.download="Резюме_"+(RB.name||"студент").trim().replace(/\s+/g,"_")+".doc";
 document.body.appendChild(l);l.click();document.body.removeChild(l);
 setTimeout(()=>URL.revokeObjectURL(url),3000);
-showToast('Файл Word сохранён — проверьте загрузки');
+showToast(RB.photo?'Файл Word сохранён. Если фото не отобразилось — вставьте его вручную (Вставка — Рисунки)':'Файл Word сохранён — проверьте загрузки');
 }
 const chartData=[["Менеджмент",91],["Экономика",87],["Юриспруденция",89],["IT",94],["HR",85],["Маркетинг",82]];
 const bars=document.getElementById('bars');

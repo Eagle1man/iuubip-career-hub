@@ -40,8 +40,8 @@ h1,h2,.serif{font-family:Georgia,"Times New Roman",serif}
 .unav button{background:none;border:0;color:#174a94;font-family:inherit;font-weight:700;font-size:16px;padding:15px 18px;cursor:pointer;white-space:nowrap}
 .unav button:hover{color:var(--navy);background:#f2f6fc}
 .unav button.active{color:var(--navy);box-shadow:inset 0 -3px 0 var(--gold)}
-.unav .hcounts{margin-left:auto;font-size:14px;color:#4b5158;white-space:nowrap;padding:10px 0}
-.unav .hcounts b{font-size:24px;color:var(--navy);font-weight:800}
+.hero-counts{font-size:19px;margin-top:16px;color:#e6ebf3}
+.hero-counts b{font-size:34px;font-weight:800;color:var(--gold-light);margin:0 4px}
 /* Hero */
 .hero{background:linear-gradient(180deg,#123a73 0%,var(--navy) 70%);color:#fff;padding:36px 0 34px;border-bottom:4px solid var(--gold)}
 .hero h2{font-size:30px;font-weight:700;margin-bottom:8px}
@@ -210,15 +210,14 @@ footer a:hover{text-decoration:underline}
 <button data-tab="dash">Аналитика</button>
 <button data-tab="about">О центре</button>
 <button data-tab="contacts">Контакты</button>
-<span class="hcounts">Вакансий&nbsp;<b id="cntVac">25</b>&nbsp;&nbsp;·&nbsp;&nbsp;Стажировок&nbsp;<b id="cntInt">16</b></span>
 </div></nav>
 <section class="hero"><div class="container">
 <h2>Карьера выпускника <span>начинается здесь</span></h2>
 <p>Живая подборка вакансий Ростовской области с портала «Работа России» + поиск похожих на hh.ru. Для студентов очной, вечерней и заочной форм. Помогаем с резюме, практикой и первым местом работы.</p>
 <div class="search-panel"><input id="search" type="text" placeholder="Должность, компания или навык — например, «юрист»"><button class="btn btn-gold" onclick="heroSearch()">Найти работу</button></div>
+<div class="hero-counts">Сейчас на сайте: <b id="cntVac">24</b> вакансий · <b id="cntInt">16</b> стажировок</div>
 <div class="fast"><span>Быстрый поиск:</span><button onclick="q('Менеджер')">менеджер по продажам</button><button onclick="q('Юрист')">юрист</button><button onclick="q('Экономист')">экономист</button><button onclick="q('удалённо')">удалённо</button><button onclick="q('HR')">hr-специалист</button></div>
 <div class="hero-stats">
-<div><b id="heroVac">25</b>реальных вакансий с trudvsem.ru</div>
 <div><b>5</b>академий и колледж</div>
 <div><b>88 <i>%</i></b>трудоустроены за 6 месяцев</div>
 <div><b>78 500 <i>₽</i></b>средняя стартовая зарплата</div>
@@ -789,7 +788,6 @@ rbRender();
 renderIntPills();renderInterns();renderStaff();
 document.getElementById('cntVac').textContent=vacs.length;
 document.getElementById('cntInt').textContent=INTERNS.length;
-document.getElementById('heroVac').textContent=vacs.length;
 document.getElementById('kpiVac').textContent=vacs.length;
 document.getElementById('dataShort').textContent=DATA_SHORT;
 </script>

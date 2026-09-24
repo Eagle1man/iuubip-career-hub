@@ -40,9 +40,8 @@ h1,h2,.serif{font-family:Georgia,"Times New Roman",serif}
 .unav button{background:none;border:0;color:#174a94;font-family:inherit;font-weight:700;font-size:16px;padding:15px 18px;cursor:pointer;white-space:nowrap}
 .unav button:hover{color:var(--navy);background:#f2f6fc}
 .unav button.active{color:var(--navy);box-shadow:inset 0 -3px 0 var(--gold)}
-.unav .usearch{margin-left:auto;display:flex;align-items:center;padding:6px 0 6px 14px}
-.unav .usearch input{border:0;border-left:1px solid var(--line);padding:10px 12px;font-size:14px;outline:none;width:170px;font-family:inherit}
-.unav .usearch button{background:none;border:0;cursor:pointer;padding:6px 10px}
+.unav .hcounts{margin-left:auto;font-size:14px;color:#4b5158;white-space:nowrap;padding:10px 0}
+.unav .hcounts b{font-size:24px;color:var(--navy);font-weight:800}
 /* Hero */
 .hero{background:linear-gradient(180deg,#123a73 0%,var(--navy) 70%);color:#fff;padding:36px 0 34px;border-bottom:4px solid var(--gold)}
 .hero h2{font-size:30px;font-weight:700;margin-bottom:8px}
@@ -173,7 +172,7 @@ footer a:hover{text-decoration:underline}
 .ibadge{display:inline-block;background:#eef6ee;border:1px solid #9dbf9f;color:#1d4d24;font-size:12px;font-weight:700;padding:3px 10px;border-radius:3px;white-space:nowrap}
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:#101418;color:#fff;padding:12px 20px;border-left:4px solid var(--gold);font-size:14px;opacity:0;transition:.25s;z-index:100;max-width:92%}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-@media(max-width:920px){.work{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr}.head-phones{display:none}.hero h2{font-size:24px}.search-panel{flex-direction:column}.usearch{display:none}}
+@media(max-width:920px){.work{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr}.head-phones{display:none}.hero h2{font-size:24px}.search-panel{flex-direction:column}}
 @media(max-width:600px){.steps{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr}.head-titles h1{font-size:18px}}
 </style>
 </head>
@@ -198,7 +197,7 @@ footer a:hover{text-decoration:underline}
 <div class="hphone">Горячая линия (звонок бесплатный)<b><span style="color:#1a9e4b">&#9742; </span>8 800 77-55-012</b></div>
 <div class="hphone">Приёмная комиссия<b><span style="color:#1a9e4b">&#9742; </span>8 (863) 245-45-65</b></div>
 <a class="btn btn-outline" href="https://www.iubip.ru/tsentr-karery/" target="_blank" rel="noopener">Центр карьеры</a>
-<button class="btn btn-call" onclick="goTab('book')">Заказать звонок</button>
+<button class="btn btn-call" onclick="openCallModal()">Заказать звонок</button>
 </div>
 </div></header>
 <nav class="unav"><div class="unav-inner">
@@ -210,7 +209,8 @@ footer a:hover{text-decoration:underline}
 <button data-tab="prog">Студентам</button>
 <button data-tab="dash">Аналитика</button>
 <button data-tab="about">О центре</button>
-<span class="usearch"><input id="usearch" type="text" placeholder="Поиск по сайту" onkeydown="if(event.key==='Enter')uSearch()"><button onclick="uSearch()" aria-label="Найти"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#174a94" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg></button></span>
+<button data-tab="contacts">Контакты</button>
+<span class="hcounts">Вакансий&nbsp;<b id="cntVac">25</b>&nbsp;&nbsp;·&nbsp;&nbsp;Стажировок&nbsp;<b id="cntInt">16</b></span>
 </div></nav>
 <section class="hero"><div class="container">
 <h2>Карьера выпускника <span>начинается здесь</span></h2>
@@ -218,7 +218,7 @@ footer a:hover{text-decoration:underline}
 <div class="search-panel"><input id="search" type="text" placeholder="Должность, компания или навык — например, «юрист»"><button class="btn btn-gold" onclick="heroSearch()">Найти работу</button></div>
 <div class="fast"><span>Быстрый поиск:</span><button onclick="q('Менеджер')">менеджер по продажам</button><button onclick="q('Юрист')">юрист</button><button onclick="q('Экономист')">экономист</button><button onclick="q('удалённо')">удалённо</button><button onclick="q('HR')">hr-специалист</button></div>
 <div class="hero-stats">
-<div><b>21</b>реальная вакансия с trudvsem.ru</div>
+<div><b>25</b>реальных вакансий с trudvsem.ru</div>
 <div><b>5</b>академий и колледж</div>
 <div><b>88 <i>%</i></b>трудоустроены за 6 месяцев</div>
 <div><b>78 500 <i>₽</i></b>средняя стартовая зарплата</div>
@@ -364,6 +364,12 @@ footer a:hover{text-decoration:underline}
 <div class="cta-row"><a class="btn btn-navy" href="https://www.iubip.ru/tsentr-karery/" target="_blank" rel="noopener">Официальная страница Центра карьеры</a></div>
 </div>
 </section>
+<section id="contacts" class="page">
+<div class="section-head"><h2>Контакты</h2><span>Центр карьеры и кураторы академий</span></div>
+<div class="panel" style="margin-bottom:14px"><p style="font-size:15px"><b>Центр карьеры Южного университета (ИУБиП)</b><br>344068, г. Ростов-на-Дону, пр. Михаила Нагибина, 33А/47<br>Горячая линия: 8 800 77-55-012 (звонок бесплатный) · Приёмная комиссия: 8 (863) 245-45-65<br>career@iubip.ru · пн–пт 9:00–18:00</p><div class="cta-row"><button class="btn btn-navy" onclick="openCallModal()">Заказать звонок</button></div></div>
+<div class="section-head"><h2>Кураторы академий</h2><span>практика, стажировки, целевое обучение</span></div>
+<div class="amb-grid" id="staffGrid"></div>
+</section>
 <section id="dash" class="page">
 <div class="section-head"><h2>Работодателям и аналитика</h2><span>итоги 2025–2026 учебного года</span></div>
 <div class="panel" style="margin-bottom:14px">
@@ -405,6 +411,17 @@ footer a:hover{text-decoration:underline}
 </div>
 <div class="foot-bottom"><span>© 2026 Южный университет (ИУБиП). Все права защищены.</span><span>При использовании материалов ссылка на сайт обязательна.</span></div>
 </footer>
+<div id="callModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center" onclick="if(event.target===this)closeCallModal()">
+<div class="panel" style="max-width:420px;width:92%;margin:0" id="callBox">
+<h2>Заказать звонок</h2>
+<p class="lead">Оставьте контакты — перезвоним в рабочее время (пн–пт 9:00–18:00).</p>
+<div class="field"><label>Ваше имя</label><input id="callName" type="text" placeholder="Как к вам обращаться"></div>
+<div class="field"><label>Телефон</label><input id="callPhone" type="text" placeholder="+7 (___) ___-__-__"></div>
+<div class="field"><label>Тема</label><select id="callTopic"><option>Консультация по карьере</option><option>Практика и стажировка</option><option>Целевое обучение</option><option>Работодателю</option></select></div>
+<div style="display:flex;gap:10px"><button class="btn btn-navy" onclick="submitCall()">Жду звонка</button><button class="btn btn-outline" onclick="closeCallModal()">Отмена</button></div>
+<p class="legal">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+</div>
+</div>
 <div id="toast"></div>
 <script>
 const ACADS=[
@@ -477,6 +494,7 @@ const f=document.getElementById('filter').value;const d=curDir();
 const dir=d&&d!=='all'?d:(f||'all');
 const list=vacs.filter(v=>(currentAcad==='all'||v.acad===currentAcad)&&(dir==='all'||v.dir===dir)&&(v.t+' '+v.c+' '+v.city+' '+v.tags.join(' ')).toLowerCase().includes(query));
 document.getElementById('count').textContent='Найдено: '+list.length+' · данные на 24 сентября 2026 г.';
+document.getElementById('cntVac').textContent=list.length;
 grid.innerHTML='';
 list.forEach((v,i)=>{
 const link=extLink(v);const hh=hhSearch(v);
@@ -524,6 +542,7 @@ p.querySelectorAll('.pill').forEach(b=>{b.onclick=()=>{currentIntAcad=b.dataset.
 function renderInterns(){
 const g=document.getElementById('intGrid');g.innerHTML='';
 const list=INTERNS.filter(v=>currentIntAcad==='all'||v.acads.indexOf(currentIntAcad)>=0);
+document.getElementById('cntInt').textContent=list.length;
 list.forEach(v=>{
 const link=intLink(v);
 const el=document.createElement('article');el.className='vacancy';
@@ -573,6 +592,21 @@ function renderMedPanel(){
 const m=document.getElementById('medPanel');
 if(currentIntAcad!=='all'&&currentIntAcad!=='medic'){m.innerHTML='';return}
 m.innerHTML='<div class="panel"><h2 style="font-size:18px">Куда на практику: отделы кадров медучреждений</h2><p class="lead">Кнопки ведут сразу в разделы «Вакансии» и контакты отделов кадров — там узнавайте о практике и стажировках. Где такого раздела нет, кнопка ведёт на сайт учреждения. Практику согласуйте с медколледжем: med@iubip.ru.</p><div style="display:flex;gap:8px;flex-wrap:wrap">'+MEDS.map(x=>'<a class="btn btn-outline" style="font-size:13px;padding:8px 14px" href="'+x.u+'" target="_blank" rel="noopener">'+x.name+'</a>').join('')+'</div></div>';
+}
+function renderStaff(){
+const g=document.getElementById('staffGrid');if(!g)return;
+g.innerHTML=ACADS.map(a=>'<div class="amb-card"><h3>'+a.name+'</h3><div class="amb-fit">'+a.spec+'</div><p style="font-size:14px">Руководитель: <b>'+a.head+'</b><br>Тел.: '+a.phone+'<br>Email: <a href="mailto:'+a.email+'">'+a.email+'</a></p></div>').join('');
+}
+let callFormHTML=null;
+function openCallModal(){const b=document.getElementById('callBox');if(callFormHTML===null)callFormHTML=b.innerHTML;else b.innerHTML=callFormHTML;document.getElementById('callModal').style.display='flex'}
+function closeCallModal(){document.getElementById('callModal').style.display='none'}
+function submitCall(){
+const n=document.getElementById('callName').value.trim();
+const p=document.getElementById('callPhone').value.replace(/\D/g,'');
+if(n.length<2){showToast('Укажите имя');return}
+if(p.length<10){showToast('Проверьте телефон — нужно 10+ цифр');return}
+try{const arr=JSON.parse(localStorage.getItem('callbacks')||'[]');arr.push({n:n,p:p,t:Date.now()});localStorage.setItem('callbacks',JSON.stringify(arr))}catch(e){}
+document.getElementById('callBox').innerHTML='<div class="ok"><b>Заявка принята, '+esc(n)+'!</b><br>Перезвоним в рабочее время (пн–пт 9:00–18:00).</div><br><button class="btn btn-outline" onclick="closeCallModal()">Закрыть</button>';
 }
 function heroSearch(){goTab('vac');openAcad('all')}
 function q(s){document.getElementById('search').value=s;goTab('vac');openAcad('all')}
@@ -750,7 +784,7 @@ const chartData=[["Менеджмент",91],["Экономика",87],["Юри�
 const bars=document.getElementById('bars');
 chartData.forEach(([n,p])=>{const r=document.createElement('div');r.className='brow';r.innerHTML='<span>'+n+'</span><div class="btrack"><div class="bfill" style="width:'+p+'%"></div></div><span>'+p+'%</span>';bars.appendChild(r)});
 rbRender();
-renderIntPills();renderInterns();
+renderIntPills();renderInterns();renderStaff();
 </script>
 </body>
 </html>

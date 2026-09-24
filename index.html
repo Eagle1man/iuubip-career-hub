@@ -3,183 +3,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Центр карьеры · Южный университет (ИУБиП)</title>
+<title>ЮУ Работа — вакансии ИУБиП | Центр карьеры</title>
 <style>
+/* Стиль в духе hh.ru: белый, красный акцент, список вакансий */
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:#f3f6fb;color:#1e293b;line-height:1.5}
-.container{max-width:1100px;margin:0 auto;padding:0 16px}
-header{position:sticky;top:0;z-index:50;background:linear-gradient(90deg,#1e40af,#3b82f6);color:#fff}
-.header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;max-width:1100px;margin:0 auto}
-.logo{font-weight:700;font-size:18px}
-.nav-note{font-size:13px;opacity:.9}
-.hero{background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;padding:44px 0 30px;text-align:center}
-.hero h1{font-size:36px;margin-bottom:10px}
-.hero p{opacity:.95;max-width:700px;margin:0 auto 22px}
-.stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.stat{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:16px;padding:16px 22px;min-width:200px;transition:.2s}
-.stat:hover{background:rgba(255,255,255,.28);transform:translateY(-3px)}
-.stat .num{font-size:26px;font-weight:800}
-.stat .lbl{font-size:14px;opacity:.9}
-.tabs-wrap{background:#fff;box-shadow:0 2px 10px rgba(30,64,175,.08);position:sticky;top:57px;z-index:40}
-.tabs{display:flex;gap:10px;overflow-x:auto;padding:12px 16px;max-width:1100px;margin:0 auto}
-.tab{white-space:nowrap;border:0;background:#e5e7eb;color:#374151;padding:10px 18px;border-radius:999px;cursor:pointer;font-size:15px;transition:.2s}
-.tab:hover{background:#dbeafe}
-.tab.active{background:#1e40af;color:#fff}
-main{padding:24px 0 40px}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f4f4;color:#1f2329;line-height:1.5}
+:root{--red:#d6001c;--red-dark:#b50018;--link:#0f6cbd;--grey:#8a94a6;--line:#e5e7eb}
+.container{max-width:1120px;margin:0 auto;padding:0 16px}
+/* Шапка как hh */
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.header-inner{display:flex;align-items:center;gap:16px;padding:10px 16px;max-width:1120px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+.logo-mark{background:var(--red);color:#fff;font-weight:900;padding:6px 10px;border-radius:50%;font-size:18px}
+.logo small{display:block;font-size:12px;color:var(--grey);font-weight:400}
+.hnav{display:flex;gap:16px;margin-left:12px;font-size:14px}
+.hnav a{color:#1f2329;text-decoration:none}
+.hnav a:hover{color:var(--red)}
+.hbtns{margin-left:auto;display:flex;gap:8px}
+.btn{border:0;border-radius:8px;padding:11px 18px;font-size:15px;cursor:pointer;transition:.2s;font-family:inherit}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:var(--red-dark)}
+.btn-outline{background:#fff;border:1px solid var(--red);color:var(--red)}
+.btn-outline:hover{background:#fff0f1}
+/* Поиск hero */
+.hero{background:#fff;border-bottom:1px solid var(--line);padding:28px 0 20px}
+.hero h1{font-size:30px;margin-bottom:6px}
+.hero p{color:#54595f;margin-bottom:16px}
+.searchbar{display:flex;gap:0;border:1px solid #cbd5e1;border-radius:8px;overflow:hidden;max-width:760px}
+.searchbar input{flex:1;border:0;padding:14px;font-size:16px;font-family:inherit;outline:none;min-width:0}
+.searchbar button{border-radius:0;padding:0 28px;font-size:16px}
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--grey)}
+.quick button{background:#eef1f4;border:0;border-radius:16px;padding:6px 12px;cursor:pointer;font-size:13px}
+.quick button:hover{background:#e2e7ec}
+.hh-stats{display:flex;gap:24px;margin-top:16px;font-size:14px;color:#54595f;flex-wrap:wrap}
+.hh-stats b{color:#1f2329}
+/* Табы */
+.tabs-wrap{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:57px;z-index:40}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;max-width:1120px;margin:0 auto}
+.tab{white-space:nowrap;border:1px solid var(--line);background:#fff;color:#1f2329;padding:9px 16px;border-radius:8px;cursor:pointer;font-size:14px;transition:.2s}
+.tab.active{background:#1f2329;color:#fff;border-color:#1f2329}
+main{padding:20px 0 40px}
 .tab-page{display:none}
-.tab-page.active{display:block;animation:fade .25s ease}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.filters input,.filters select{padding:12px 14px;border-radius:12px;border:1px solid #cbd5e1;font-size:15px;font-family:inherit}
-.filters input{flex:1;min-width:200px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 4px 14px rgba(15,23,42,.08);transition:.2s;display:flex;flex-direction:column;gap:8px}
-.card:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(30,64,175,.15)}
-.card h3{font-size:17px;color:#1e40af}
-.card .company{font-size:14px;color:#475569}
-.card .salary{font-weight:700;color:#0f172a}
-.tags{display:flex;gap:6px;flex-wrap:wrap}
-.tag{background:#fef3c7;color:#92400e;font-size:12px;padding:4px 10px;border-radius:999px}
-.btn{background:#1e40af;color:#fff;border:0;border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;transition:.2s;font-family:inherit}
-.btn:hover{background:#3b82f6}
-.card .btn{margin-top:auto}
-.form-card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 14px rgba(15,23,42,.08);max-width:600px;margin:0 auto}
-.form-card h2{margin-bottom:6px;color:#1e40af}
-.form-card p.sub{color:#64748b;margin-bottom:16px}
-label{display:block;font-weight:600;margin:12px 0 6px}
-select,input[type=text],textarea{width:100%;padding:12px;border-radius:12px;border:1px solid #cbd5e1;font-family:inherit;font-size:15px}
+.tab-page.active{display:block;animation:fade .2s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:16px;align-items:start}
+.side{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;font-size:14px}
+.side h4{margin-bottom:10px;font-size:14px}
+.side label{display:flex;gap:8px;align-items:center;font-weight:400;margin:8px 0;cursor:pointer}
+/* Список вакансий как на hh */
+.vac-list{display:flex;flex-direction:column;gap:12px}
+.vac{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;transition:.2s}
+.vac:hover{box-shadow:0 4px 18px rgba(0,0,0,.1)}
+.vac-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.vac-title{color:var(--link);font-size:19px;font-weight:700;text-decoration:none;cursor:pointer}
+.vac-title:hover{color:var(--red)}
+.vac-salary{font-weight:700;font-size:17px;white-space:nowrap}
+.vac-company{color:#54595f;font-size:14px;margin:4px 0}
+.vac-city{color:var(--grey);font-size:13px}
+.vac-tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.tag{background:#eef1f4;color:#1f2329;font-size:12px;padding:4px 10px;border-radius:6px}
+.vac-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.vac-date{font-size:12px;color:var(--grey)}
+.filters-row{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.filters-row input,.filters-row select{padding:11px 12px;border-radius:8px;border:1px solid #cbd5e1;font-size:14px;font-family:inherit}
+.filters-row input{flex:1;min-width:200px}
+/* Формы */
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px}
+.card h2{margin-bottom:6px}
+.card p.sub{color:#54595f;margin-bottom:14px}
+label.fl{display:block;font-weight:600;margin:12px 0 6px;font-size:14px}
+select,input[type=text],textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #cbd5e1;font-family:inherit;font-size:15px}
 textarea{min-height:80px;resize:vertical}
 .radio-row{display:flex;gap:8px;flex-wrap:wrap}
-.radio-row label{font-weight:400;background:#f1f5f9;padding:8px 14px;border-radius:999px;cursor:pointer;margin:0}
-.radio-row input{margin-right:6px}
-.success{background:#dcfce7;border:1px solid #22c55e;color:#166534;border-radius:16px;padding:24px;text-align:center;font-size:17px;font-weight:600}
-.progress-card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 14px rgba(15,23,42,.08)}
-.bar-bg{background:#e5e7eb;border-radius:999px;height:18px;overflow:hidden;margin:12px 0 6px}
-.bar-fill{width:40%;height:100%;background:linear-gradient(90deg,#1e40af,#f59e0b);border-radius:999px;transition:.3s}
+.radio-row label{font-weight:400;background:#eef1f4;padding:8px 14px;border-radius:20px;cursor:pointer;margin:0;font-size:14px}
+.success{background:#e6f4ea;border:1px solid #34a853;color:#137333;border-radius:12px;padding:24px;text-align:center;font-size:17px;font-weight:600}
+/* Прогресс */
+.bar-bg{background:#e5e7eb;border-radius:999px;height:14px;overflow:hidden;margin:12px 0 6px}
+.bar-fill{width:40%;height:100%;background:var(--red);border-radius:999px}
 .badges{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
-.badge{background:#eff6ff;border:2px solid #3b82f6;border-radius:16px;padding:16px;text-align:center;transition:.2s}
-.badge:hover{transform:scale(1.03)}
-.badge.locked{background:#f1f5f9;border-color:#cbd5e1;color:#94a3b8}
-.badge .ico{font-size:32px}
-.badge .t{font-size:14px;font-weight:600;margin-top:6px}
-.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
-.num-card{background:#fff;border-radius:16px;padding:22px;text-align:center;box-shadow:0 4px 14px rgba(15,23,42,.08);transition:.2s}
-.num-card:hover{transform:translateY(-3px)}
-.num-card .v{font-size:32px;font-weight:800;color:#1e40af}
-.num-card .d{color:#64748b;font-size:14px}
-.chart{background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 14px rgba(15,23,42,.08)}
-.chart h3{margin-bottom:16px;color:#1e40af}
-.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.bar-row .name{width:130px;font-size:14px;text-align:right}
-.bar-track{flex:1;background:#e5e7eb;border-radius:8px;height:26px;overflow:hidden}
-.bar-val{height:100%;background:linear-gradient(90deg,#1e40af,#3b82f6);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;color:#fff;font-size:12px;font-weight:700;padding-right:8px}
-.note{font-size:12px;color:#94a3b8;margin-top:14px}
-#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#0f172a;color:#fff;padding:14px 22px;border-radius:12px;opacity:0;transition:.3s;z-index:100;max-width:90%}
+.badge{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;transition:.2s}
+.badge.got{border-color:var(--red)}
+.badge.locked{color:#8a94a6;background:#f7f7f7}
+.badge .ico{font-size:30px}
+/* Дашборд */
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.num-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center}
+.num-card .v{font-size:30px;font-weight:800;color:var(--red)}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:14px}
+.bar-row .name{width:130px;text-align:right}
+.bar-track{flex:1;background:#eef1f4;border-radius:6px;height:24px;overflow:hidden}
+.bar-val{height:100%;background:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;color:#fff;font-size:12px;font-weight:700;padding-right:8px}
+.note{font-size:12px;color:#8a94a6;margin-top:12px}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#1f2329;color:#fff;padding:14px 22px;border-radius:10px;opacity:0;transition:.3s;z-index:100;max-width:90%}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-footer{background:#0f172a;color:#cbd5e1;text-align:center;padding:22px 16px;font-size:14px;margin-top:20px}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.badges{grid-template-columns:repeat(2,1fr)}.nums{grid-template-columns:1fr}.hero h1{font-size:28px}}
-@media(max-width:600px){.grid{grid-template-columns:1fr}.badges{grid-template-columns:repeat(2,1fr)}.bar-row .name{width:100px;font-size:12px}}
+footer{background:#1f2329;color:#b9c0cb;text-align:center;padding:22px 16px;font-size:13px;margin-top:20px}
+@media(max-width:860px){.layout{grid-template-columns:1fr}.side{display:none}.nums{grid-template-columns:1fr}.hnav{display:none}.hero h1{font-size:24px}.badges{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 <header>
 <div class="header-inner">
-<div class="logo">🎓 Центр карьеры · ЮУ (ИУБиП)</div>
-<div class="nav-note">вакансии · консультации · аналитика</div>
+<div class="logo"><span class="logo-mark">юу</span><span>ЮУ Работа<small>Центр карьеры ИУБиП · Ростов-на-Дону</small></span></div>
+<nav class="hnav"><a href="#" onclick="goTab('vac');return false">Вакансии</a><a href="#" onclick="goTab('book');return false">Консультации</a><a href="#" onclick="goTab('dash');return false">Работодателям</a></nav>
+<div class="hbtns"><button class="btn btn-outline" onclick="goTab('dash')">Найти сотрудника</button><button class="btn btn-red" onclick="goTab('book')">Войти</button></div>
 </div>
 </header>
 <section class="hero">
 <div class="container">
-<h1>Карьера начинается здесь</h1>
-<p>Вакансии, консультации, менторинг и аналитика — в одном окне. Для всех форм обучения: очной, вечерней, заочной.</p>
-<div class="stats">
-<div class="stat"><div class="num">💼 1 248</div><div class="lbl">активных вакансий</div></div>
-<div class="stat"><div class="num">👥 20 000+</div><div class="lbl">выпускников в базе</div></div>
-<div class="stat"><div class="num">🤝 312</div><div class="lbl">компаний-партнёров</div></div>
-</div>
+<h1>Работа для студентов и выпускников ИУБиП</h1>
+<p>1 248 вакансий от 312 компаний Ростова и удалённо — для очной, вечерней и заочной форм.</p>
+<div class="searchbar"><input id="search" type="text" placeholder="Профессия, должность или компания"><button class="btn btn-red" onclick="renderVacs()">Найти</button></div>
+<div class="quick"><span>Часто ищут:</span><button onclick="q('Менеджер')">менеджер</button><button onclick="q('Юрист')">юрист</button><button onclick="q('Экономист')">экономист</button><button onclick="q('удалённо')">удалённо</button><button onclick="q('HR')">HR</button></div>
+<div class="hh-stats"><span><b>1 248</b> вакансий</span><span><b>20 000+</b> выпускников</span><span><b>88%</b> трудоустройство за 6 мес.</span><span><b>78 500 ₽</b> средняя зарплата</span></div>
 </div>
 </section>
 <div class="tabs-wrap">
 <div class="tabs">
-<button class="tab active" data-tab="vac">💼 Вакансии</button>
-<button class="tab" data-tab="book">📅 Записаться</button>
-<button class="tab" data-tab="prog">🏆 Мой прогресс</button>
-<button class="tab" data-tab="dash">📊 Дашборд</button>
+<button class="tab active" data-tab="vac">Вакансии</button>
+<button class="tab" data-tab="book">Записаться на консультацию</button>
+<button class="tab" data-tab="prog">Мой прогресс</button>
+<button class="tab" data-tab="dash">Дашборд</button>
 </div>
 </div>
 <main class="container">
 <section id="vac" class="tab-page active">
-<div class="filters">
-<input type="text" id="search" placeholder="Поиск: должность, компания, город...">
-<select id="filter">
+<div class="layout">
+<aside class="side">
+<h4>Направление</h4>
+<label><input type="radio" name="dir" value="all" checked> Все</label>
+<label><input type="radio" name="dir" value="Менеджмент"> Менеджмент</label>
+<label><input type="radio" name="dir" value="Экономика"> Экономика</label>
+<label><input type="radio" name="dir" value="Юриспруденция"> Юриспруденция</label>
+<label><input type="radio" name="dir" value="IT"> IT</label>
+<label><input type="radio" name="dir" value="HR"> HR</label>
+<label><input type="radio" name="dir" value="Маркетинг"> Маркетинг</label>
+<h4 style="margin-top:16px">Формат</h4>
+<label><input type="checkbox" checked> Ростов-на-Дону</label>
+<label><input type="checkbox" checked> Удалённо</label>
+</aside>
+<div>
+<div class="filters-row">
+<select id="filter" style="max-width:240px">
 <option value="all">Все направления</option>
-<option>Менеджмент</option>
-<option>Экономика</option>
-<option>Юриспруденция</option>
-<option>IT</option>
-<option>HR</option>
-<option>Маркетинг</option>
+<option>Менеджмент</option><option>Экономика</option><option>Юриспруденция</option>
+<option>IT</option><option>HR</option><option>Маркетинг</option>
 </select>
+<span style="align-self:center;color:#8a94a6;font-size:14px" id="count"></span>
 </div>
-<div class="grid" id="grid"></div>
+<div class="vac-list" id="grid"></div>
+</div>
+</div>
 </section>
 <section id="book" class="tab-page">
-<div class="form-card" id="formCard">
-<h2>Запись на онлайн-консультацию</h2>
-<p class="sub">Вечерние окна 17:00–21:00 и суббота — специально для студентов вечерней и заочной форм обучения</p>
-<label>Тема консультации</label>
-<select id="topic">
-<option>Резюме</option>
-<option>Собеседование</option>
-<option>Карьерный путь</option>
-<option>Стажировка</option>
-</select>
-<label>Дата</label>
-<select id="dateSel"></select>
-<label>Время</label>
+<div class="card" id="formCard" style="max-width:640px;margin:0 auto">
+<h2>Запись на консультацию</h2>
+<p class="sub">Вечерние окна 17:00–21:00 и суббота — для вечерней и заочной форм обучения</p>
+<label class="fl">Тема</label>
+<select id="topic"><option>Резюме</option><option>Собеседование</option><option>Карьерный путь</option><option>Стажировка</option></select>
+<label class="fl">Дата</label><select id="dateSel"></select>
+<label class="fl">Время</label>
 <div class="radio-row">
-<label><input type="radio" name="time" value="17:00" checked>17:00</label>
-<label><input type="radio" name="time" value="18:30">18:30</label>
-<label><input type="radio" name="time" value="20:00">20:00</label>
-<label><input type="radio" name="time" value="Суббота 11:00">Суббота 11:00</label>
+<label><input type="radio" name="time" checked>17:00</label>
+<label><input type="radio" name="time">18:30</label>
+<label><input type="radio" name="time">20:00</label>
+<label><input type="radio" name="time">Суббота 11:00</label>
 </div>
-<label>Ваш вопрос (необязательно)</label>
-<textarea id="q" placeholder="Например: как составить резюме без опыта?"></textarea>
-<br><br>
-<button class="btn" onclick="submitForm()">Записаться</button>
+<label class="fl">Ваш вопрос (необязательно)</label>
+<textarea placeholder="Например: как составить резюме без опыта?"></textarea>
+<br><br><button class="btn btn-red" onclick="submitForm()">Записаться</button>
 </div>
 </section>
 <section id="prog" class="tab-page">
-<div class="progress-card">
-<h2>Ваш карьерный путь: 40%</h2>
+<div class="card">
+<h2>Мой прогресс: 40%</h2>
 <div class="bar-bg"><div class="bar-fill"></div></div>
 <div class="badges">
-<div class="badge"><div class="ico">📄</div><div class="t">Первое резюме</div></div>
-<div class="badge"><div class="ico">💼</div><div class="t">Первый отклик</div></div>
-<div class="badge"><div class="ico">🎤</div><div class="t">Первое собеседование</div></div>
-<div class="badge locked"><div class="ico">🔒 🤝</div><div class="t">5 встреч с работодателями</div></div>
-<div class="badge locked"><div class="ico">🔒 🎓</div><div class="t">Стажировка найдена</div></div>
-<div class="badge locked"><div class="ico">🔒 🏅</div><div class="t">Оффер получен</div></div>
+<div class="badge got"><div class="ico">📄</div><div>Первое резюме</div></div>
+<div class="badge got"><div class="ico">💼</div><div>Первый отклик</div></div>
+<div class="badge got"><div class="ico">🎤</div><div>Первое собеседование</div></div>
+<div class="badge locked"><div class="ico">🔒 🤝</div><div>5 встреч с работодателями</div></div>
+<div class="badge locked"><div class="ico">🔒 🎓</div><div>Стажировка найдена</div></div>
+<div class="badge locked"><div class="ico">🔒 🏅</div><div>Оффер получен</div></div>
 </div>
-<button class="btn" onclick="alert('Ваш прогресс: 40%! Так держать — до оффера осталось 3 шага!')">Поделиться прогрессом</button>
+<button class="btn btn-red" onclick="alert('Ваш прогресс: 40%! Так держать!')">Поделиться прогрессом</button>
 </div>
 </section>
 <section id="dash" class="tab-page">
 <div class="nums">
-<div class="num-card"><div class="v">88%</div><div class="d">Трудоустройство выпускников за 6 мес.</div></div>
-<div class="num-card"><div class="v">78 500 ₽</div><div class="d">Средняя стартовая зарплата</div></div>
-<div class="num-card"><div class="v">312</div><div class="d">Компаний-партнёров</div></div>
+<div class="num-card"><div class="v">88%</div><div>Трудоустройство за 6 мес.</div></div>
+<div class="num-card"><div class="v">78 500 ₽</div><div>Стартовая зарплата</div></div>
+<div class="num-card"><div class="v">312</div><div>Компаний-партнёров</div></div>
 </div>
-<div class="chart">
-<h3>Трудоустройство по направлениям</h3>
-<div id="bars"></div>
-<p class="note">Данные обновляются из опроса выпускников (FDS) и открытого API hh.ru</p>
-</div>
+<div class="card"><h3>Трудоустройство по направлениям</h3><br><div id="bars"></div>
+<p class="note">Данные из опроса выпускников (FDS) и открытого API hh.ru</p></div>
 </section>
 </main>
-<footer>
-© 2026 Южный университет (ИУБиП) · Центр карьеры
-</footer>
+<footer>© 2026 Южный университет (ИУБиП) · Центр карьеры · Ростов-на-Дону</footer>
 <div id="toast"></div>
 <script>
 const vacs=[
@@ -193,49 +212,38 @@ const vacs=[
 {t:"Инженер-кадастровый инженер",c:"ООО «ГеоПроект»",city:"Ростов-на-Дону",s:"55 000–110 000 ₽",tags:["кадастр","геодезия","БТИ"],dir:"Менеджмент"}
 ];
 const grid=document.getElementById('grid');
+function curDir(){const r=document.querySelector('input[name=dir]:checked');return r?r.value:document.getElementById('filter').value}
 function renderVacs(){
-const q=document.getElementById('search').value.toLowerCase();
+const query=document.getElementById('search').value.toLowerCase();
 const f=document.getElementById('filter').value;
+const d=curDir();const dir=d&&d!=='all'?d:(f||'all');
+const list=vacs.filter(v=>(dir==='all'||v.dir===dir)&&(v.t+' '+v.c+' '+v.city).toLowerCase().includes(query));
+document.getElementById('count').textContent='Найдено: '+list.length;
 grid.innerHTML='';
-vacs.filter(v=>(f==='all'||v.dir===f)&&(v.t+' '+v.c+' '+v.city).toLowerCase().includes(q)).forEach(v=>{
-const d=document.createElement('div');d.className='card';
-d.innerHTML='<h3>'+v.t+'</h3><div class="company">'+v.c+' · '+v.city+'</div><div class="salary">'+v.s+'</div><div class="tags">'+v.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div><button class="btn">Откликнуться</button>';
-d.querySelector('button').onclick=()=>showToast('✅ Отклик отправлен в '+v.c);
-grid.appendChild(d);
+list.forEach(v=>{
+const el=document.createElement('div');el.className='vac';
+el.innerHTML='<div class="vac-top"><a class="vac-title">'+v.t+'</a><div class="vac-salary">'+v.s+'</div></div><div class="vac-company">'+v.c+'</div><div class="vac-city">'+v.city+' · '+v.dir+'</div><div class="vac-tags">'+v.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div><div class="vac-foot"><span class="vac-date">Сегодня · откликов: '+(5+Math.floor(Math.random()*40))+'</span><button class="btn btn-red">Откликнуться</button></div>';
+el.querySelector('button').onclick=()=>showToast('✅ Отклик отправлен в '+v.c);
+grid.appendChild(el);
 });
-if(!grid.innerHTML)grid.innerHTML='<p style="color:#64748b">Ничего не найдено. Попробуйте изменить запрос.</p>';
+if(!grid.innerHTML)grid.innerHTML='<div class="card">Ничего не найдено. Попробуйте изменить запрос.</div>';
 }
+function q(s){document.getElementById('search').value=s;renderVacs()}
 document.getElementById('search').oninput=renderVacs;
 document.getElementById('filter').onchange=renderVacs;
+document.querySelectorAll('input[name=dir]').forEach(r=>r.onchange=()=>{document.getElementById('filter').value=r.value;renderVacs()});
 renderVacs();
-document.querySelectorAll('.tab').forEach(b=>{
-b.onclick=()=>{
-document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-document.querySelectorAll('.tab-page').forEach(x=>x.classList.remove('active'));
-b.classList.add('active');
-document.getElementById(b.dataset.tab).classList.add('active');
-};
-});
+function goTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.tab-page').forEach(x=>x.classList.toggle('active',x.id===id));window.scrollTo({top:320,behavior:'smooth'})}
+document.querySelectorAll('.tab').forEach(b=>{b.onclick=()=>goTab(b.dataset.tab)});
 let toastTimer;
-function showToast(msg){
-const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
-clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
-}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3000)}
 const ds=document.getElementById('dateSel');
-const days=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
-const months=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
-for(let i=1;i<=7;i++){const d=new Date();d.setDate(d.getDate()+i);
-const o=document.createElement('option');o.textContent=days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()];ds.appendChild(o);}
-function submitForm(){
-document.getElementById('formCard').innerHTML='<div class="success">✅ Вы записаны! Подтверждение придёт в MAX-бот Центра карьеры.</div>';
-}
+const days=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],months=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+for(let i=1;i<=7;i++){const d=new Date();d.setDate(d.getDate()+i);const o=document.createElement('option');o.textContent=days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()];ds.appendChild(o)}
+function submitForm(){document.getElementById('formCard').innerHTML='<div class="success">✅ Вы записаны! Подтверждение придёт в MAX-бот Центра карьеры.</div>'}
 const chartData=[["Менеджмент",91],["Экономика",87],["Юриспруденция",89],["IT",94],["HR",85],["Маркетинг",82]];
 const bars=document.getElementById('bars');
-chartData.forEach(([n,p])=>{
-const r=document.createElement('div');r.className='bar-row';
-r.innerHTML='<div class="name">'+n+'</div><div class="bar-track"><div class="bar-val" style="width:'+p+'%">'+p+'%</div></div>';
-bars.appendChild(r);
-});
+chartData.forEach(([n,p])=>{const r=document.createElement('div');r.className='bar-row';r.innerHTML='<div class="name">'+n+'</div><div class="bar-track"><div class="bar-val" style="width:'+p+'%">'+p+'%</div></div>';bars.appendChild(r)});
 </script>
 </body>
 </html>

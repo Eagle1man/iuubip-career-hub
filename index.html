@@ -141,6 +141,14 @@ footer a:hover{text-decoration:underline}
 .rb-preview .pos{font-weight:700;margin:6px 0 2px}
 .rb-preview .sec{margin-top:12px}
 .rb-preview .sec b{display:block;color:var(--navy);font-size:13px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.amb-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.amb-card{background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);padding:22px}
+.amb-card h3{font-family:Georgia,serif;color:var(--navy);font-size:19px;margin-bottom:2px}
+.amb-fit{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.amb-card ul{margin:8px 0 8px 18px;font-size:13.5px;color:#3c424a}
+.amb-card li{margin-bottom:4px}
+.amb-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+@media(max-width:860px){.amb-grid{grid-template-columns:1fr}}
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:#101418;color:#fff;padding:12px 20px;border-left:4px solid var(--gold);font-size:14px;opacity:0;transition:.25s;z-index:100;max-width:92%}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:920px){.work{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr}.head-contact{display:none}.hero h2{font-size:24px}.search-panel{flex-direction:column}}
@@ -160,6 +168,7 @@ footer a:hover{text-decoration:underline}
 <nav class="mainnav"><div class="mainnav-inner">
 <button class="active" data-tab="vac">Вакансии</button>
 <button data-tab="resume">Конструктор резюме</button>
+<button data-tab="amb">Амбассадоры</button>
 <button data-tab="book">Консультации</button>
 <button data-tab="prog">Студентам</button>
 <button data-tab="dash">Работодателям и аналитика</button>
@@ -225,6 +234,33 @@ footer a:hover{text-decoration:underline}
 <div id="rbBody"></div>
 <div class="rb-nav"><button class="btn btn-outline" id="rbBack" onclick="rbNav(-1)">← Назад</button><button class="btn btn-navy" id="rbNext" onclick="rbNav(1)">Далее →</button></div>
 </div>
+</section>
+<section id="amb" class="page">
+<div class="section-head"><h2>Амбассадоры крупных компаний</h2><span>Яндекс · VK · Сбер · ВТБ</span></div>
+<div class="panel" style="margin-bottom:14px"><p class="lead" style="margin:0">Амбассадор — студент, который представляет компанию в своём вузе: рассказывает о стажировках, ведёт соцсети, собирает митапы и помогает одногруппникам попасть на отбор. Это строка в резюме и короткий путь на стажировку. Наборы открываются волнами — точные условия и дедлайны смотрите на сайтах компаний.</p></div>
+<div class="amb-grid">
+<div class="amb-card"><h3>Яндекс</h3><div class="amb-fit">Подойдёт: Академия управления и цифрового развития (IT, менеджмент)</div>
+<ul><li><b>Делает:</b> рассказывает о технологиях и стажировках в вузе, ведёт канал, организует мероприятия.</li>
+<li><b>Получает:</b> обучение, мерч, нетворкинг, преимущество при отборе на стажировку.</li>
+<li><b>Условия:</b> студент, интерес к технологиям, заявка и отбор. Точный список — на сайте.</li></ul>
+<div class="amb-links"><a class="btn btn-navy" href="https://yandex.ru/yaintern" target="_blank" rel="noopener">Стажировки Яндекса</a><a class="btn btn-outline" href="https://yandex.ru/jobs/vacancies" target="_blank" rel="noopener">Вакансии</a></div></div>
+<div class="amb-card"><h3>VK</h3><div class="amb-fit">Подойдёт: IT, гуманитарные технологии (контент, HR)</div>
+<ul><li><b>Делает:</b> представляет VK в вузе, ведёт соцсети, помогает запускать студенческие проекты.</li>
+<li><b>Получает:</b> обучение, мерч, сообщество амбассадоров по всей стране.</li>
+<li><b>Условия:</b> студент, активность в соцсетях и вузе, заявка и отбор. Точный список — на сайте.</li></ul>
+<div class="amb-links"><a class="btn btn-navy" href="https://vk.com" target="_blank" rel="noopener">Сайт VK</a><a class="btn btn-outline" href="https://hh.ru/search/vacancy?text=VK&area=76" target="_blank" rel="noopener">Вакансии VK на hh.ru</a></div></div>
+<div class="amb-card"><h3>Сбер</h3><div class="amb-fit">Подойдёт: экономика и туризм, право, IT</div>
+<ul><li><b>Делает:</b> знакомит студентов с продуктами и молодёжными программами Сбера, собирает команды на кейс-чемпионаты.</li>
+<li><b>Получает:</b> обучение, наставника, fast-track на стажировки и стажировочные программы.</li>
+<li><b>Условия:</b> студент, интерес к финтеху, заявка и отбор. Точный список — на сайте.</li></ul>
+<div class="amb-links"><a class="btn btn-navy" href="https://www.sberbank.ru" target="_blank" rel="noopener">Сайт Сбера</a><a class="btn btn-outline" href="https://hh.ru/search/vacancy?text=%D1%81%D0%B1%D0%B5%D1%80&area=76" target="_blank" rel="noopener">Вакансии Сбера на hh.ru</a></div></div>
+<div class="amb-card"><h3>ВТБ</h3><div class="amb-fit">Подойдёт: экономика и туризм, право</div>
+<ul><li><b>Делает:</b> представляет ВТБ в вузе, рассказывает о карьере в банке и Junior-программах.</li>
+<li><b>Получает:</b> обучение, нетворкинг, преимущество при отборе на стажировки банка.</li>
+<li><b>Условия:</b> студент экономических или юридических направлений, заявка и отбор. Точный список — на сайте.</li></ul>
+<div class="amb-links"><a class="btn btn-navy" href="https://www.vtb.ru" target="_blank" rel="noopener">Сайт ВТБ</a><a class="btn btn-outline" href="https://hh.ru/search/vacancy?text=%D0%B2%D1%82%D0%B1&area=76" target="_blank" rel="noopener">Вакансии ВТБ на hh.ru</a></div></div>
+</div>
+<div class="panel" style="margin-top:14px"><p class="legal" style="margin:0">Страницы программ амбассадоров обновляются каждый набор. Пришлите точные ссылки на программы — вставим прямые кнопки вместо главных страниц сайтов.</p></div>
 </section>
 <section id="book" class="page">
 <div class="section-head"><h2>Запись на консультацию</h2><span>очно и онлайн</span></div>

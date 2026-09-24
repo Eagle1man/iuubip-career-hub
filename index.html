@@ -527,22 +527,22 @@ if(!g.innerHTML)g.innerHTML='<div class="panel">В этой академии п�
 renderMedPanel();
 }
 const MEDS=[
-{name:"РОКБ — областная больница",u:"https://rocb.ru"},
-{name:"Областная детская больница",u:"https://odbro.ru"},
-{name:"ГКБ №20, Ростов-на-Дону",u:"https://rgb20.ru"},
-{name:"ГБ СМП №2, Ростов-на-Дону",u:"https://gbsmp-rostov.ru"},
-{name:"Горбольница №6, Ростов-на-Дону",u:"https://gb6-rostov.ru"},
-{name:"ГБ СМП, Новочеркасск",u:"https://bsmp-novoch.ru"},
-{name:"ЦРБ, Сальский район",u:"https://salskcrb.ru"},
-{name:"Стоматполиклиника №1",u:"https://doctorstoma.ru"},
-{name:"Стоматполиклиника №4",u:"https://sovetstom.ru"},
-{name:"Клиники «Denta»",u:"https://denta.ru"},
-{name:"РостГМУ — медвуз",u:"https://rostgmu.ru"}
+{name:"РОКБ — вакансии",u:"https://rocb.ru/vakansii"},
+{name:"ОДКБ — сайт",u:"https://odbro.ru"},
+{name:"ГКБ №20 — сайт",u:"https://rgb20.ru"},
+{name:"ГБ СМП Ростов — вакансии",u:"https://gbsmp-rostov.ru/o-bolnitse/vakansii"},
+{name:"Горбольница №6 — вакансии",u:"https://gb6-rostov.ru/spetsialistam/vakansii"},
+{name:"ГБ СМП Новочеркасск — сайт",u:"https://bsmp-novoch.ru"},
+{name:"ЦРБ Сальск — вакансии",u:"https://salskcrb.ru/index.php/ob-uchrezhdenii/vakansii"},
+{name:"Стоматполиклиника №1 — вакансии",u:"https://doctorstoma.ru/vacancy"},
+{name:"Стоматполиклиника №4 — вакансии",u:"https://sovetstom.ru/home/%d0%be-%d0%bf%d0%be%d0%bb%d0%b8%d0%ba%d0%bb%d0%b8%d0%bd%d0%b8%d0%ba%d0%b5/%d0%b2%d0%b0%d0%ba%d0%b0%d0%bd%d1%81%d0%b8%d0%b8/"},
+{name:"Клиники «Denta» — контакты",u:"https://denta.ru/clinic/contact"},
+{name:"РостГМУ — сайт",u:"https://rostgmu.ru"}
 ];
 function renderMedPanel(){
 const m=document.getElementById('medPanel');
 if(currentIntAcad!=='all'&&currentIntAcad!=='medic'){m.innerHTML='';return}
-m.innerHTML='<div class="panel"><h2 style="font-size:18px">Куда на практику: медучреждения области</h2><p class="lead">Официальные сайты больниц, стоматологий и медвуза — ищите там разделы о практике и вакансиях. Практику согласуйте с медколледжем: med@iubip.ru.</p><div style="display:flex;gap:8px;flex-wrap:wrap">'+MEDS.map(x=>'<a class="btn btn-outline" style="font-size:13px;padding:8px 14px" href="'+x.u+'" target="_blank" rel="noopener">'+x.name+'</a>').join('')+'</div></div>';
+m.innerHTML='<div class="panel"><h2 style="font-size:18px">Куда на практику: отделы кадров медучреждений</h2><p class="lead">Кнопки ведут сразу в разделы «Вакансии» и контакты отделов кадров — там узнавайте о практике и стажировках. Где такого раздела нет, кнопка ведёт на сайт учреждения. Практику согласуйте с медколледжем: med@iubip.ru.</p><div style="display:flex;gap:8px;flex-wrap:wrap">'+MEDS.map(x=>'<a class="btn btn-outline" style="font-size:13px;padding:8px 14px" href="'+x.u+'" target="_blank" rel="noopener">'+x.name+'</a>').join('')+'</div></div>';
 }
 function heroSearch(){goTab('vac');openAcad('all')}
 function q(s){document.getElementById('search').value=s;goTab('vac');openAcad('all')}
